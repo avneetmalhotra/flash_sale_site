@@ -1,0 +1,3 @@
+# README
+
+Flash Sale Site
