@@ -17,3 +17,11 @@
 /yarn-error.log
 
 .byebug_history
+
+.DS_Store
+db/schema.rb
+/config/*.yml
+/public/system/*
+
+# Ignore application configuration
+/config/application.yml

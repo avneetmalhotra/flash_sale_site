@@ -6,8 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 
-gem 'jquery-ui-rails'
-gem 'jquery'
+gem 'jquery-ui-rails', '~>6.0.1'
+gem 'jquery-rails', '~> 4.3.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
 # Use mysql as the database for Active Record
@@ -23,8 +23,6 @@ gem 'therubyracer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -40,7 +38,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 3.8.0'
 end
 
 group :development do
@@ -51,11 +49,11 @@ group :development do
   # gem 'spring'
   # gem 'spring-watcher-listen', '~> 2.0.0'
   # Preview email in the default browser instead of sending it.
-  gem 'letter_opener'
-  gem 'better_errors'
-  gem 'bullet'
-  gem 'rails-footnotes'
-  gem 'figaro'
+  gem 'letter_opener', '~> 1.4.1'
+  gem 'better_errors', '~> 2.4.0'
+  gem 'bullet', '~> 5.7.0'
+  gem 'rails-footnotes', '~> 4.1.8'
+  gem 'figaro', '~> 1.1.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
