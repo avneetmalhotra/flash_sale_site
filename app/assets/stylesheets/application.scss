@@ -14,3 +14,19 @@
  *= require bootstrap.min.css
  *= require_self
  */
+
+
+.flash-display {
+  margin-top: 1rem;
+}
+
+.clearix::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.form-group label::after {
+  content: '*';
+  color: red;
+}
