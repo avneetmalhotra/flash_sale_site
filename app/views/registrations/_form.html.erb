@@ -2,26 +2,26 @@
   <fieldset>
     <legend>Enter you details:</legend>
     <div class="form-group">
-      <%= form.label :name, 'Full Name' %>
+      <%= form.label :name, 'Full Name', class: 'reuqired-field' %>
       <%= form.text_field :name, id: :user_name, class: 'form-control', placeholder: 'John Targaryn' %>
       <%= display_error(:name, user) %>
     </div>
     
     <div class="form-group">
-      <%= form.label :email, 'Email Address' %>
+      <%= form.label :email, 'Email Address', class: 'reuqired-field' %>
       <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com' %>
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
       <%= display_error(:email, user) %>
     </div>
 
     <div class="form-group">
-      <%= form.label :password %>
+      <%= form.label :password, class: 'reuqired-field' %>
       <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
       <%= display_error(:password, user) %>
     </div>
 
     <div class='form-group'>
-      <%= form.label :password_confirmation, 'Confirm Password' %>
+      <%= form.label :password_confirmation, 'Confirm Password', class: 'reuqired-field' %>
       <%= form.password_field :password_confirmation, id: :user_password_confirmation, class: 'form-control', placeholder: '******' %>
       <%= display_error(:password_confirmation, user) %>
     </div>

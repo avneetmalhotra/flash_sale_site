@@ -10,14 +10,24 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <%= link_to 'Logout', logout_url, method: :delete, class: 'dropdown-item' %>
+          </div>
         </li>
       </ul>
     </div>

@@ -23,5 +23,6 @@ Rails.application.routes.draw do
 
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
   # resources :sessions, path_names: { new: 'login', create: 'login' }, only: [:new, :create]
 end

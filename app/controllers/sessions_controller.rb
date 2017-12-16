@@ -5,14 +5,19 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email])
+    user = User.find_by(email: params[:user][:email])
 
-    if user.try(:authenticate, params[:password])
+    if user.try(:authenticate, params[:user][:password])
       session[:user_id] = user.id
-      redirect_to 'home#index', flash: "Welcome #{user.name}."
+      redirect_to root_url, notice: "Welcome #{user.name}."
     else
       redirect_to login_url, alert: 'Invalid email/passord. Please try again.'
     end
+  end
+
+  def destroy
+    session.clear
+    redirect_to login_url, notice: 'Successfully logged out.'
   end
 
 end
