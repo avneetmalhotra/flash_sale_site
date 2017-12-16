@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
   helper ErrorHelper
+  skip_before_action :authorize
 
   def new
     @user = User.new
