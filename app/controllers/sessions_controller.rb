@@ -8,6 +8,9 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:user][:email])
 
     if user.try(:authenticate, params[:user][:password])
+      if user.confirmed_at.nil?
+        redirect_to login_url, alert: 'Account not confirmed' and return
+      end
       session[:user_id] = user.id
       redirect_to root_url, notice: "Welcome #{user.name}."
     else

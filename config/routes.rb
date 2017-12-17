@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   # end
 
   resources :registrations, only: [:new, :create]
+
+  resources :confirmations, only: [:new, :create]
+  get 'account-confirmed', to: 'confirmations#confirm'
   # resources :sessions, only: [:new, :create]
   # controller :sessions do
   #   get 'login' => :new

@@ -19,6 +19,8 @@
     <% end %>
   </div>
 
+  <%= button_to 'Confirmation email not recieved', new_confirmation_path, method: 'get', class: 'btn btn-info' %>
+
   <div class="create-account jumbotron">
     <small class="text-primary">New to Deals He Deals</small>
     <%= button_to 'Create new Account', new_registration_path, method: 'get', class: 'btn btn-secondary' %>

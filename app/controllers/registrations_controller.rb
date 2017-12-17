@@ -10,7 +10,8 @@ class RegistrationsController < ApplicationController
     @user = User.new(new_user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to root_url, notice: "#{@user.name} customer created" }
+        RegistrationMailer.confirmation(@user).deliver_now
+        format.html { redirect_to login_url, notice: "Confirmation email has been sent to your email address." }
       else
         format.html { render :new }
       end
