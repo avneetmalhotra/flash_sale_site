@@ -14,6 +14,13 @@
           <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
         </div>
 
+        <div class="form-check">
+          <label class="form-check-label">
+            <%= check_box_tag 'remember_me', 'yes', false, class: 'form-check-input' %>
+            Remember Me
+          </label>
+        </div>
+
         <%= form.submit 'Login', class: 'btn btn-primary' %>
         <%= link_to 'Confirmation email not recieved', new_confirmation_path, method: 'get', class: 'btn btn-link' %>
       </fieldset>
