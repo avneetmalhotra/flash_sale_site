@@ -1,7 +1,7 @@
 <div class="jumbotron registration-form">
   <%= form_with(scope: user, url: url, local: true, method: method) do |form| %>
     <fieldset>
-      <legend>Create Account</legend>
+      <legend><%= form_legend %></legend>
 
       <div class="form-group">
         <%= form.label :name, 'Your Name', class: 'required-field' %>

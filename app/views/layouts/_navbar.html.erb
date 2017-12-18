@@ -36,7 +36,7 @@
     </div>
   <% end %>
 
-  <% if request.path =~ /\/registrations(\/)?\w*/ && current_user.nil? %>
+  <% if request.path =~ Regexp.new(ENV['registrations_path_regex']) && current_user.nil? %>
     <ul class="navbar-nav nav-create-form">
       <li class="nav-item">
         <%= button_to 'Back to Login', login_path, method: 'get', class: 'btn btn-info' %>
