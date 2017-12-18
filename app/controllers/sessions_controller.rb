@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_action :authorize
+  before_action :ensure_logged_out, only: [:new, :create]
 
   def new
   end
@@ -22,5 +23,11 @@ class SessionsController < ApplicationController
     session.clear
     redirect_to login_url, notice: 'Successfully logged out.'
   end
+
+  private
+
+    def ensure_logged_out
+      redirect_to '/' if current_user
+    end
 
 end

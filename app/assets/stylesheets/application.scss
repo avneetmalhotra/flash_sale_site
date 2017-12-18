@@ -15,8 +15,8 @@
  *= require_self
  */
 
-body {
-  height: 400px;
+.container {
+  height: 100%;
 }
 
 .flash-display {
@@ -35,5 +35,9 @@ body {
 }
 
 .nav-user-options {
-  
+  margin-right: 6rem;   
+}
+
+.display-block {
+  display: block;
 }

@@ -1,6 +1,7 @@
 class RegistrationsController < ApplicationController
   helper ErrorHelper
   skip_before_action :authorize
+  before_action :ensure_logged_out, only: [:new, :create]
 
   def new
     @user = User.new
@@ -22,5 +23,9 @@ class RegistrationsController < ApplicationController
 
     def new_user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    def ensure_logged_out
+      redirect_to '/' if current_user
     end
 end

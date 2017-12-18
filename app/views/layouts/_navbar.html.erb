@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">DEALS he DEALS</a>
+  <a class="" href="#"><%= image_tag 'logo.jpg', size: '68x60' %></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -24,8 +24,8 @@
         </li>
       </ul>
 
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown nav-user-option">
+      <ul class="navbar-nav nav-user-options">
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">OPTIONS</a>
           <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 47px, 0px); top: 0px; left: 0px; will-change: transform;">
             <%= link_to 'Logout', logout_url, method: :delete, class: 'dropdown-item' %>
@@ -33,5 +33,13 @@
         </li>
       </ul>
     </div>
+  <% end %>
+
+  <% if request.path =~ /\/registrations(\/)?\w*/ && current_user.nil? %>
+    <ul class="navbar-nav nav-create-form">
+      <li class="nav-item">
+        <%= button_to 'Back to Login', login_path, method: 'get', class: 'btn btn-info' %>
+      </li>
+    </ul>
   <% end %>
 </nav>
