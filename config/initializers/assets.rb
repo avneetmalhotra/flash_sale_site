@@ -15,4 +15,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w( sessions.css 
   application.scss 
-  registrations.scss )
+  registrations.scss 
+  confirmations.scss )
