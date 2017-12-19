@@ -1,0 +1,12 @@
+<div class='jumbotron confirmation-form'>
+  <%= form_with(url: confirmations_path, local: true ) do |form| %>
+    <fieldset>
+      <div class="form-group">
+        <%= form.label :email, 'Email' %>
+        <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com' %>
+      </div>
+
+      <%= form.submit 'Resend Confirmation Email', class: 'btn btn-primary' %>
+    </fieldset>
+  <% end %>
+</div>

@@ -14,3 +14,30 @@
  *= require bootstrap.min.css
  *= require_self
  */
+
+.container {
+  height: 100%;
+}
+
+.flash-display {
+  margin-top: 1rem;
+}
+
+.clearix::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
+.required-field::after {
+  content: '*';
+  color: red;
+}
+
+.nav-user-options {
+  margin-right: 6rem;   
+}
+
+.display-block {
+  display: block;
+}

@@ -1,0 +1,28 @@
+<div class="login-page">
+  <div class="login-form jumbotron clearfix">
+    <%= form_with(scope: :user, url: login_path, local: true ) do |form| %>
+      <fieldset>
+        <%= image_tag 'logo.jpg', size: '140x120', alt: 'logo', class: 'logo' %>
+        
+        <div class="form-group">
+          <%= form.label :email, 'Email' %>
+          <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :password %>
+          <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
+        </div>
+
+        <%= form.submit 'Login', class: 'btn btn-primary' %>
+        <%= link_to 'Confirmation email not recieved', new_confirmation_path, method: 'get', class: 'btn btn-link' %>
+      </fieldset>
+    <% end %>
+  </div>
+
+
+  <div class="create-account jumbotron">
+    <h6 class="text-primary">New to Deals He Deals</h6>
+    <%= button_to 'Create new Account', new_registration_path, method: 'get', class: 'btn btn-outline-primary' %>
+  </div>
+</div>

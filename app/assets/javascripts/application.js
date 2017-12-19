@@ -12,5 +12,6 @@
 //
 //= require jquery
 //= require rails-ujs
+//= require popper.min.js
 //= require bootstrap.min.js
 //= require jquery-ui
