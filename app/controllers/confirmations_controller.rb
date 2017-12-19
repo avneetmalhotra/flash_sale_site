@@ -11,6 +11,11 @@ class ConfirmationsController < ApplicationController
     end
 
     user = User.find_by(email: params[:email])
+
+    unless user.confirmed_at
+      redirect_to login_url, notice: 'Account already confirmed'
+    end
+
     if user
       RegistrationMailer.confirmation(user).deliver_now
       redirect_to login_url, notice: 'Confirmation Email Sent' 
@@ -22,12 +27,20 @@ class ConfirmationsController < ApplicationController
 
   def confirm
     @user = User.find_by(confirmation_token: params[:confirmation_token])
-    
+
+
     if @user
-      @user.update(confirmed_at: Time.now)
+      # regenerating confirmation token here so that same link cannot be reused
+      @user.regenerate_confirmation_token
+
+      if has_confirmation_token_expired?
+        redirect_to login_url, notice: 'Confirmation Link expired' and return
+      end
+
+      @user.update(confirmed_at: Time.current)
       flash[:notice] = 'Account Confirmed'
     else
-      flash[:error] = "Account couldn't be confirmed"
+      flash[:error] = "Invalid Link"
     end
       redirect_to login_url
   end
@@ -39,4 +52,7 @@ class ConfirmationsController < ApplicationController
       email =~ email_regexp
     end
 
+    def has_confirmation_token_expired?
+      Time.current - @user.confirmation_token_sent_at > eval(ENV['confirmation_token_validity'])
+    end
 end

@@ -12,6 +12,7 @@ class RegistrationsController < ApplicationController
     respond_to do |format|
       if @user.save
         RegistrationMailer.confirmation(@user).deliver_now
+
         format.html { redirect_to login_url, notice: "Confirmation email has been sent to your email address." }
       else
         format.html { render :new }
