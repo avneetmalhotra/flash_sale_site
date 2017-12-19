@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   #   post 'signup', to: 'create'
   # end
 
-  resources :registrations, only: [:new, :create]
+  resources :registrations, only: [:new, :create, :edit, :update]
 
   resources :confirmations, only: [:new, :create]
   get 'account-confirmed', to: 'confirmations#confirm'

@@ -1,8 +1,8 @@
 <div class="jumbotron registration-form">
-  <%= form_with(scope: :user, url: registrations_path, local: true ) do |form| %>
+  <%= form_with(scope: user, url: url, local: true, method: method) do |form| %>
     <fieldset>
-      <legend>Create Account</legend>
-      <h1></h1>
+      <legend><%= form_legend %></legend>
+
       <div class="form-group">
         <%= form.label :name, 'Your Name', class: 'required-field' %>
         <%= form.text_field :name, id: :user_name, class: 'form-control', placeholder: 'John Targaryn' %>
