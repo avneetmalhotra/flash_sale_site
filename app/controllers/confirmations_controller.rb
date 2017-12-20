@@ -32,7 +32,7 @@ class ConfirmationsController < ApplicationController
     def fetch_user
       @user = User.find_by(email: params[:email])
       if @user.nil?
-        redirect_to action: :new, notice: 'Invalid Account' and return
+        redirect_to new_confirmation_url, notice: 'Invalid Account'
       end
     end
 
@@ -44,7 +44,7 @@ class ConfirmationsController < ApplicationController
 
     def fetch_user_from_confirmation_token
       @user = User.find_by(confirmation_token: params[:confirmation_token])
-      render status: 404 and return if @user.nil?
+      render file: Rails.root.join('public', '404.html'), status: 404 and return if @user.nil?
     end
 
     def redirect_if_confirmation_token_expired

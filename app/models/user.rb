@@ -17,7 +17,6 @@ class User < ApplicationRecord
   validates :password, allow_blank: true, length: { minimum: 6 }
 
     def send_confrimation_instructions
-      debugger
       UserMailer.confirmation(self).deliver_now
     end
 end
