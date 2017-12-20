@@ -8,24 +8,10 @@
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
  }
-
-.flash-display {
-  margin-top: 1rem;
-}
-
-.clearix::after {
-  content: '';
-  clear: both;
-  display: block;
-}
-
+ 
 .required-field::after {
   content: '*';
   color: red;
-}
-
-.nav-user-options {
-  margin-right: 6rem;   
 }
 
 .display-block {
