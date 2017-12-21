@@ -11,7 +11,7 @@
       </div>
 
       <div class="form-group">
-        <%= form.label :password %>
+        <%= form.label :password %> <span>&nbsp</span> <%= link_to 'Forgot Password?', new_password_url %>
         <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
       </div>
 

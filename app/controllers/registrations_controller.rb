@@ -11,7 +11,7 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(new_user_params)
     if @user.save
-      redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice])
+      redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) and return
     else
       render :new
     end
@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
 
   def update
     if @user.update(update_user_params)
-      redirect_to root_url, notice: t(:account_updated, scope: [:flash, :notice])
+      redirect_to root_url, notice: t(:account_updated, scope: [:flash, :notice]) and return
     else
       render :edit
     end

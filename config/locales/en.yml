@@ -31,35 +31,46 @@
 
 en:
   action:
-    create_account:   'Create New Account'
-    login:            'Login'
-    send:             'Send'
-    sign_up:          'Sign Up'
-    update_profile:   'Update Profile'
     confirmation_email_not_recieved:  'Did not recieve Confirmation email?'
+    create_account:                   'Create New Account'
+    login:                            'Login'
+    reset:                            'Reset'
+    send:                             'Send'
+    sign_up:                          'Sign Up'
+    update_profile:                   'Update Profile'
 
   flash:
     alert:
-      account_already_confirmed:  'Your account is already confirmed. Please Log in'
-      account_not_confirmed:      'Please confirm your account to log in.'
-      invalid_account:            'User with given email does not exist.'
-      invalid_confirmation_token: 'Confirmation Token has been expired. Please request a new one.'
-      login_to_continue:          'Please login to view this page.'
-      logout_to_continue:         'You are not authorized to perform this action.'
-      invalid_email_or_password:  'Invalid email or passord. Please try again.'
+      account_already_confirmed:    'Your account is already confirmed. Please Log in'
+      account_not_confirmed:        'Please confirm your account to continue.'
+      invalid_account:              'User with given email does not exist.'
+      invalid_confirmation_token:   'Confirmation Token has been expired. Please request a new one.'
+      invalid_email_or_password:    'Invalid email or passord. Please try again.'
+      invalid_password_reset_token: 'Password Reset Token has been expired. Please request a new one.'
+      login_to_continue:            'Please login to view this page.'
+      logout_to_continue:           'You are not authorized to perform this action.'
     notice:
-      account_confirmed:          'Your account has been successfully confirmed. Please log in.'
-      account_updated:            'Your account has been successfully updated'
-      confirmation_email_sent:    'Confirmation email has been sent to your email address.'
-      login_successfull:          'You have successfully logged in.'
-      logout_successfull:         'You have successfully logged out.'
+      account_confirmed:            'Your account has been successfully confirmed. Please log in.'
+      account_updated:              'Your account has been successfully updated'
+      confirmation_email_sent:      'Confirmation email has been sent to your email address.'
+      login_successfull:            'You have successfully logged in.'
+      logout_successfull:           'You have successfully logged out.'
+      password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
+      password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
 
   user_mailer:
     confirmation_email:
       action:
-        confirm_account: 'Confirm Your Account'
+        confirm_account:  'Confirm Your Account'
       greeting:       'Hi'
       first_line:     'Welcome to Flash Sale.'
       second_line:    'To grab exciting deals you need to confirm your account.'
       subject:        'Flash Sale Account Confimration'
       third_line:     'Please click on the following link to confirm your account: '
+
+    password_reset_email:
+      action:
+        password_reset:   'Reset Your Password'
+      greeting:        'Hi'
+      first_line:      "Please click on the following link to reset your account's password: "
+      subject:         'Flash Sale Reset Your Password'

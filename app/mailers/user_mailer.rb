@@ -5,4 +5,10 @@ class UserMailer < ApplicationMailer
 
     mail(to: @user.email, subject: default_i18n_subject)
   end
+
+  def password_reset_email(user_id)
+    @user = User.find_by(id: user_id)
+
+    mail(to: @user.email, subject: default_i18n_subject)
+  end
 end

@@ -6,7 +6,22 @@ class ApplicationController < ActionController::Base
 
   private
     def current_user
+      if session[:user_id].nil?
+        @current_user ||= check_for_user_in_remember_me_cookie
+      end
       @current_user ||= User.find_by(id: session[:user_id])
+    end
+
+    def check_for_user_in_remember_me_cookie
+      if cookies[:remember_me].present?
+        user = User.find_by(remember_me_token: cookies.encrypted[:remember_me])
+        
+        if user.present?
+          session[:user_id] = user.id
+        end
+
+        user
+      end
     end
 
     def authenticate_user

@@ -1,0 +1,13 @@
+<div class='form-div col-md-6 col-md-offset-3'>
+  <%= form_with(url: passwords_path, local: true) do |form| %>
+    <fieldset>
+      <p>Enter the email associated with your account:</p>
+      <div class="form-group">
+        <%= form.label :email, 'Email' %>
+        <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com' %>
+      </div>
+
+      <%= form.submit t(:send, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
+    </fieldset>
+  <% end %>
+</div>

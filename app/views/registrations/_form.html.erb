@@ -11,20 +11,20 @@
         <%= display_error(:name, user) %>
       </div>
 
-      <div class="form-group <%= 'has-error' if has_error?(:name, user) %>">
+      <div class="form-group <%= 'has-error' if has_error?(:email, user) %>">
         <%= form.label :email, 'Email Address', class: 'required-field' %>
         <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com', disabled: email_disable_status %>
         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         <%= display_error(:email, user) %>
       </div>
 
-      <div class="form-group <%= 'has-error' if has_error?(:name, user) %>">
+      <div class="form-group <%= 'has-error' if has_error?(:password, user) %>">
         <%= form.label :password, class: 'required-field' %>
         <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
         <%= display_error(:password, user) %>
       </div>
 
-      <div class="form-group <%= 'has-error' if has_error?(:name, user) %>">
+      <div class="form-group <%= 'has-error' if has_error?(:password_confirmation, user) %>">
         <%= form.label :password_confirmation, 'Confirm Password', class: 'required-field' %>
         <%= form.password_field :password_confirmation, id: :user_password_confirmation, class: 'form-control', placeholder: '******' %>
         <%= display_error(:password_confirmation, user) %>

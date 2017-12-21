@@ -3,14 +3,16 @@ Rails.application.routes.draw do
 
   root 'home#index'
   
-
   resources :registrations, only: [:new, :create, :edit, :update]
 
   resources :confirmations, only: [:new, :create]
   get 'user/confirm', to: 'confirmations#confirm'
-  
+
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
+  resources :passwords, only: [:new, :create]
+  get 'password/reset', to: 'passwords#edit'
+  patch 'password/reset', to: 'passwords#update'
 end

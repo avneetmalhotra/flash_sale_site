@@ -12,13 +12,13 @@ class ConfirmationsController < ApplicationController
   def create
     @user.update(confirmation_token_sent_at: Time.current) 
     @user.send_confrimation_instructions
-    redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) 
+    redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) and return
   end
 
   def confirm
     @user.update_columns(confirmed_at: Time.current)
     @user.update(confirmation_token: nil) 
-    redirect_to login_url, notice: t(:account_confirmed, scope: [:flash, :notice])
+    redirect_to login_url, notice: t(:account_confirmed, scope: [:flash, :notice]) and return
   end
 
   private
@@ -30,7 +30,7 @@ class ConfirmationsController < ApplicationController
     def fetch_user
       @user = User.find_by(email: params[:email])
       if @user.nil?
-        redirect_to new_confirmation_url, alert: t(:invalid_account, scope: [:flash, :alert])
+        redirect_to new_confirmation_url, alert: t(:invalid_account, scope: [:flash, :alert]) and return
       end
     end
 
