@@ -1,10 +1,8 @@
 class UserMailer < ApplicationMailer
 
-  def confirmation(user)
-    @user = user
+  def confirmation_email(user_id)
+    @user = User.find_by(id: user_id)
 
-    mail(to: @user.email, subject: 'Account Confimration')
-
-    @user.update(confirmation_token_sent_at: Time.current) 
+    mail(to: @user.email, subject: default_i18n_subject)
   end
 end

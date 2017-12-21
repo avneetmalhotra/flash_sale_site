@@ -30,4 +30,36 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  action:
+    create_account:   'Create New Account'
+    login:            'Login'
+    send:             'Send'
+    sign_up:          'Sign Up'
+    update_profile:   'Update Profile'
+    confirmation_email_not_recieved:  'Did not recieve Confirmation email?'
+
+  flash:
+    alert:
+      account_already_confirmed:  'Your account is already confirmed. Please Log in'
+      account_not_confirmed:      'Please confirm your account to log in.'
+      invalid_account:            'User with given email does not exist.'
+      invalid_confirmation_token: 'Confirmation Token has been expired. Please request a new one.'
+      login_to_continue:          'Please login to view this page.'
+      logout_to_continue:         'You are not authorized to perform this action.'
+      invalid_email_or_password:  'Invalid email or passord. Please try again.'
+    notice:
+      account_confirmed:          'Your account has been successfully confirmed. Please log in.'
+      account_updated:            'Your account has been successfully updated'
+      confirmation_email_sent:    'Confirmation email has been sent to your email address.'
+      login_successfull:          'You have successfully logged in.'
+      logout_successfull:         'You have successfully logged out.'
+
+  user_mailer:
+    confirmation_email:
+      action:
+        confirm_account: 'Confirm Your Account'
+      greeting:       'Hi'
+      first_line:     'Welcome to Flash Sale.'
+      second_line:    'To grab exciting deals you need to confirm your account.'
+      subject:        'Flash Sale Account Confimration'
+      third_line:     'Please click on the following link to confirm your account: '

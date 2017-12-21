@@ -16,3 +16,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += 
   %w( application.scss 
       global.scss )
+
+Rails.application.config.assets.precompile +=
+  %w( auto_hide.js )

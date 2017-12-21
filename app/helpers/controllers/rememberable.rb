@@ -2,7 +2,7 @@ module Controllers::Rememberable
   def create_remember_me_cookie
     cookies.encrypted[:remember_me] = {
       value: @user.remember_me_token,
-      expires: REMEMBER_ME_COOKIE_VALIDITY,
+      expires: REMEMBER_ME_COOKIE_EXPIRATION_DATE,
       domain: request.domain
     }
   end

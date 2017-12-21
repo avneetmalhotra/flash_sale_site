@@ -1,0 +1,11 @@
+<h2>Confirm Your Account</h1>
+
+<p><%= t(:greeting, scope: [:user_mailer, :confirmation_email]) %> <%= @user.name %></p>
+
+<p><%= t(:first_line ,scope: [:user_mailer, :confirmation_email]) %></p>
+
+<p><%= t(:second_line ,scope: [:user_mailer, :confirmation_email]) %></p>
+<p>
+  <%= t(:third_line ,scope: [:user_mailer, :confirmation_email]) %><br>
+  <%= link_to t(:confirm_account ,scope: [:user_mailer, :confirmation_email, :action]), user_confirm_url(confirmation_token: @user.confirmation_token) %>
+</p>

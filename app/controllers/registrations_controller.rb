@@ -1,7 +1,8 @@
 class RegistrationsController < ApplicationController
   before_action :ensure_logged_out, only: [:new, :create]
-  skip_before_action :authorize, only:[:new, :create]
+  skip_before_action :authenticate_user, only:[:new, :create]
   before_action :set_user, only: [:edit, :update]
+  before_action :ensure_current_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -10,8 +11,7 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(new_user_params)
     if @user.save
-      @user.send_confrimation_instructions
-      redirect_to login_url, notice: "Confirmation email has been sent to your email address."
+      redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice])
     else
       render :new
     end
@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
 
   def update
     if @user.update(update_user_params)
-      redirect_to root_url, notice: 'Acoount successfully updated'
+      redirect_to root_url, notice: t(:account_updated, scope: [:flash, :notice])
     else
       render :edit
     end
@@ -38,11 +38,11 @@ class RegistrationsController < ApplicationController
       params.require(:user).permit(:name, :password, :password_confirmation)
     end
 
-    def ensure_logged_out
-      redirect_to root_url if current_user
-    end
-
     def set_user
       @user = User.find_by(id: params[:id])
+    end
+
+    def ensure_current_user
+      render file: Rails.root.join('public', '404.html'), status: 404 and return unless @user.id == current_user.id
     end
 end

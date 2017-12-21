@@ -1,8 +1,0 @@
-<h2>Confirm Your Account</h1>
-
-<p>Hi <%= @user.name %></p>
-
-<p>
-  Click on the following link to confirm your account:<br>
-  <%= link_to 'Confirm Account', account_confirmed_url(confirmation_token: @user.confirmation_token) %>
-</p>
