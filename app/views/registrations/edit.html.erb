@@ -1,0 +1,19 @@
+<div class="form-div col-md-6 col-md-offset-3">
+  <%= form_with(scope: @user, url: registration_path(@user), local: true, method: :patch) do |form| %>
+    <fieldset>
+      <div class="form-group">
+        <h4 class= 'col-md-offset-4'>Update Profile</h4>
+      </div>
+
+      <%= render 'form', form: form, user: @user, email_disable_status: true %>
+
+      <div class="form-group <%= 'has-error' if has_error?(:current_password, @user) %>">
+        <%= form.label :current_password, 'Current Password', class: 'required-field' %>
+        <%= form.password_field :current_password, id: :user_current_password, class: 'form-control', placeholder: '******' %>
+        <%= display_error(:current_password, @user) %>
+      </div>
+
+      <%= form.submit t(:update_profile, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
+    </fieldset>
+  <% end %>
+</div>
