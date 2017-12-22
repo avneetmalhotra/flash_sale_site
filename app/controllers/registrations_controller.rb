@@ -11,6 +11,8 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(new_user_params)
     if @user.save
+      @user.generate_confirmation_token
+      @user.send_confrimation_instructions
       redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) and return
     else
       render :new
@@ -21,10 +23,11 @@ class RegistrationsController < ApplicationController
   end
 
   def update
-    if @user.update(update_user_params)
-      redirect_to root_url, notice: t(:account_updated, scope: [:flash, :notice]) and return
-    else
+    @user.update_with_password(update_user_params)
+    if @user.errors.present?
       render :edit
+    else
+      redirect_to root_url, notice: t(:account_updated, scope: [:flash, :notice]) and return
     end
   end
 
@@ -35,11 +38,12 @@ class RegistrationsController < ApplicationController
     end
 
     def update_user_params
-      params.require(:user).permit(:name, :password, :password_confirmation)
+      params.require(:user).permit(:name, :password, :password_confirmation, :current_password)
     end
 
     def set_user
       @user = User.find_by(id: params[:id])
+      render file: Rails.root.join('public', '404.html'), status: 404 and return if @user.nil?
     end
 
     def ensure_current_user

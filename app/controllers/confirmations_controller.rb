@@ -2,30 +2,25 @@ class ConfirmationsController < ApplicationController
   skip_before_action :authenticate_user
   before_action :ensure_logged_out
   before_action :fetch_user, only: [:create]
-  before_action :ensure_not_confirmed, only: [:create]
   before_action :fetch_user_from_confirmation_token, only: [:confirm]
+  before_action :ensure_not_confirmed, only: [:create, :confirm]
   before_action :ensure_confirmation_token_validity, only: [:confirm]
 
   def new
   end
 
   def create
-    @user.update(confirmation_token_sent_at: Time.current) 
+    @user.generate_confirmation_token
     @user.send_confrimation_instructions
     redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) and return
   end
 
   def confirm
-    @user.update_columns(confirmed_at: Time.current)
-    @user.update(confirmation_token: nil) 
+    @user.confirm
     redirect_to login_url, notice: t(:account_confirmed, scope: [:flash, :notice]) and return
   end
 
   private
-
-    def has_confirmation_token_expired?
-      Time.current - @user.confirmation_token_sent_at > CONFIRMATION_TOKEN_VALIDITY
-    end
 
     def fetch_user
       @user = User.find_by(email: params[:email])
@@ -46,7 +41,7 @@ class ConfirmationsController < ApplicationController
     end
 
     def ensure_confirmation_token_validity
-      if has_confirmation_token_expired?
+      if @user.confirmation_token_expired?
         redirect_to login_url, alert: t(:invalid_confirmation_token, scope: [:flash, :alert]) and return
       end
     end

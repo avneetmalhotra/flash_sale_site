@@ -1,37 +1,33 @@
-<div class="form-div col-md-6 col-md-offset-3">
-  <%= form_with(scope: user, url: url, local: true, method: method) do |form| %>
-    <fieldset>
-      <div class="form-group">
-        <h4 class= 'col-md-offset-4'><%= form_legend %></h4>
-      </div>
+<div class="form-group <%= 'has-error' if has_error?(:name, user) %>">
+  <%= form.label :name, 'Name', class: 'required-field' %>
+  <%= form.text_field :name, id: :user_name, class: 'form-control', placeholder: 'John Targaryn' %>
+  <%= display_error(:name, user) %>
+</div>
 
-      <div class="form-group <%= 'has-error' if has_error?(:name, user) %>">
-        <%= form.label :name, 'Name', class: 'required-field' %>
-        <%= form.text_field :name, id: :user_name, class: 'form-control', placeholder: 'John Targaryn' %>
-        <%= display_error(:name, user) %>
-      </div>
+<div class="form-group <%= 'has-error' if has_error?(:email, user) %>">
+  <%= form.label :email, 'Email Address', class: 'required-field' %>
+  <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com', disabled: email_disable_status %>
+  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  <%= display_error(:email, user) %>
+</div>
 
-      <div class="form-group <%= 'has-error' if has_error?(:email, user) %>">
-        <%= form.label :email, 'Email Address', class: 'required-field' %>
-        <%= form.email_field :email, id: :user_email, class: 'form-control', placeholder: 'myemail@gmail.com', disabled: email_disable_status %>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        <%= display_error(:email, user) %>
-      </div>
-
-      <div class="form-group <%= 'has-error' if has_error?(:password, user) %>">
-        <%= form.label :password, class: 'required-field' %>
-        <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
-        <%= display_error(:password, user) %>
-      </div>
-
-      <div class="form-group <%= 'has-error' if has_error?(:password_confirmation, user) %>">
-        <%= form.label :password_confirmation, 'Confirm Password', class: 'required-field' %>
-        <%= form.password_field :password_confirmation, id: :user_password_confirmation, class: 'form-control', placeholder: '******' %>
-        <%= display_error(:password_confirmation, user) %>
-      </div>
-
-      <%= yield form %>
-    
-    </fieldset>
+<div class="form-group <%= 'has-error' if has_error?(:password, user) %>">
+  <%= form.label :password, class: (user.new_record? ? 'required-field' : '')  %>
+  
+  <%= form.password_field :password, id: :user_password, class: 'form-control', placeholder: '******' %>
+  <% if user.persisted? %>
+    <small class="form-text text-muted">Leave this field blank if you don't want to update password</small>
   <% end %>
+  <%= display_error(:password, user) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:password_confirmation, user) %>">
+  <%= form.label :password_confirmation, 'Confirm Password', class: (user.new_record? ? 'required-field' : '') %>
+
+  <%= form.password_field :password_confirmation, id: :user_password_confirmation, class: 'form-control', placeholder: '******' %>
+  
+  <% if user.persisted? %>
+    <small class="form-text text-muted">Leave this field blank if you don't want to update password</small>
+  <% end %>
+  <%= display_error(:password_confirmation, user) %>
 </div>

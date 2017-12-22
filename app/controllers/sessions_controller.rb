@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   before_action :ensure_logged_out, only: [:new, :create]
   before_action :fetch_user, only: [:create]
   before_action :ensure_user_confirmed, only: [:create]
-  before_action :login_if_remember_user, only: [:new]
+  # before_action :login_if_remember_user, only: [:new]
 
   def new
   end
@@ -36,20 +36,20 @@ class SessionsController < ApplicationController
       end
     end
 
-    def login_if_remember_user
-      if cookies[:remember_me].present?
-        @user = User.find_by(remember_me_token: cookies.encrypted[:remember_me])
+    # def login_if_remember_user
+    #   if cookies[:remember_me].present?
+    #     @user = User.find_by(remember_me_token: cookies.encrypted[:remember_me])
         
-        ensure_user_valid
+    #     ensure_user_valid
 
-        session[:user_id] = @user.id
-        redirect_to root_url and return
-      end
-    end
+    #     session[:user_id] = @user.id
+    #     redirect_to root_url and return
+    #   end
+    # end
 
-    def ensure_user_valid
-      redirect_to login_url and return if @user.nil?
-      redirect_to login_url and return if @user.confirmed_at.nil?
-    end
+    # def ensure_user_valid
+    #   redirect_to login_url and return if @user.nil?
+    #   redirect_to login_url and return if @user.confirmed_at.nil?
+    # end
 
 end

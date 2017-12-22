@@ -1,3 +1,13 @@
-<%= render 'form', user: @user, url: registrations_path, method: :post, form_legend: 'Create Account', email_disable_status: false  do |form| %>
-  <%= form.submit t(:sign_up, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
-<% end %>
+<div class="form-div col-md-6 col-md-offset-3">
+  <%= form_with(scope: @user, url: registrations_path, local: true) do |form| %>
+    <fieldset>
+      <div class="form-group">
+        <h4 class= 'col-md-offset-4'>Create Account</h4>
+      </div>
+
+      <%= render 'form', form: form, user: @user, email_disable_status: false %>
+      
+      <%= form.submit t(:sign_up, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
+     </fieldset>
+  <% end %>
+</div>
