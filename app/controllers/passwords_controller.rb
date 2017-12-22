@@ -9,20 +9,19 @@ class PasswordsController < ApplicationController
   end
 
   def create
-    @user.generate_password_reset_token
     @user.send_password_reset_instructions
-    redirect_to login_url, notice: t(:password_reset_email_sent, scope: [:flash, :notice]) and return
+    redirect_to login_url, notice: t(:password_reset_email_sent, scope: [:flash, :notice])
   end
 
   def edit
   end
 
   def update
-    @user.update_password(password_reset_params)
+    @user.reset_password(password_reset_params)
     if @user.errors.present?
       render 'edit'
     else
-      redirect_to login_url, notice: t(:password_successfully_reset, scope: [:flash, :notice]) and return
+      redirect_to login_url, notice: t(:password_successfully_reset, scope: [:flash, :notice])
     end
   end
 

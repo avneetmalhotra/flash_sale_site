@@ -6,7 +6,6 @@ module ErrorHelper
   end
 
   def has_error?(attribute, model_object)
-    return false if model_object.errors[attribute].empty?
-    true
+    model_object.errors[attribute].present?
   end
 end

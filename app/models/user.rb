@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   include Authenticable
+  include TokenGenerator
+
   attr_accessor :current_password
 
   has_secure_password
@@ -21,29 +23,21 @@ class User < ApplicationRecord
   before_update :set_password_reset_token_sent_at, if: :password_reset_token_changed?
 
     def send_confrimation_instructions
+      generate_confirmation_token
       UserMailer.confirmation_email(id).deliver_later
     end
 
     def send_password_reset_instructions
+      generate_password_reset_token
       UserMailer.password_reset_email(id).deliver_later
     end
 
     def generate_password_reset_token
-      token = nil
-      loop do
-        token = SecureRandom.hex(16)
-        break unless User.where(password_reset_token: token).exists?
-      end
-      update(password_reset_token: token)
+      update(password_reset_token: generate_unique_token(:password_reset_token))
     end
 
     def generate_confirmation_token
-      token = nil
-      loop do
-        token = SecureRandom.hex(16)
-        break unless User.where(confirmation_token: token).exists?
-      end
-      update(confirmation_token: token)
+      update(confirmation_token: generate_unique_token(:confirmation_token))
     end
 
     def confirmation_token_expired?

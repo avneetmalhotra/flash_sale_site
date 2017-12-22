@@ -8,7 +8,7 @@ module Authenticable
     end
   end
 
-  def update_password(params)
+  def reset_password(params)
     if params[:password].blank?
       errors.add(:password, :blank)
     else

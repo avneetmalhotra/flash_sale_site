@@ -10,14 +10,13 @@ class ConfirmationsController < ApplicationController
   end
 
   def create
-    @user.generate_confirmation_token
     @user.send_confrimation_instructions
-    redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice]) and return
+    redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice])
   end
 
   def confirm
     @user.confirm
-    redirect_to login_url, notice: t(:account_confirmed, scope: [:flash, :notice]) and return
+    redirect_to login_url, notice: t(:account_confirmed, scope: [:flash, :notice])
   end
 
   private
