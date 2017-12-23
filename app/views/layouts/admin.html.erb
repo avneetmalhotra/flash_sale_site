@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FlashSaleSite</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag 'admin/all', media: 'all' %>
+    <%= javascript_include_tag 'admin/all' %>
+  </head>
+
+  <body>
+    <%= render 'shared/admin_navbar' %>
+    <div class="container">
+      <%= render 'shared/flash_messages' %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
