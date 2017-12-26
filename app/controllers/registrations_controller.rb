@@ -10,7 +10,6 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(new_user_params)
     if @user.save
-      @user.send_confrimation_instructions
       redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice])
     else
       render :new
