@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   before_update :set_confirmed_token_sent_at, if: :confirmation_token_changed?
   before_update :set_password_reset_token_sent_at, if: :password_reset_token_changed?
+  after_commit :send_confrimation_instructions, on: :create
 
     def send_confrimation_instructions
       generate_confirmation_token
@@ -33,11 +34,11 @@ class User < ApplicationRecord
     end
 
     def generate_password_reset_token
-      update(password_reset_token: generate_unique_token(:password_reset_token))
+      update_columns(password_reset_token: generate_unique_token(:password_reset_token), password_reset_token_sent_at: Time.current)
     end
 
     def generate_confirmation_token
-      update(confirmation_token: generate_unique_token(:confirmation_token))
+      update_columns(confirmation_token: generate_unique_token(:confirmation_token), confirmation_token_sent_at: Time.current)
     end
 
     def confirmation_token_expired?
@@ -57,18 +58,10 @@ class User < ApplicationRecord
   private
 
     def set_confirmed_token_sent_at
-      if confirmation_token.present?
-        self.confirmation_token_sent_at = Time.current
-      else
-        self.confirmation_token_sent_at = nil
-      end
+      self.confirmation_token_sent_at = nil if confirmation_token.nil?
     end
 
     def set_password_reset_token_sent_at
-      if password_reset_token.present?
-        self.password_reset_token_sent_at = Time.current
-      else
-        self.password_reset_token_sent_at = nil
-      end
+      self.password_reset_token_sent_at = nil if password_reset_token.nil?
     end
 end

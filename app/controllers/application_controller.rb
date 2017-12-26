@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user
   helper_method :current_user
 
-  layout :select_layout
-
   private
     def current_user
       if session[:user_id].nil?
@@ -29,14 +27,6 @@ class ApplicationController < ActionController::Base
       if current_user.nil?
         redirect_to login_url, alert: t(:login_to_continue, scope: [:flash, :alert]) and return
       end
-    end
-
-    def select_layout
-      if current_user.try(:admin)
-        'admin'
-      else
-        'application'
-      end      
     end
 
     def ensure_logged_out

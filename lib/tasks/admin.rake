@@ -9,10 +9,10 @@ namespace :admin do
     admin_user.name = STDIN.gets.chomp
 
     print "Enter your Email address: "
-    admin_user.email = STDIN.gets.chomp
+    admin_user.email = STDIN.noecho(&:gets).chomp
 
-    print "Enter your password: "
-    admin_user.password = STDIN.gets.chomp
+    print "\nEnter your password: "
+    admin_user.password = STDIN.noecho(&:gets).chomp
 
     print "Please confirm your password: "
     admin_user.password_confirmation = STDIN.gets.chomp
