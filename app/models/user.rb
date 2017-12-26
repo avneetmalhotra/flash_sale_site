@@ -19,8 +19,8 @@ class User < ApplicationRecord
   
   validates :password, allow_blank: true, length: { minimum: 6 }
 
-  before_update :set_confirmed_token_sent_at, if: :confirmation_token_changed?
-  before_update :set_password_reset_token_sent_at, if: :password_reset_token_changed?
+  before_update :clear_confirmed_token_sent_at, if: :confirmation_token_changed?
+  before_update :clear_password_reset_token_sent_at, if: :password_reset_token_changed?
   after_commit :send_confrimation_instructions, on: :create
 
     def send_confrimation_instructions
@@ -57,11 +57,11 @@ class User < ApplicationRecord
 
   private
 
-    def set_confirmed_token_sent_at
+    def clear_confirmed_token_sent_at
       self.confirmation_token_sent_at = nil if confirmation_token.nil?
     end
 
-    def set_password_reset_token_sent_at
+    def clear_password_reset_token_sent_at
       self.password_reset_token_sent_at = nil if password_reset_token.nil?
     end
 end
