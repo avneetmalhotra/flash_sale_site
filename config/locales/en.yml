@@ -31,18 +31,29 @@
 
 en:
   action:
+    add_deal_image:                   'Add Image'
     confirmation_email_not_recieved:  'Did not recieve Confirmation email?'
     create_account:                   'Create New Account'
+    create_deal:                      'Create Deal'
+    deal_page_title:                  'Deals'
+    deals:                            'Deals'
     login:                            'Login'
+    page_action_destroy:              'Delete'
+    page_action_edit:                 'Edit'
+    page_action_new_deal:             'New Deal'
+    page_action_show:                 'Show'
+    remove:                           'Remove'
     reset:                            'Reset'
     send:                             'Send'
     sign_up:                          'Sign Up'
     update_profile:                   'Update Profile'
+    update_deal:                      'Update Deal'
 
   flash:
     alert:
       account_already_confirmed:    'Your account is already confirmed. Please Log in'
       account_not_confirmed:        'Please confirm your account to continue.'
+      deal_cannot_be_destroyed:     'Deal could not be deleted.'
       invalid_account:              'User with given email does not exist.'
       invalid_confirmation_token:   'Confirmation Token has been expired. Please request a new one.'
       invalid_email_or_password:    'Invalid email or passord. Please try again.'
@@ -53,6 +64,9 @@ en:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'
       account_updated:              'Your account has been successfully updated'
       confirmation_email_sent:      'Confirmation email has been sent to your email address.'
+      deal_created:                 'Deal has been successfully created.'
+      deal_updated:                 'Deal has been successfully updated'
+      deal_successfully_destroyed:  'Deal was successfully deleted.'
       login_successfull:            'You have successfully logged in.'
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
@@ -74,3 +88,16 @@ en:
       greeting:        'Hi'
       first_line:      "Please click on the following link to reset your account's password: "
       subject:         'Flash Sale Reset Your Password'
+
+  errors:
+    custom_validation:
+      publishing_date_cannot_be_changed_h_hours_before_deal_goes_live: 'cannot be changed %{h} hours before the deal going live.'
+      publishing_date_cannot_be_changed_after_deal_expire: 'cannot be changed 24 hours before the deal going live.'
+      publishing_date_must_be_after_tomorrow: "must be after %{date}"
+      cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
+      image_greater_than: 'count must have greater than or equal to %{image_count}'
+
+  deal:
+    publishing_issues:
+      image_greater_than: 'Image count must be greater than or equal to %{image_count}'
+      quantity_greater_than: 'Quantity must be geater than or equal to %{quantity_count}'

@@ -12,6 +12,9 @@ class SessionsController < ApplicationController
     if @user.try(:authenticate, params[:user][:password])
       create_remember_me_cookie if params[:remember_me].present?
       session[:user_id] = @user.id
+      
+      flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
+      redirect_to admin_deals_path and return if @user.admin?
       redirect_to root_url, notice: t(:login_successfull, scope: [:flash, :notice])
     else
       redirect_to login_url, alert: t(:invalid_email_or_password, scope: [:flash, :alert])

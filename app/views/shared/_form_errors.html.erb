@@ -1,0 +1,20 @@
+<div class="col-md-6 col-md-offset-3">
+  <div class="panel panel-danger">
+    
+    <div class="panel-heading">
+      <h3 class="panel-title col-md-offset-4"><%= "#{model_object.class} couldn't be created" %></h3>
+    </div>
+    
+    <div class="panel-body">
+      <ul class="list-group">
+        <%= "Following were the errors: " %>
+        <% model_object.errors.full_messages.each do |message| %>
+          <li class="list-group-item">
+            <%= message.capitalize %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  
+  </div>
+</div>

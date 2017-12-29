@@ -15,4 +15,9 @@ Rails.application.routes.draw do
   resources :passwords, only: [:new, :create]
   get 'password/reset', to: 'passwords#edit'
   patch 'password/reset', to: 'passwords#update'
+
+  namespace :admin do
+    resources :deals
+    # resources :images
+  end
 end

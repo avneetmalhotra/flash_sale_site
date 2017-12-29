@@ -26,6 +26,8 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  Paperclip.options[:command_path] = "/usr/local/bin/"
+    
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
   # config.action_mailer.asset_host = 'http://localhost:3000'
