@@ -1,17 +1,22 @@
 <% content_for :page_title do %>
-  <%= link_to t(:deal_page_title, scope: [:action]), admin_deals_url, class: 'btn-link col-md-offset-11 page-title col-xs-offset-11' %>
+  <span class='page-title col-md-offset-10 col-xs-offset-10'>
+    <%= link_to t(:deal_page_title, scope: :action), admin_deals_url %> /
+    <%= t(:edit, scope: :action) %>
+  </span>
 <% end %>
 
 <% content_for :page_action do %>
-  <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(@deal), class: 'btn btn-info page-action col-md-offset-10 col-xs-offset-9' %>
+  <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(@deal), class: 'btn btn-info page-action col-md-offset-10 col-xs-offset-10' %>
 <% end %>
 
-<% if @deal.errors.any? %>
-  <%= render 'shared/form_errors', model_object: @deal %>
-<% end %>
 
 <div class="form-div col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-  <%= nested_form_for(@deal, url: admin_deal_path(@deal), method: :patch) do |form| %>
+  
+  <% if @deal.errors.any? %>
+    <%= render 'shared/form_errors', model_object: @deal, action: 'update' %>
+  <% end %>
+  
+  <%= nested_form_for([:admin, @deal]) do |form| %>
     <fieldset>
       <div class="form-group">
         <h4 class= 'col-md-offset-5 col-xs-offset-5'>Update Deal</h4>

@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :deals
-    # resources :images
   end
+
+  # get 'admin', to: 'deals#index', module: 'admin'
+  get 'admin', to: 'admin/deals#index'
 end

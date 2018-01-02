@@ -1,20 +1,11 @@
-<div class="col-md-6 col-md-offset-3">
-  <div class="panel panel-danger">
+<% if model_object.errors.any? %>
+  <div class="alert alert-dismissible alert-danger text-center form-errors">
     
-    <div class="panel-heading">
-      <h3 class="panel-title col-md-offset-4"><%= "#{model_object.class} couldn't be created" %></h3>
-    </div>
-    
-    <div class="panel-body">
-      <ul class="list-group">
-        <%= "Following were the errors: " %>
-        <% model_object.errors.full_messages.each do |message| %>
-          <li class="list-group-item">
-            <%= message.capitalize %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  
+    <strong><p><%= "#{model_object.class} couldn't be #{action}d due to #{model_object.errors.count} errors" %></p></strong>
+
+      <% model_object.errors.full_messages.each do |message| %>
+        <p><%= message.capitalize %></p>
+      <% end %>
   </div>
-</div>
+<% end %>
+

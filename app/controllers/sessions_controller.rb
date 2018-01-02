@@ -12,10 +12,8 @@ class SessionsController < ApplicationController
     if @user.try(:authenticate, params[:user][:password])
       create_remember_me_cookie if params[:remember_me].present?
       session[:user_id] = @user.id
-      
-      flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
-      redirect_to admin_deals_path and return if @user.admin?
-      redirect_to root_url, notice: t(:login_successfull, scope: [:flash, :notice])
+      after_sign_in_path
+
     else
       redirect_to login_url, alert: t(:invalid_email_or_password, scope: [:flash, :alert])
     end
@@ -36,6 +34,16 @@ class SessionsController < ApplicationController
     def ensure_user_confirmed
       if @user.confirmed_at.nil?
         redirect_to login_url, alert: t(:account_not_confirmed, scope: [:flash, :alert]) and return
+      end
+    end
+
+    def after_sign_in_path
+      flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
+
+      if @user.admin?
+        redirect_to admin_deals_path
+      else
+        redirect_to root_url
       end
     end
     

@@ -6,6 +6,6 @@ class Admin::BaseController < ApplicationController
   private
 
     def ensure_admin
-      render file: Rails.root.join('public', '404.html'), status: 404 and return unless @deal.try(:id) unless current_user.admin?
+      render file: Rails.root.join('public', '404.html'), status: 404 and return unless current_user.admin?
     end
 end

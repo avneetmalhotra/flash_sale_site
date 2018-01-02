@@ -1,6 +1,6 @@
 class Admin::DealsController < Admin::BaseController
-
-  before_action :set_user, only: [:edit, :update, :show, :destroy]
+  
+  before_action :set_deal, only: [:edit, :update, :show, :destroy]
 
   def index
     @deals = Deal.all
@@ -13,7 +13,7 @@ class Admin::DealsController < Admin::BaseController
   def create
     @deal = Deal.new(new_deal_params)
     if @deal.save
-      redirect_to action: :index, notice: t(:deal_created, scope: [:flash, :notice])
+      redirect_to admin_deals_url, notice: t(:deal_created, scope: [:flash, :notice])
     else
       render :new
     end
@@ -24,7 +24,7 @@ class Admin::DealsController < Admin::BaseController
 
   def update
     if @deal.update(update_deal_params)
-      redirect_to action: :index, notice: t(:deal_updated, scope: [:flash, :notice])
+      redirect_to admin_deals_url, notice: t(:deal_updated, scope: [:flash, :notice])
     else
       render :edit
     end
@@ -34,10 +34,11 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def destroy
-    if @deal.destroy
-      redirect_to action: :index, notice: t(:deal_successfully_destroyed, scope: [:flash, :notice])
+    if false
+      redirect_to admin_deals_url, notice: t(:deal_successfully_destroyed, scope: [:flash, :notice])
     else
-      render :show, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert])
+      # redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert]) + ' ' + errors[:base]
+      redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert])
     end
   end
 
@@ -51,8 +52,8 @@ class Admin::DealsController < Admin::BaseController
       params.require(:deal).permit(:title, :description, :price, :discount_price, :quantity, :publishing_date, images_attributes: [:id, :avatar, :_destroy])
     end
 
-    def set_user
+    def set_deal
       @deal = Deal.find_by(id: params[:id])
-      render file: Rails.root.join('public', '404.html'), status: 404 and return unless @deal.try(:id)
+      render file: Rails.root.join('public', '404.html'), status: 404 and return unless @deal.present?
     end
 end

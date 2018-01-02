@@ -64,29 +64,11 @@
 
             <td><%= deal.quantity %></td>
 
-            <td>
-              <% if deal.publishing_date.nil? %>
-                No Date Set
-              <% else %>
-                <%= deal.publishing_date %>
-              <% end %>
-            </td>
+            <td><%= deal.present.publishing_date %></td>
 
-            <td>
-              <% if deal.publish_start_at.nil? %>
-                No Time Set
-              <% else %>
-                <%= deal.publish_start_at.strftime("%H:%M:%S") %>
-              <% end %>
-            </td>
-
-            <td>
-              <% if deal.publish_end_at.nil? %>
-                No Time Set
-              <% else %>
-                <%= deal.publish_end_at.strftime("%H:%M:%S") %>
-              <% end %>
-            </td>
+            <td><%= deal.present.start_time %></td>
+            
+            <td><%= deal.present.end_time %></td>
 
             <td>
               <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(deal) %> | 

@@ -1,10 +1,13 @@
 <% content_for :page_title do %>
-  <%= link_to t(:deal_page_title, scope: [:action]), admin_deals_url, class: 'btn-link col-md-offset-10 page-title col-xs-offset-10' %>
+  <span class="col-md-offset-10 page-title col-xs-offset-10">
+    <%= link_to t(:deal_page_title, scope: :action), admin_deals_url %> / 
+    <%= t(:show, scope: :action) %>
+  </span>
 <% end %>
 
 <% content_for :page_action do %>
-  <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_deal_url(@deal), class: 'btn btn-success page-action col-md-offset-8 col-xs-offset-8' %>
-  <%= link_to t(:page_action_destroy, scope: [:action]), admin_deal_url(@deal), method: 'delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger page-action' %>
+  <%= link_to t(:page_action_edit, scope: :action), edit_admin_deal_url(@deal), class: 'btn btn-success page-action col-md-offset-8 col-xs-offset-8' %>
+  <%= link_to t(:page_action_destroy, scope: :action), admin_deal_url(@deal), method: 'delete', data: { confirm: 'Are you sure?' }, class: 'btn btn-danger page-action' %>
 <% end %>
 
 <div class="row">
@@ -13,7 +16,7 @@
       <% if @deal.images.exists? %>
       
           <% @deal.images.each do |deal_image| %>
-            <li><%= image_tag deal_image.avatar.url(:product) %></li>
+            <li><%= image_tag deal_image.avatar.url(:medium) %></li>
           <% end %>
       
       <% else %>
@@ -51,42 +54,29 @@
 
       <tr>
         <td>Publishing Date</td>
-        <td>
-          <% if @deal.has_publishing_date? %>
-            <%= @deal.publishing_date %>
-          <% else %>
-            No Date Set
-          <% end %>
-        </td>
+        <td><%= @deal.present.publishing_date %></td>
       </tr>
 
       <tr>
         <td>Publishing Start Time</td>
-        <td>
-          <% if @deal.publish_start_at.nil? %>
-            No Time Set
-          <% else %>
-            <%= @deal.publish_start_at.strftime("%H:%M:%S") %>
-          <% end %>
-        </td>
+        <td><%= @deal.present.start_time %></td>
       </tr>
 
       <tr>
         <td>Publishing End Time</td>
-        <td>
-          <% if @deal.publish_end_at.nil? %>
-            No Time Set
-          <% else %>
-            <%= @deal.publish_end_at.strftime("%H:%M:%S") %>
-          <% end %>
-        </td>
+        <td><%= @deal.present.end_time %></td>
       </tr>
 
       <tr>
-        <td>Publishing status: </td>
+        <td>Publication status: </td>
         <td>
           <% if @deal.has_publishing_date? %>
-            Deal is published
+
+            <% if @deal.start_at.nil? %>
+              Ready to be published
+            <% else %>
+              Deal is published
+            <% end %>
 
           <% else %>
             <p>Deal Cannot be published because:-</p>
@@ -96,7 +86,7 @@
                 No Publishing Date has been Set
               </li>
 
-              <% @deal.publishing_issues.each do | issues | %>
+              <% @deal.publishability.each do | issues | %>
                 <li class="list-group-item">
                   <%= issues %>
                 </li>

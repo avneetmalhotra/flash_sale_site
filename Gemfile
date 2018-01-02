@@ -31,7 +31,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'paperclip'
+gem 'paperclip', '~> 5.1.0'
 gem 'nested_form', '~> 0.3.2'
 
 # Use Capistrano for deployment
