@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
     def ensure_logged_out
       redirect_to root_url, alert: t(:logout_to_continue, scope: [:flash, :alert]) and return if current_user.present?
     end
+
+    def render_404
+      render file: Rails.root.join('public', '404.html'), status: 404 and return
+    end
 end

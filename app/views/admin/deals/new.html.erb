@@ -1,0 +1,26 @@
+<% content_for :page_title do %>
+  <div class='col-md-offset-5 col-xs-offset-5 page-title'>
+    <%= link_to 'Deals', admin_deals_url%> / 
+    <%=t(:new, scope: [:action]) %>
+  </div>
+<% end %>
+
+
+<div class="form-div col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+  
+  <% if @deal.errors.any? %>
+    <%= render 'shared/form_errors', model_object: @deal %>
+  <% end %>
+
+  <%= nested_form_for([:admin, @deal]) do |form| %>
+    <fieldset>
+      <div class="form-group">
+        <h4 class= 'col-md-offset-5 col-xs-offset-5'>Create Deal</h4>
+      </div>
+      
+      <%= render 'form', deal: @deal, form: form %>
+
+      <%= form.submit t(:create_deal, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
+    </fieldset>
+  <% end %>
+</div>

@@ -1,0 +1,17 @@
+<% if content_for?(:page_title) || content_for?(:page_action) %>
+  
+  <div class = 'row content-header'>
+    <% if content_for?(:page_title) %>
+      <p class="<%= content_for?(:page_action)? 'col-md-6 col-xs-6' : 'col-md-12 col-xs-12' %> " >
+        <%= yield :page_title %>
+      </p>
+    <% end %>
+
+    <% if content_for?(:page_action) %>
+      <p class="<%= content_for?(:page_title)? 'col-md-6 col-xs-6' : 'col-md-12 col-xs-12' %>" >
+        <%= yield :page_action %>
+      </p>
+    <% end %>
+
+  </div>
+<% end %>

@@ -1,0 +1,83 @@
+<% content_for :page_action do %>
+  <%= link_to t(:page_action_new_deal, scope: [:action]), new_admin_deal_url, class: 'btn btn-success col-md-offset-10 col-xs-offset-8 page-action' %>
+<% end %>
+
+<% content_for :page_title do %>
+  <%= link_to t(:deal_page_title, scope: [:action]), admin_deals_url, class: 'btn-link col-md-offset-10 col-xs-offset-10 page-title' %>
+<% end %>
+
+<% if @deals.empty? %>
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title col-md-offset-4">NO DEAL FOUND</h3>
+      </div>
+      <div class="panel-body">
+        <p>No deal has been created yet.</p>
+        <%= link_to 'Create', new_admin_deal_url, class: 'btn btn-danger' %>
+        a deal now.
+      </div>
+    </div>
+  </div>
+
+<% else %>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover ">
+      
+      <thead>
+        <tr>
+          <th>#</th>
+          <th></th>
+          <th>TITLE</th>
+          <th>DESCRIPTION</th>
+          <th>PRICE</th>
+          <th>DISCOUNT PRICE</th>
+          <th>QUANTITY</th>
+          <th>PUBLISHING DATE</th>
+          <th>START TIME</th>
+          <th>END TIME</th>
+          <th></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @deals.each.with_index(1) do |deal, serial_number| %>
+          <tr>
+
+            <td><%= serial_number %></td>
+
+            <td>
+              <% if deal.images.exists? %>
+                <%= image_tag deal.images.first.avatar.url(:mini) %>
+              <% else %>
+                <%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '48x48' %>
+              <% end %>
+            </td>
+
+            <td><%= deal.title %></td>
+
+            <td><%= truncate(deal.description, length: 10) %></td>
+
+            <td><%= deal.price %></td>
+
+            <td><%= deal.discount_price %></td>
+
+            <td><%= deal.quantity %></td>
+
+            <td><%= deal.presenter.publishing_date %></td>
+
+            <td><%= deal.presenter.start_time %></td>
+            
+            <td><%= deal.presenter.end_time %></td>
+
+            <td>
+              <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(deal) %> | 
+              <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_deal_url(deal) %> | 
+              <%= link_to t(:page_action_destroy, scope: [:action]), admin_deal_url(deal), method: 'delete', data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

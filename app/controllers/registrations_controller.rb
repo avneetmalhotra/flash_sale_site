@@ -40,7 +40,7 @@ class RegistrationsController < ApplicationController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      render file: Rails.root.join('public', '404.html'), status: 404 and return if @user.try(:id) != current_user.id
+      render_404 if @user.try(:id) != current_user.id
     end
 
 end

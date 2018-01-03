@@ -1,0 +1,52 @@
+<div class="form-group <%= 'has-error' if has_error?(:title, deal) %>">
+  <%= form.label :title, class: 'required-field' %>
+  <%= form.text_field :title,id: 'deal_title', class: 'form-control', placeholder: 'Super Deal' %>
+  <%= display_error(:title, deal) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:description, deal) %>">
+  <%= form.label :description, class: 'required-field' %>
+  <%= form.text_area :description, id: 'deal_description', class: 'form-control', placeholder: '5 shirts in $5.' %>
+  <%= display_error(:description, deal) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:price, deal) %>">
+  <%= form.label :price, class: 'required-field' %>
+  <%= form.text_field :price, id: 'deal_price', class: 'form-control', placeholder: '123.14' %>
+  <%= display_error(:price, deal) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:discount_price, deal) %>">
+  <%= form.label :discount_price, class: 'required-field' %>
+  <%= form.text_field :discount_price, id: 'deal_discount_price', class: 'form-control', placeholder: '3.56' %>
+  <%= display_error(:discount_price, deal) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:quantity, deal) %>">
+  <%= form.label :quantity, class: 'required-field' %>
+  <%= form.number_field :quantity, class: 'form-control', placeholder: '10' %>
+  <%= display_error(:quantity, deal) %>
+</div>
+
+<div class="form-group <%= 'has-error' if has_error?(:publishing_date, deal) %>">
+  <%= form.label :publishing_date %>
+  <%= form.text_field :publishing_date, class: 'form-control', id: 'datepicker', placeholder: 'yyyy-mm-dd' %>
+  <small class="form-text text-muted">Leave this field blank if you don't want to publish this deal.</small>
+  <%= display_error(:publishing_date, deal) %>
+</div>
+
+<div class="form-group">
+  <%= form.fields_for(:images, multipart: true) do |image_form| %>
+    <div class="form-group <%= 'has-error' if has_error?(:"images.avatar_content_type", deal) %>" >
+      <%= image_form.label :avatar, 'Deal Image' %>
+      <%= image_form.file_field :avatar %>
+      <%= display_error(:"images.avatar", deal) %>
+      <%= image_form.link_to_remove t(:remove, scope: [:actions]) %>
+    </div>
+    <%= display_error(:images, deal) %>
+  <% end %>
+</div>
+
+<div class="form-group">
+  <%= form.link_to_add t(:add_deal_image, scope: [:action]), :images %>
+</div>
