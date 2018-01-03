@@ -1,7 +1,7 @@
 <% if model_object.errors.any? %>
   <div class="alert alert-dismissible alert-danger text-center form-errors">
     
-    <strong><p><%= "#{model_object.class} couldn't be #{action}d due to #{model_object.errors.count} errors" %></p></strong>
+    <strong><p><%= "#{model_object.class} couldn't be #{action}d due to " + pluralize(model_object.errors.count, 'error') %></p></strong>
 
       <% model_object.errors.full_messages.each do |message| %>
         <p><%= message.capitalize %></p>

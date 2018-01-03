@@ -12,6 +12,8 @@ class SessionsController < ApplicationController
     if @user.try(:authenticate, params[:user][:password])
       create_remember_me_cookie if params[:remember_me].present?
       session[:user_id] = @user.id
+
+      flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
       after_sign_in_path
 
     else
@@ -38,8 +40,6 @@ class SessionsController < ApplicationController
     end
 
     def after_sign_in_path
-      flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
-
       if @user.admin?
         redirect_to admin_deals_path
       else

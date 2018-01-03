@@ -28,12 +28,11 @@
   <%= display_error(:quantity, deal) %>
 </div>
 
-<div class="form-group <%= 'has-error' if has_error?(:publishing_date, deal) || has_error?(:base, deal) %>">
+<div class="form-group <%= 'has-error' if has_error?(:publishing_date, deal) %>">
   <%= form.label :publishing_date %>
   <%= form.text_field :publishing_date, class: 'form-control', id: 'datepicker', placeholder: 'yyyy-mm-dd' %>
   <small class="form-text text-muted">Leave this field blank if you don't want to publish this deal.</small>
   <%= display_error(:publishing_date, deal) %>
-  <%= display_error(:base, deal) %>
 </div>
 
 <div class="form-group">

@@ -26,9 +26,13 @@ namespace :admin do
       admin_user.errors.full_messages.each { |full_message| puts full_message }
       puts "\nAdmin account not created. Please make your account again."
     else
-      puts "\nAdmin successfullt created."
+      puts "\nAdmin successfully created."
     end
+  end
 
+  desc 'Publish deal now for 34 hours'
+  task :publish_deal => :environment do
+    Deal.deals_on_publishing_date.update_all(start_at: Time.current, end_at: Time.current + 24.hours)
   end
 
 end

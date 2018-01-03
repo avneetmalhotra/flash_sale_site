@@ -98,11 +98,12 @@ en:
       publishing_date_cannot_be_changed_h_hours_before_deal_goes_live: 'cannot be changed %{h} hours before the deal going live.'
       publishing_date_must_be_after_today: "must be after %{date}"
       cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
-      image_greater_than: 'count must have greater than or equal to %{image_count}'
+      image_greater_than: 'count must be greater than or equal to %{image_count}'
       discount_price_less_than_price: 'must be less than price.'
       quantity_greater_than: 'must be geater than or equal to %{quantity_count}'
 
   deal:
     errors:
-      no_date_set:   'No Date Set'
-      no_time_set:   'No Time Set'
+      no_date_set:                        'No Date Set'
+      no_time_set:                        'No Time Set'
+      publishng_date_absent:              'Publishing date is not set.'

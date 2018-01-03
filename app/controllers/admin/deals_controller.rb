@@ -3,7 +3,7 @@ class Admin::DealsController < Admin::BaseController
   before_action :set_deal, only: [:edit, :update, :show, :destroy]
 
   def index
-    @deals = Deal.all
+    @deals = Deal.includes(:images)
   end
 
   def new
@@ -34,11 +34,10 @@ class Admin::DealsController < Admin::BaseController
   end
 
   def destroy
-    if false
+    if @deal.destroy
       redirect_to admin_deals_url, notice: t(:deal_successfully_destroyed, scope: [:flash, :notice])
     else
-      # redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert]) + ' ' + errors[:base]
-      redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert])
+      redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert]) + ' ' + errors.full_messages.join(' ')
     end
   end
 
@@ -54,6 +53,6 @@ class Admin::DealsController < Admin::BaseController
 
     def set_deal
       @deal = Deal.find_by(id: params[:id])
-      render file: Rails.root.join('public', '404.html'), status: 404 and return unless @deal.present?
+      render_404 unless @deal.present?
     end
 end

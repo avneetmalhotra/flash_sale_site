@@ -54,17 +54,17 @@
 
       <tr>
         <td>Publishing Date</td>
-        <td><%= @deal.present.publishing_date %></td>
+        <td><%= @deal.presenter.publishing_date %></td>
       </tr>
 
       <tr>
         <td>Publishing Start Time</td>
-        <td><%= @deal.present.start_time %></td>
+        <td><%= @deal.presenter.start_time %></td>
       </tr>
 
       <tr>
         <td>Publishing End Time</td>
-        <td><%= @deal.present.end_time %></td>
+        <td><%= @deal.presenter.end_time %></td>
       </tr>
 
       <tr>
@@ -82,11 +82,7 @@
             <p>Deal Cannot be published because:-</p>
             
             <ul class="list-group">
-              <li class="list-group-item">
-                No Publishing Date has been Set
-              </li>
-
-              <% @deal.publishability.each do | issues | %>
+              <% @deal.publishability_errors.each do | issues | %>
                 <li class="list-group-item">
                   <%= issues %>
                 </li>

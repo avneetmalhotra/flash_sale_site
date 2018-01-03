@@ -64,11 +64,11 @@
 
             <td><%= deal.quantity %></td>
 
-            <td><%= deal.present.publishing_date %></td>
+            <td><%= deal.presenter.publishing_date %></td>
 
-            <td><%= deal.present.start_time %></td>
+            <td><%= deal.presenter.start_time %></td>
             
-            <td><%= deal.present.end_time %></td>
+            <td><%= deal.presenter.end_time %></td>
 
             <td>
               <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(deal) %> | 
