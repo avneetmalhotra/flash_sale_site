@@ -70,26 +70,18 @@
       <tr>
         <td>Publication status: </td>
         <td>
-          <% if @deal.has_publishing_date? %>
-
-            <% if @deal.start_at.nil? %>
-              Ready to be published
-            <% else %>
-              Deal is published
-            <% end %>
-
-          <% else %>
+          <% if @deal.publishability_errors.present? %>
             <p>Deal Cannot be published because:-</p>
-            
             <ul class="list-group">
-              <% @deal.publishability_errors.each do | issues | %>
+              <% @deal.publishability_errors.each do |issue| %>
                 <li class="list-group-item">
-                  <%= issues %>
+                  <%= issue %>
                 </li>
               <% end %>
             </ul>
+          <% else %>
+            <%= @deal.presenter.publishability_status %>
           <% end %>
-        
         </td>
       </tr>
     </table>

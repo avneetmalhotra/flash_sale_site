@@ -9,7 +9,7 @@
 <div class="form-div col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
   
   <% if @deal.errors.any? %>
-    <%= render 'shared/form_errors', model_object: @deal, action: 'create' %>
+    <%= render 'shared/form_errors', model_object: @deal %>
   <% end %>
 
   <%= nested_form_for([:admin, @deal]) do |form| %>

@@ -30,7 +30,7 @@ class Deal < ApplicationRecord
 
   validate :quantity_count, if: :has_publishing_date?
 
-  validate :publishing_date_cannot_be_updated, on: :update, if: :publishing_date_changed?
+  validate :publishing_date_cannot_be_updated, on: :update, if: [:publishing_date_changed?, :publishing_date_was]
   
   validate :maximum_number_of_deals_per_publishing_date, if: :has_publishing_date?
 
@@ -40,7 +40,7 @@ class Deal < ApplicationRecord
   after_update :ensure_images_count_valid, if: :has_publishing_date?
 
   ## SCOPE
-  scope :deals_on_publishing_date, ->(date = Date.current) { where(publishing_date: date) }
+  scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }
 
 
   def has_publishing_date?
@@ -49,18 +49,24 @@ class Deal < ApplicationRecord
 
   def publishability_errors
     issues = []
-    unless has_publishing_date?
-      issues << I18n.t(:publishng_date_absent, scope:[:deal, :error])
       
-      if has_invalid_associated_images_count?
-        issues << 'Image ' + I18n.t(:image_greater_than, scope: [:errors, :custom_validation], image_count: ENV['published_deal_minimum_image_count'].to_i) 
-      end
-
-      if has_invalid_quantity_count?
-        issues << 'Quantity ' + I18n.t(:quantity_greater_than, scope: [:errors, :custom_validation], quantity_count: ENV['published_deal_minimum_quantity_count'].to_i)
-      end
+    if has_invalid_associated_images_count?
+      issues << 'Image ' + I18n.t(:image_greater_than, scope: [:errors, :custom_validation], image_count: ENV['published_deal_minimum_image_count'].to_i) 
     end
+
+    if has_invalid_quantity_count?
+      issues << 'Quantity ' + I18n.t(:quantity_greater_than, scope: [:errors, :custom_validation], quantity_count: ENV['published_deal_minimum_quantity_count'].to_i)
+    end
+
     issues
+  end
+
+  def is_live?
+    start_at.present? && end_at.present? && Time.current.between?(start_at, end_at)
+  end
+
+  def is_expired?
+    start_at.present? && end_at.present? && end_at < Time.current
   end
 
   private
@@ -92,29 +98,22 @@ class Deal < ApplicationRecord
     end
 
     def publishing_date_cannot_be_updated
-      if publishing_date_was.present?
-
-        # publishing date cannot be changed 1.day before deal goes live ||
-        # on the day of publish if it hasn't been published yet
-        if (publishing_date_was == 1.day.after.to_date) || (start_at.nil? && publishing_date_was == Date.current)
-          errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_h_hours_before_deal_goes_live, scope: [:errors, :custom_validation], h: ENV['hours_before_start_when_publishing_date_cannot_be_changed'])
-
-        elsif start_at? && end_at?
-          # publishing date cannot be changed when deal is live
-          if Time.current.between?(start_at, end_at) 
-            errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_for_live_deal, scope: [:errors, :custom_validation])
-        
-          # publishing date cannot be changed after deal has expired
-          elsif end_at < Time.current
-            errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_after_deal_expire, scope: [:errors, :custom_validation])
-          end
-        end
-      
+      # publishing date cannot be changed when deal is live
+      if is_live? 
+        errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_for_live_deal, scope: [:errors, :custom_validation])
+    
+      # publishing date cannot be changed after deal has expired
+      elsif is_expired?
+        errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_after_deal_expire, scope: [:errors, :custom_validation])
+     
+      # publishing date cannot be changed 24.hours before deal goes live
+      elsif publishing_date_was.to_time - Time.current < HOURS_BEFORE_START_WHEN_PUBLISHING_DATE_CANNOT_BE_CHANGED
+        errors[:publishing_date] << I18n.t(:publishing_date_cannot_be_changed_h_hours_before_deal_goes_live, scope: [:errors, :custom_validation], h: ENV['bumber_of_hours_before_start_when_publishing_date_cannot_be_changed'])
       end
     end
 
     def maximum_number_of_deals_per_publishing_date
-      if self.class.deals_on_publishing_date(publishing_date).count >= ENV['maximum_number_of_deal_per_publishing_date'].to_i
+      if self.class.publishable_on(publishing_date).count >= ENV['maximum_number_of_deal_per_publishing_date'].to_i
         errors[:publishing_date] << I18n.t(:cannot_have_more_deals, scope: [:errors, :custom_validation], maximum_number_of_deals: ENV['maximum_number_of_deal_per_publishing_date'].to_i)
       end
     end
