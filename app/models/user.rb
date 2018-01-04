@@ -17,10 +17,11 @@ class User < ApplicationRecord
       with: Regexp.new(ENV['email_regex']),
       allow_blank: true
     }
+
+    validates :password, on: :update, if: :password_confirmation_present?
   end
   
   validates :password, allow_blank: true, length: { minimum: 6 }
-  validate :password_is_present_when_password_confirmation_is_present
 
   ## CALLBACKLS
   before_update :clear_confirmed_token_sent_at, if: :confirmation_token_changed?
@@ -60,6 +61,10 @@ class User < ApplicationRecord
       update(confirmation_token: nil, confirmed_at: Time.current)
     end
 
+    def password_confirmation_present?
+      password_confirmation.present?
+    end
+
   private
 
     def clear_confirmed_token_sent_at
@@ -70,9 +75,9 @@ class User < ApplicationRecord
       self.password_reset_token_sent_at = nil if password_reset_token.nil?
     end
 
-    def password_is_present_when_password_confirmation_is_present
-      if password_confirmation.present? && password.blank?
-        errors[:password] << I18n.t(:cannot_be_blank, scope: [:user, :errors])
-      end
-    end
+    # def password_is_present_when_password_confirmation_is_present
+    #   if password_confirmation.present? && password.blank?
+    #     errors[:password] << I18n.t(:cannot_be_blank, scope: [:user, :errors])
+    #   end
+    # end
 end

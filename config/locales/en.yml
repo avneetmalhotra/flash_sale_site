@@ -118,7 +118,3 @@ en:
     errors:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
-
-  user:
-    errors:
-      cannot_be_blank:                    "can't be blank"
