@@ -1,7 +1,7 @@
 <% content_for :page_title do %>
   <span class='page-title col-md-offset-10 col-xs-offset-10'>
     <%= link_to t(:deal_page_title, scope: :action), admin_deals_url %> /
-    <%= t(:edit, scope: :action) %>
+    <%= @deal.title %>
   </span>
 <% end %>
 

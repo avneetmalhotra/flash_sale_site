@@ -7,12 +7,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'FLASH SALE', root_url, class: 'navbar-brand' %>
+      <%= link_to 'FLASH SALE', admin_url, class: 'navbar-brand' %>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><%= link_to t(:deals, scope: [:action]), admin_deals_path %></li>
+        <li><%= link_to t(:users, scope: [:action]), admin_users_path %></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

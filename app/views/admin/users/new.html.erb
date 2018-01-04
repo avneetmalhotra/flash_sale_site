@@ -1,0 +1,25 @@
+<% content_for :page_title do %>
+  <div class='col-md-offset-5 col-xs-offset-5 page-title'>
+    <%= link_to t(:user_page_title, scope: :action), admin_users_url%> / 
+    <%= t(:new, scope: [:action]) %>
+  </div>
+<% end %>
+
+<div class="form-div col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+
+  <% if @user.errors.any? %>
+    <%= render 'shared/form_errors', model_object: @user %>
+  <% end %>
+
+  <%= form_with(scope: @user, url: admin_users_path, local: true) do |form| %>
+    <fieldset>
+      <div class="form-group">
+        <h4 class= 'col-md-offset-4'>Create User</h4>
+      </div>
+
+      <%= render 'form', form: form, user: @user, email_disable_status: false %>
+      
+      <%= form.submit t(:create_customer, scope: [:action]), class: 'btn btn-primary col-md-offset-5' %>
+     </fieldset>
+  <% end %>
+</div>

@@ -1,6 +1,6 @@
 <% content_for :page_title do %>
   <div class='col-md-offset-5 col-xs-offset-5 page-title'>
-    <%= link_to 'Deals', admin_deals_url%> / 
+    <%= link_to t(:deals, scope: :action), admin_deals_url%> / 
     <%=t(:new, scope: [:action]) %>
   </div>
 <% end %>

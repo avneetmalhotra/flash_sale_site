@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
   before_action :ensure_logged_out, only: [:new, :create]
   before_action :fetch_user, only: [:create]
   before_action :ensure_user_confirmed, only: [:create]
+  before_action :ensure_user_active, only: [:create]
 
   def new
   end
@@ -45,6 +46,12 @@ class SessionsController < ApplicationController
       else
         redirect_to root_url
       end
+    end
+
+    def ensure_user_active
+      unless @user.active?
+        redirect_to login_url, alert: t(:account_inactive, scope: [:flash, :alert]) and return
+      end      
     end
     
 end
