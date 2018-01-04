@@ -1,7 +1,7 @@
 namespace :admin do
 
   desc 'Create new admin'
-  task :new => :environment do
+  task new: :environment do
     admin_user = User.new
     admin_user.admin = true
 
@@ -9,30 +9,25 @@ namespace :admin do
     admin_user.name = STDIN.gets.chomp
 
     print "Enter your Email address: "
-    admin_user.email = STDIN.noecho(&:gets).chomp
+    admin_user.email = STDIN.gets.chomp
 
-    print "\nEnter your password: "
+    print "Enter your password: "
     admin_user.password = STDIN.noecho(&:gets).chomp
 
-    print "Please confirm your password: "
-    admin_user.password_confirmation = STDIN.gets.chomp
+    print "\nPlease confirm your password: "
+    admin_user.password_confirmation = STDIN.noecho(&:gets).chomp
 
     admin_user.confirmed_at = Time.current
     
     admin_user.save
       
     if admin_user.errors.any?
-      puts "\n**Errors:**\n"
+      puts "\n\n**Errors:**\n"
       admin_user.errors.full_messages.each { |full_message| puts full_message }
       puts "\nAdmin account not created. Please make your account again."
     else
       puts "\nAdmin successfully created."
     end
-  end
-
-  desc 'Publish deal now for 34 hours'
-  task :publish_deal => :environment do
-    Deal.deals_on_publishing_date.update_all(start_at: Time.current, end_at: Time.current + 24.hours)
   end
 
 end
