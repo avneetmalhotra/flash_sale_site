@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
       if cookies[:remember_me].present?
         user = User.find_by(remember_me_token: cookies.encrypted[:remember_me])
 
-        session[:user_id] = user.id if user.present? && user.confirmed_at?
+        session[:user_id] = user.id if user.present? && user.confirmed_at? && user.active?
 
         user
       end

@@ -20,6 +20,7 @@ class User < ApplicationRecord
   end
   
   validates :password, allow_blank: true, length: { minimum: 6 }
+  validate :password_is_present_when_password_confirmation_is_present
 
   ## CALLBACKLS
   before_update :clear_confirmed_token_sent_at, if: :confirmation_token_changed?
@@ -67,5 +68,11 @@ class User < ApplicationRecord
 
     def clear_password_reset_token_sent_at
       self.password_reset_token_sent_at = nil if password_reset_token.nil?
+    end
+
+    def password_is_present_when_password_confirmation_is_present
+      if password_confirmation.present? && password.blank?
+        errors[:password] << I18n.t(:cannot_be_blank, scope: [:user, :errors])
+      end
     end
 end

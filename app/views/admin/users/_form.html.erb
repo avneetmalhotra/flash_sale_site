@@ -11,10 +11,8 @@
 </div>
 
 <div class="form-group">
-  <label>
-    <%= form.check_box :active, class: 'form-check-input' %>
-    Active User
-  </label>
+  <%= form.label :active, 'Active:' %> &nbsp
+  <%= form.check_box :active %>
 </div>
 
  <div class="form-group <%= 'has-error' if has_error?(:password, @user) %>">

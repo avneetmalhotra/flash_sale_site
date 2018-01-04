@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'password/reset', to: 'passwords#edit'
   patch 'password/reset', to: 'passwords#update'
 
-  get 'admin', to: 'admin/deals#index'
+  get 'admin', to: redirect('admin/deals')
 
   namespace :admin do
     resources :deals

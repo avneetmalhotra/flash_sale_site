@@ -46,7 +46,7 @@ en:
     new:                              'New'
     page_action_destroy:              'Delete'
     page_action_edit:                 'Edit'
-    page_action_new_customer:         'New Customer'
+    page_action_new_user:             'New User'
     page_action_new_deal:             'New Deal'
     page_action_show:                 'Show'
     remove:                           'Remove'
@@ -70,7 +70,7 @@ en:
       invalid_password_reset_token: 'Password Reset Token has been expired. Please request a new one.'
       login_to_continue:            'Please login to view this page.'
       logout_to_continue:           'You are not authorized to perform this action.'
-      cannot_edit_admin:            'You cannot edit an admin.'
+      not_authorized:               'You are not authorized to perform this action.'
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'
@@ -118,3 +118,7 @@ en:
     errors:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
+
+  user:
+    errors:
+      cannot_be_blank:                    "can't be blank"
