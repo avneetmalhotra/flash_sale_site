@@ -1,12 +1,14 @@
 <% content_for :page_title do %>
-  <span class="col-md-offset-10 page-title col-xs-offset-10">
+  <span class="page-title <%= @user.admin?? 'col-md-offset-5  col-xs-offset-5' : 'col-md-offset-10  col-xs-offset-10' %>">
     <%= link_to t(:user_page_title, scope: [:action]), admin_users_url %> /
     <%= t(:show, scope: :action) %>
   </span>
 <% end %>
 
-<% content_for :page_action do %>
-  <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_user_url(@user), class: 'btn btn-success page-action col-md-offset-10 col-xs-offset-10' %>
+<% unless @user.admin? %>
+  <% content_for :page_action do %>
+    <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_user_url(@user), class: 'btn btn-success page-action col-md-offset-10 col-xs-offset-10' %>
+  <% end %>
 <% end %>
 
 <div class="row">

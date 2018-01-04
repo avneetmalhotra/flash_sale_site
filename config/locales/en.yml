@@ -70,6 +70,7 @@ en:
       invalid_password_reset_token: 'Password Reset Token has been expired. Please request a new one.'
       login_to_continue:            'Please login to view this page.'
       logout_to_continue:           'You are not authorized to perform this action.'
+      cannot_edit_admin:            'You cannot edit an admin.'
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'

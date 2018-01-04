@@ -47,10 +47,10 @@ class Admin::UsersController < Admin::BaseController
     end
 
     def update_user_params
-      params.require(:user).permit(:name, :active)
+      params.require(:user).permit(:name, :active, :password, :password_confirmation)
     end
 
     def ensure_not_admin
-      render_404 if @user.admin?
+      redirect_to admin_users_url, alert: t(:cannot_edit_admin, scope: [:flash, :alert]) if @user.admin?
     end
 end 

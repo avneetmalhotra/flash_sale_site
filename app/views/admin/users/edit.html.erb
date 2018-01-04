@@ -1,3 +1,14 @@
+<% content_for :page_title do %>
+  <span class='page-title col-md-offset-10 col-xs-offset-10'>
+    <%= link_to t(:user_page_title, scope: :action), admin_users_url %> /
+    <%= t(:edit, scope: :action) %>
+  </span>
+<% end %>
+
+<% content_for :page_action do %>
+  <%= link_to t(:page_action_show, scope: [:action]), admin_user_url(@user), class: 'btn btn-info page-action col-md-offset-10 col-xs-offset-10' %>
+<% end %>
+
 <div class="form-div col-md-6 col-md-offset-3">
   <%= form_with(scope: @user, url: admin_user_path(@user), local: true, method: :patch) do |form| %>
     <fieldset>
