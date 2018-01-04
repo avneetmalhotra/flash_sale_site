@@ -1,7 +1,8 @@
 namespace :admin do
   
-  desc 'Publish deal now for 24 hours'
+  desc "Publish today's deals at current time for 24 hours"
   task :publish_deal => :environment do
-    Deal.deals_on_publishing_date.update_all(start_at: Time.current, end_at: Time.current + 24.hours)
+    no_of_deals_published = Deal.publishable_on.update_all(start_at: Time.current, end_at: Time.current + 24.hours)
+    puts "#{no_of_deals_published} deal published."
   end
 end
