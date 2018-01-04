@@ -16,10 +16,11 @@ Rails.application.routes.draw do
   get 'password/reset', to: 'passwords#edit'
   patch 'password/reset', to: 'passwords#update'
 
+  get 'admin', to: 'admin/deals#index'
+
   namespace :admin do
     resources :deals
+    resources :users, only: [:index, :new, :create, :edit, :update, :show]
   end
 
-  # get 'admin', to: 'deals#index', module: 'admin'
-  get 'admin', to: 'admin/deals#index'
 end

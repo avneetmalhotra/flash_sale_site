@@ -1,8 +1,9 @@
 class UserMailer < ApplicationMailer
 
-  def confirmation_email(user_id)
+  def confirmation_email(user_id, user_password)
     @user = User.find_by(id: user_id)
-    
+    @user_password = user_password
+
     mail(to: @user.email, subject: default_i18n_subject) unless @user.nil?
   end
 

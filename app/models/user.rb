@@ -2,6 +2,8 @@ class User < ApplicationRecord
   include Authenticable
   include TokenGenerator
 
+  include Presentable
+
   attr_accessor :current_password
 
   has_secure_password
@@ -19,13 +21,15 @@ class User < ApplicationRecord
   
   validates :password, allow_blank: true, length: { minimum: 6 }
 
+  ## CALLBACKLS
   before_update :clear_confirmed_token_sent_at, if: :confirmation_token_changed?
   before_update :clear_password_reset_token_sent_at, if: :password_reset_token_changed?
   after_commit :send_confrimation_instructions, on: :create
 
+
     def send_confrimation_instructions
       generate_confirmation_token
-      UserMailer.confirmation_email(id).deliver_later
+      UserMailer.confirmation_email(id, password).deliver_later
     end
 
     def send_password_reset_instructions
