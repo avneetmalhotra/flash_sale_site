@@ -15,3 +15,6 @@
 //= require bootstrap.min.js
 //= require jquery-ui
 //= require miscellaneous
+//= require jquery.bxslider.js
+//= require global.js
+//= require countdown_timer.js

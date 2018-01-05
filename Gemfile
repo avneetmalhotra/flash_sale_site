@@ -25,6 +25,8 @@ gem 'delayed_job_active_record'
 
 gem 'whenever', '~> 0.10.0', require: false
 
+gem 'ckeditor', '4.1.3'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

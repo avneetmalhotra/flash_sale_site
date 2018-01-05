@@ -22,3 +22,44 @@
 .field-error {
   color: #b94a48;
 }
+
+.text-centre {
+  text-align: center;
+}
+
+.freeze { 
+  position: fixed;
+  right: 21px;
+  top: 0px;
+ }
+
+.live-deals {
+  .deal-countdown-timer {
+    margin: 8px;
+    padding: 6px;
+  }
+
+  .deal {
+    margin: 20px;
+  }
+
+  .view-deal-btn {
+    margin-top: 8px;
+  }
+}
+
+.expired-deals {
+  .deal {
+    margin: 20px;
+  }  
+}
+
+.deal-view {
+  .deal-title {
+    margin-bottom: 30px;
+  }
+
+  .left-side {
+    border-right: 1px solid #e0e0e0
+  }
+}

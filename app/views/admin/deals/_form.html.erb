@@ -12,7 +12,7 @@
 
 <div class="form-group <%= 'has-error' if has_error?(:price, deal) %>">
   <%= form.label :price, class: 'required-field' %>
-  <%= form.text_field :price, id: 'deal_price', class: 'form-control', placeholder: '123.14' %>
+  <%= form.cktext_area :price, id: 'deal_price', class: 'form-control', placeholder: '123.14' %>
   <%= display_error(:price, deal) %>
 </div>
 

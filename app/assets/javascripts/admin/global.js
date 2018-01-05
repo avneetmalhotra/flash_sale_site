@@ -3,8 +3,8 @@ $(function(){
   //bx slider
   $('.bxslider').bxSlider({
     mode: 'fade',
-    speed: 2000,
-    slideWidth: 240,
+    // speed: 2000,
+    slideWidth: 300,
     auto: true
   });
 

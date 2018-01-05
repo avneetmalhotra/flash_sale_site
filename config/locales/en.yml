@@ -30,6 +30,16 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+
+  number:
+    currency:
+      format:
+        unit:      "$"
+        precision: 2
+        separator: "."
+        delimiter: ","
+        format:    "%u%n"
+
   action:
     add_deal_image:                   'Add Image'
     activate:                         'Activate'
@@ -57,6 +67,8 @@ en:
     update_profile:                   'Update Profile'
     users:                            'Users'
     user_page_title:                  'Users'
+    view_deal:                        'View Deal'
+    add_to_cart:                      'Add to Cart'
 
   flash:
     alert:
