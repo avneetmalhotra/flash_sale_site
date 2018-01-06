@@ -12,15 +12,15 @@
 
 <div class="row">
   <div class="deal-images col-md-3 col-xs-3">
-    <ul class= 'bxslider deal-images-slider'>
+    <ul class= 'bxslider', data-slider='deal-admin-show-images'>
       <% if @deal.images.exists? %>
       
           <% @deal.images.each do |deal_image| %>
-            <li><%= image_tag deal_image.avatar.url(:medium) %></li>
+            <li><%= image_tag deal_image.avatar.url(:large) %></li>
           <% end %>
       
       <% else %>
-        <li><%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '240' %></li>
+        <li><%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '340' %></li>
       <% end %>
     </ul>
   </div>
@@ -36,17 +36,17 @@
         
         <tr>
           <td>Description</td>
-          <td><%= @deal.description %></td>
+          <td><%= @deal.description.html_safe %></td>
         </tr>
         
         <tr>
           <td>Price</td>
-          <td><%= @deal.price %></td>
+          <td><%= number_to_currency(@deal.price) %></td>
         </tr>
         
         <tr>
           <td>Discount Price</td>
-          <td><%= @deal.discount_price %></td>
+          <td><%= number_to_currency(@deal.discount_price) %></td>
         </tr>
 
         <tr>

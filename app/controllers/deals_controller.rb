@@ -2,8 +2,12 @@ class DealsController < ApplicationController
 
   before_action :set_deal, only: [:show]
 
+  def index
+    @live_deals = Deal.live
+    @expired_deals = Deal.expired    
+  end
+
   def show
-    
   end
 
   private

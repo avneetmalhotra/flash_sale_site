@@ -1,27 +1,19 @@
 $(function(){
-  
-  //bx slider
-  $("ul[data-slider='deal-preview-image'").bxSlider({
-    auto: true,
-    slideWidth: 240
-  });
 
-  $("ul[data-slider='deal-show-images']").bxSlider({
-    auto: true,
-    sliderWidth: 600
-  });
+  //countdown-timer
+  (function(){
+    this.elements = $("[data-timer='yes']");
+    
+    this.elements.each(function(){
+      var _this = this;
 
-  //freeze deal details on show
-  $(window).scroll(function(){
-    var scroll = $(window).scrollTop();
-    // var dealDetailsPosition = $('.deal-details').position();
-    // dealDetailsPosition.top = 182px;
-    if(182 <= scroll){
-      $("[data-type='deal-details']").addClass('freeze');
-    }
-    else{
-      $("[data-type='deal-details']").removeClass('freeze');
-    }
-  });
+      $(this).countdown($(_this).data('end-at'), function(event){
+        $(this).html(
+          event.strftime('%H:%M:%S')
+        ).addClass('label-warning');
+      });
+    
+    });
+  })();
 
 });

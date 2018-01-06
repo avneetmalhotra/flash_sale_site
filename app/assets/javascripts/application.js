@@ -17,4 +17,4 @@
 //= require miscellaneous
 //= require jquery.bxslider.js
 //= require global.js
-//= require countdown_timer.js
+//= require jquery.countdown.min.js

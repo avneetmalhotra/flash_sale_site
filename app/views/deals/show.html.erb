@@ -17,14 +17,9 @@
           <% end %>
         </ul>
       </div>
-
-      <hr class="col-md-11">
-      <div class="deal-description col-md-12 col-xs-12">
-        <%= @deal.description %>
-      </div>
     </section>
   
-    <section class="col-md-5 deal-details right-side", data-type='deal-details'>
+    <section class="col-md-5 deal-details right-side">
       <div class="col-md-10 col-xs-10 col-md-offset-1">
         <h2>
           <span class="lead text-danger text-muted "><del><%= number_to_currency(@deal.price) %><del></span>
@@ -40,8 +35,13 @@
           <br><br>
           <p class="lead text-danger">Sold Out</p>
         <% end %>    
-      
       </div>
+   
+      <hr class="col-md-11 col-xs-11">
+      <div class="deal-description col-md-12 col-xs-12">
+        <%= @deal.description.html_safe %>
+      </div>
+    
     </section>
   <div>
 </article>
