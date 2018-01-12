@@ -52,6 +52,7 @@ en:
     deal_page_title:                  'Deals'
     edit:                             'Edit'
     edit_customer:                    'Edit Customer'
+    empty_cart:                       'Empty Cart'
     login:                            'Login'
     new:                              'New'
     page_action_destroy:              'Delete'
@@ -86,8 +87,10 @@ en:
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'
-      account_updated:              'Your account has been successfully updated'
+      account_updated:              'Your account has been successfully updated.'
+      cart_emptied:                 'Cart has been emptied.'
       confirmation_email_sent:      'Confirmation email has been sent to your email address.'
+      deal_added_to_cart:           '%{deal_title} added to your cart.'
       deal_created:                 'Deal has been successfully created.'
       deal_updated:                 'Deal has been successfully updated'
       deal_successfully_destroyed:  'Deal was successfully deleted.'
@@ -117,13 +120,15 @@ en:
 
   errors:
     custom_validation:
+      can_be_bought_once:  'can be bought only once.'
+      cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
+      deal_already_bought: 'This deal has already been bought before.'
+      discount_price_less_than_price: 'must be less than price.'
+      image_greater_than: 'count must be greater than or equal to %{image_count}'
       publishing_date_cannot_be_changed_after_deal_expire: 'cannot be changed after deal has exipired.'
       publishing_date_cannot_be_changed_for_live_deal: 'cannot be changed for live deal.'
       publishing_date_cannot_be_changed_h_hours_before_deal_goes_live: 'cannot be changed %{h} hours before the deal going live.'
       publishing_date_must_be_after_today: "must be after %{date}"
-      cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
-      image_greater_than: 'count must be greater than or equal to %{image_count}'
-      discount_price_less_than_price: 'must be less than price.'
       quantity_greater_than: 'must be geater than or equal to %{quantity_count}'
 
   deal:

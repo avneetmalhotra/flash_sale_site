@@ -1,0 +1,14 @@
+<tr>
+  <td><%= image_tag line_item.deal.images.first.avatar.url(:mini) %></td>
+  <td><%= line_item.deal.title %></td>
+  <td><%= line_item.quantity %></td>
+  <td><%= number_to_currency(line_item.price) %></td>
+  <td><%= number_to_currency(line_item.discount_price) %></td>
+  <td>
+    <%= link_to t(:page_action_destroy, scope: [:action]), line_item_url(line_item), method: 'delete', data: { confirm: 'Are you sure?' } %> |
+    <%= link_to t(:page_action_show, scope: [:action]), deal_url(line_item.deal) %>
+    <% if line_item.deal.is_expired? %>
+      | <span class="label label-danger">EXPIRED</span>
+    <% end %>
+  </td>
+</tr>

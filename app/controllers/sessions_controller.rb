@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     if @user.try(:authenticate, params[:user][:password])
       create_remember_me_cookie if params[:remember_me].present?
       session[:user_id] = @user.id
+      session[:order_id] = current_user.orders.where(state: 'cart').first.try(:id)
 
       flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
       after_sign_in_path
@@ -24,6 +25,7 @@ class SessionsController < ApplicationController
 
   def destroy
     delete_remember_me_cookie
+    delete_empty_order
     reset_session
     redirect_to login_url, notice: t(:logout_successfull, scope: [:flash, :notice])
   end
@@ -52,6 +54,14 @@ class SessionsController < ApplicationController
       unless @user.active?
         redirect_to login_url, alert: t(:account_inactive, scope: [:flash, :alert]) and return
       end      
+    end
+
+    def delete_empty_order
+      if current_order.present?
+        unless current_order.line_items.exists?
+          current_order.destroy
+        end
+      end
     end
     
 end

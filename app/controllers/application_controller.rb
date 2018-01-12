@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user
   helper_method :current_user
+  helper_method :current_order
 
   private
     def current_user
@@ -21,6 +22,10 @@ class ApplicationController < ActionController::Base
 
         user
       end
+    end
+
+    def current_order
+      @current_order ||= Order.find_by(id: session[:order_id])
     end
 
     def authenticate_user

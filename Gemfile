@@ -27,6 +27,10 @@ gem 'whenever', '~> 0.10.0', require: false
 
 gem 'ckeditor', '4.1.3'
 
+# gem 'state_machine', '1.2.0'
+gem 'state_machines', '0.5.0'
+gem 'state_machines-activerecord', '0.5.0'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
