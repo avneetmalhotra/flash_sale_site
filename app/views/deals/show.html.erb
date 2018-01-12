@@ -1,3 +1,5 @@
+<%= javascript_include_tag "slideshow.js" %>
+
 <article class="deal-view panel panel-default">
   <div class= 'panel-body'>
 
@@ -5,7 +7,7 @@
 
     <section class="col-md-7 left-side">
       <div class="deal-images col-md-12 col-xs-12 ">
-        <ul class= 'bxslider deal-show-images', data-slider='deal-show-images'> 
+        <ul class= 'bxslider deal-show-images', data-slider='images-slider', data-width='600'> 
           <% if @deal.images.exists? %>
           
               <% @deal.images.each do |deal_image| %>

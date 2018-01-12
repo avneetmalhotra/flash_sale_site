@@ -20,3 +20,5 @@ Rails.application.config.assets.precompile += %w( admin/all.js )
 Rails.application.config.assets.precompile += %w( admin/all.scss )
 
 Rails.application.config.assets.precompile += %w( ckeditor/*)
+
+Rails.application.config.assets.precompile += %w( slideshow.js )

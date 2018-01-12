@@ -1,3 +1,5 @@
+<%= javascript_include_tag "slideshow.js" %>
+
 <% content_for :page_title do %>
   <span class="col-md-offset-10 page-title col-xs-offset-10">
     <%= link_to t(:deal_page_title, scope: :action), admin_deals_url %> / 
@@ -12,7 +14,7 @@
 
 <div class="row">
   <div class="deal-images col-md-3 col-xs-3">
-    <ul class= 'bxslider', data-slider='deal-admin-show-images'>
+    <ul class= 'bxslider', data-slider='images-slider', data-width='340'>
       <% if @deal.images.exists? %>
       
           <% @deal.images.each do |deal_image| %>

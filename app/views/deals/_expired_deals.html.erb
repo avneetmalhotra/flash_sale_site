@@ -1,3 +1,5 @@
+<%= javascript_include_tag "slideshow.js" %>
+
 <article class="expired-deals col-md-12 col-xs-12">
   <h2 class="col-md-6 col-md-offset-5 col-xs-6 col-xs-offset-5">Past Deals</h2>
 
@@ -6,7 +8,7 @@
         <div class="panel-body">
 
           <div class="deal-images col-md-11 col-xs-11">
-            <ul class= 'bxslider', data-slider='deal-preview-image'>
+            <ul class= 'bxslider',  data-slider='images-slider', data-width='240'>
               <% if deal.images.exists? %>
               
                   <% deal.images.each do |deal_image| %>
