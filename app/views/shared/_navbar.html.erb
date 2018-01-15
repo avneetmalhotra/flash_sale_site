@@ -12,6 +12,9 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <% if current_user.present? %>
+        <ul class="nav navbar-nav">
+          <li><%= link_to t(:deals, scope: [:action]), deals_url %></li>
+        </ul>
 
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">

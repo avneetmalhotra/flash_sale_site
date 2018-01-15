@@ -1,3 +1,5 @@
+<%= javascript_include_tag "slideshow.js" %>
+
 <% content_for :page_title do %>
   <span class="col-md-offset-10 page-title col-xs-offset-10">
     <%= link_to t(:deal_page_title, scope: :action), admin_deals_url %> / 
@@ -12,15 +14,15 @@
 
 <div class="row">
   <div class="deal-images col-md-3 col-xs-3">
-    <ul class= 'bxslider deal-images-slider'>
+    <ul class= 'bxslider', data-slider='images-slider', data-width='340'>
       <% if @deal.images.exists? %>
       
           <% @deal.images.each do |deal_image| %>
-            <li><%= image_tag deal_image.avatar.url(:medium) %></li>
+            <li><%= image_tag deal_image.avatar.url(:large) %></li>
           <% end %>
       
       <% else %>
-        <li><%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '240' %></li>
+        <li><%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '340' %></li>
       <% end %>
     </ul>
   </div>
@@ -36,17 +38,17 @@
         
         <tr>
           <td>Description</td>
-          <td><%= @deal.description %></td>
+          <td><%= @deal.description.html_safe %></td>
         </tr>
         
         <tr>
           <td>Price</td>
-          <td><%= @deal.price %></td>
+          <td><%= number_to_currency(@deal.price) %></td>
         </tr>
         
         <tr>
           <td>Discount Price</td>
-          <td><%= @deal.discount_price %></td>
+          <td><%= number_to_currency(@deal.discount_price) %></td>
         </tr>
 
         <tr>

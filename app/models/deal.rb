@@ -41,6 +41,8 @@ class Deal < ApplicationRecord
 
   ## SCOPE
   scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }
+  scope :live, ->(time = Time.current) { where("start_at <= ? AND end_at >= ?", time, time) }
+  scope :expired, ->(time = Time.current) { where("end_at < ?", time) }
 
 
   def has_publishing_date?

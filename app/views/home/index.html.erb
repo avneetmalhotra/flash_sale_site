@@ -1,2 +1,16 @@
-
-<p>Welcome <%= current_user.name %></p>
+<% if current_user %>
+  <p>Welcome <%= current_user.name %></p>
+<% end %>
+  
+<% if @live_deals.present? %>
+  <%= render 'deals/live_deals', live_deals: @live_deals %>
+<% else %>
+  <h2 class="col-md-6 col-md-offset-4 col-xs-6 col-xs-offset-4">There are no Live Deals available.</h2>
+  <hr class="col-md-12">
+  
+  <% if @expired_deals.present? %>
+    <%= render 'deals/expired_deals', expired_deals: @expired_deals %>
+  <% else %>
+    <h2 class="col-md-6 col-md-offset-4 col-xs-6 col-xs-offset-4">There are no Past Deals available.</h2>
+  <% end %>
+<% end %>

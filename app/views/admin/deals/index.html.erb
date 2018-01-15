@@ -27,17 +27,17 @@
         
         <thead>
           <tr>
-            <th>#</th>
-            <th></th>
-            <th>TITLE</th>
-            <th>DESCRIPTION</th>
-            <th>PRICE</th>
-            <th>DISCOUNT PRICE</th>
-            <th>QUANTITY</th>
-            <th>PUBLISHING DATE</th>
-            <th>START TIME</th>
-            <th>END TIME</th>
-            <th></th>
+            <th nowrap>#</th>
+            <th nowrap></th>
+            <th nowrap>TITLE</th>
+            <th nowrap>DESCRIPTION</th>
+            <th nowrap>PRICE</th>
+            <th nowrap>DISCOUNT PRICE</th>
+            <th nowrap>QUANTITY</th>
+            <th nowrap>PUBLISHING DATE</th>
+            <th nowrap>START TIME</th>
+            <th nowrap>END TIME</th>
+            <th nowrap></th>
           </tr>
         </thead>
         
@@ -57,11 +57,11 @@
 
               <td><%= deal.title %></td>
 
-              <td><%= truncate(deal.description, length: 10) %></td>
+              <td><%= strip_html_and_truncate(deal.description, 10) %></td>
 
-              <td><%= deal.price %></td>
+              <td><%= number_to_currency(deal.price) %></td>
 
-              <td><%= deal.discount_price %></td>
+              <td><%= number_to_currency(deal.discount_price) %></td>
 
               <td><%= deal.quantity %></td>
 

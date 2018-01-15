@@ -6,7 +6,7 @@
 
 <div class="form-group <%= 'has-error' if has_error?(:description, deal) %>">
   <%= form.label :description, class: 'required-field' %>
-  <%= form.text_area :description, id: 'deal_description', class: 'form-control', placeholder: '5 shirts in $5.' %>
+  <%= form.cktext_area :description, id: 'deal_description', class: 'form-control', placeholder: '5 shirts in $5.' %>
   <%= display_error(:description, deal) %>
 </div>
 

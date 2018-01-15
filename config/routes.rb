@@ -23,4 +23,6 @@ Rails.application.routes.draw do
     resources :users, except: [:destroy]
   end
 
+  resources :deals, only: [:index, :show]
+
 end
