@@ -28,7 +28,7 @@ class Admin::UsersController < Admin::BaseController
 
   def update
     if @user.update(update_user_params)
-      redirect_to admin_users_url, notice: t(:customer_account_unpdated, scope: [:flash, :notice])
+      redirect_to admin_users_url, notice: t(:customer_account_updated, scope: [:flash, :notice])
     else
       render :edit
     end

@@ -21,7 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '4.1.2'
 
 gem 'whenever', '~> 0.10.0', require: false
 

@@ -2,7 +2,7 @@
  <h3 class="text-centre">Cart is Empty</h3>
 
 <% else %>
-  <div class="col-md-8 col-md-offset-2 col-xs-8 col-xs-offset-2">
+  <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
     
     <div class="table-responsive ">
       <div class="panel panel-default">
@@ -11,15 +11,22 @@
             <tr>
               <th></th>
               <th nowrap>TITLE</th>
+              <th nowrap>UNIT PRICE</th>
               <th nowrap>QUANTITY</th>
-              <th nowrap>PRICE</th>
-              <th nowrap>DISCOUNTED PRICE</th>
+              <th nowrap>LOYALTY DISCOUNT</th>
+              <th nowrap>TOTAL PRICE</th>
+              <th nowrap></th>
             </tr>
           </thead>
           <tbody>
             <%= render current_order.line_items %>
           <tr>
-            <td colspan="4"><strong><p class="col-md-offset-7">Total Order Amount:</p></strong></td>
+            <td colspan="4"><strong><p class="col-md-offset-6">Total Loyalty Discount</p></strong></td>
+            <td colspan="2"><strong><%= number_to_currency(current_order.loyalty_discount) %></strong></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="5"><strong><p class="col-md-offset-8">SUBTOTAL:</p></strong></td>
             <td colspan="2"><strong><%= number_to_currency(current_order.total_amount) %></strong></td>
           </tr>
           </tbody>

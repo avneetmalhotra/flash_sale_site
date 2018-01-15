@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_secure_token :remember_me_token
 
   ## ASSOCATIONS
-  has_many :orders, dependent: :restrict_with_error # or? :nullify
+  has_many :orders, dependent: :restrict_with_error
   has_many :line_items, through: :orders
 
   ## VALIDATIONS

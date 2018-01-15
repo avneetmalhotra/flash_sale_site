@@ -7,10 +7,9 @@ class OrdersController < ApplicationController
 
   def destroy
     if @order.destroy
-      session[:order_id] = nil
       redirect_to root_url, notice: I18n.t(:cart_emptied, scope: [:flash, :notice])
     else
-      flash.now[:alert] = @order.errors.full_messages.join("<br>")
+      flash.now[:alert] = @order.pretty_error
       render :edit
     end
   end
@@ -18,7 +17,8 @@ class OrdersController < ApplicationController
   private
 
     def get_order
-      @order = Order.find_by(id: params[:id])
+      @order = current_order
+      render_404 unless @order.present?
     end
 
 end

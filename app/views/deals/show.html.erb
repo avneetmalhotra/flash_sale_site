@@ -34,8 +34,19 @@
         <br>
 
         <% if @deal.is_live? %>
-          <%= button_to I18n.t(:add_to_cart, scope: :action), line_items_url(deal_id: @deal), class: "btn btn-success btn-lg add-to-cart-btn", method: :post, data: { name: 'add-to-cart-btn' } %>
-          <p><small class="form-text text-muted">Can be ordered only once.</small></p>
+          <div>
+            <%= form_with(scope: :line_item, url: line_items_url(deal_id: @deal), local: true) do |form| %>
+            
+            <div class="form-group">
+              <%= form.label :quantity%>
+              <%= form.select(:quantity, options_for_select(((1..@deal.quantity).step(1).to_a),1), {}, { class: 'form-control', id: :line_item_quantity }) %>
+            </div>
+
+            <%= form.submit I18n.t(:add_to_cart, scope: :action), class: "btn btn-success btn-lg add-to-cart-btn" %>
+            <% end %>
+            <p><small class="form-text text-muted">Can be ordered only once.</small></p>
+          </div>
+
 
         <% elsif @deal.is_expired? %>
           <%= button_to I18n.t(:add_to_cart, scope: :action), line_items_url(deal_id: @deal), class: "btn btn-success btn-lg add-to-cart-btn disabled" %>

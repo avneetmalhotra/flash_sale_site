@@ -24,8 +24,14 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_order
-      @current_order ||= Order.find_by(id: session[:order_id])
+    def current_order(create_new_order_if_nil: false)
+      @current_order ||= Order.where(completed_at: nil).first
+      
+      if create_new_order_if_nil && @current_order.nil?
+        @current_order = current_user.orders.create
+      end
+
+      @current_order
     end
 
     def authenticate_user

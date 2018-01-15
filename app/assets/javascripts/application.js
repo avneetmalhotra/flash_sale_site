@@ -18,3 +18,4 @@
 //= require jquery.bxslider.js
 //= require global.js
 //= require jquery.countdown.min.js
+//= require line_item_quantity.js

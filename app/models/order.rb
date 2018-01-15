@@ -4,9 +4,6 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :line_items, dependent: :destroy
 
-  ## CALLBACKS
-  before_save :set_loyalty_discount, on: :create
-
   ## STATE MACHINE
   state_machine :state, initial: :cart do
     event :add_address do
@@ -18,29 +15,21 @@ class Order < ApplicationRecord
     end
 
     state :cart do
-      def add_deal(deal_id)
-        deal = Deal.find_by(id: deal_id)
-        line_items.build(deal_id: deal_id, price: deal.price, discount_price: deal.discount_price)
-      end
-
-      def total_amount
-      amount = 0
-      if line_items.exists?
-        line_items.each do |line_item|
-          amount += line_item.discount_price * line_item.quantity
+      def add_deal(deal, line_item_quantity)
+        line_item_temp = line_items.find_by(deal_id: deal.id)
+        if line_item_temp.present?
+          line_item_temp.quantity += line_item_quantity
+        else
+          line_item_temp = line_items.build(deal_id: deal.id, price: deal.price, discount_price: deal.discount_price, quantity: line_item_quantity)
         end
-      end
-      amount
+        line_item_temp
       end
 
     end
   end
 
-  private
-
-    def set_loyalty_discount
-      user = User.find_by(id: user_id)
-      self.loyalty_discount = LOYALTY_DISCOUNT_SLABS[user.orders.size.to_s]
-    end
+  def pretty_error
+    errors.full_messages.join("<br>")
+  end
 
 end 

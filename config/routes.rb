@@ -25,7 +25,8 @@ Rails.application.routes.draw do
 
   resources :deals, only: [:index, :show]
 
-  resources :line_items, only: [:create, :destroy]
+  resources :line_items, only: [:create, :destroy, :update]
+
   resources :orders, only: [:destroy]
   get 'cart', to: 'orders#cart'
 

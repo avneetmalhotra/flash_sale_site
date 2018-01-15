@@ -43,7 +43,7 @@ en:
   action:
     add_deal_image:                   'Add Image'
     activate:                         'Activate'
-    confirmation_email_not_recieved:  'Did not recieve Confirmation email?'
+    confirmation_email_not_recieved:  'Did not receive Confirmation email?'
     create_account:                   'Create New Account'
     create_customer:                  'Create Customer'
     create_deal:                      'Create Deal'
@@ -76,13 +76,16 @@ en:
       account_already_confirmed:    'Your account is already confirmed. Please Log in'
       account_inactive:             'Your account is not active. Please contact site administrator'
       account_not_confirmed:        'Please confirm your account to continue.'
+      deal_cannot_be_added_to_cart: 'Deal could not be added to cart.'
       deal_cannot_be_destroyed:     'Deal could not be deleted.'
       invalid_account:              'User with given email does not exist.'
       invalid_confirmation_token:   'Confirmation Token has been expired. Please request a new one.'
-      invalid_email_or_password:    'Invalid email or passord. Please try again.'
+      invalid_email_or_password:    'Invalid email or password. Please try again.'
       invalid_password_reset_token: 'Password Reset Token has been expired. Please request a new one.'
       login_to_continue:            'Please login to view this page.'
       logout_to_continue:           'You are not authorized to perform this action.'
+      line_item_cannot_be_deleted:  "Line Item couldn't be deleted."
+      line_item_cannot_be_updated:  "Line Item couldn't be updated."
       not_authorized:               'You are not authorized to perform this action.'
 
     notice:
@@ -90,11 +93,13 @@ en:
       account_updated:              'Your account has been successfully updated.'
       cart_emptied:                 'Cart has been emptied.'
       confirmation_email_sent:      'Confirmation email has been sent to your email address.'
+      customer_account_updated:     "Customer's account was successfully updated"
       deal_added_to_cart:           '%{deal_title} added to your cart.'
+      deal_deleted_from_cart:       '%{deal_title} was successfully removed.'
       deal_created:                 'Deal has been successfully created.'
       deal_updated:                 'Deal has been successfully updated'
       deal_successfully_destroyed:  'Deal was successfully deleted.'
-      customer_account_unpdated:    "Customer's account was successfully updated"
+      line_item_quantity_updated:  "%{deal_title}'s quantity updated. "
       login_successfull:            'You have successfully logged in.'
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
@@ -130,6 +135,7 @@ en:
       publishing_date_cannot_be_changed_h_hours_before_deal_goes_live: 'cannot be changed %{h} hours before the deal going live.'
       publishing_date_must_be_after_today: "must be after %{date}"
       quantity_greater_than: 'must be geater than or equal to %{quantity_count}'
+      quantity_less_than_or_equal_to: 'must be less than or equal to %{count}'
 
   deal:
     errors:
