@@ -1,6 +1,6 @@
 function Slideshow(options){
-  this.imageElementSelector = options.imageElementSelector;
-  this.sliderWidth = $(this.imageElementSelector).data("width");
+  this.$imageElement = options.$imageElement;
+  this.sliderWidth = this.$imageElement.data("width");
 }
 
 Slideshow.prototype.init = function(){
@@ -8,7 +8,7 @@ Slideshow.prototype.init = function(){
 };
 
 Slideshow.prototype.imageSlider = function(){
-  $(this.imageElementSelector).bxSlider({
+  this.$imageElement.bxSlider({
     auto: true,
     sliderWidth: this.sliderWidth
   });
@@ -16,7 +16,7 @@ Slideshow.prototype.imageSlider = function(){
 
 $(function(){
 
-  var slideshowArguments = { imageElementSelector : "ul[data-slider='images-slider']" },
+  var slideshowArguments = { $imageElement : $("ul[data-slider='images-slider']") },
       slideshow = new Slideshow(slideshowArguments);
 
   slideshow.init();
