@@ -5,10 +5,10 @@ class LineItemsController < ApplicationController
   def create
     @line_item = current_order(options = {create_new_order: true}).add_deal(@deal, params[:line_item][:quantity].to_i)
 
-    if @line_item
-      redirect_to cart_path(@deal), notice: I18n.t(:deal_added_to_cart, scope: [:flash, :notice], deal_title: @deal.title)
-    else
+    if @line_item.errors.present?
       redirect_to deal_path(@deal), alert: @line_item.pretty_error
+    else
+      redirect_to cart_path, notice: I18n.t(:deal_added_to_cart, scope: [:flash, :notice], deal_title: @deal.title)
     end
   end
 

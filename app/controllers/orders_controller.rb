@@ -3,7 +3,6 @@ class OrdersController < ApplicationController
   before_action :get_order, only: [:destroy]
 
   def cart
-    @line_items = current_order.line_items.includes(:deal)
   end
 
   def destroy
@@ -17,7 +16,7 @@ class OrdersController < ApplicationController
   private
 
     def get_order
-      @order = current_user.orders.find_by(completed_at: nil)
+      @order = Order.find_by(id: params[:id])
       render_404 unless @order.present?
     end
 

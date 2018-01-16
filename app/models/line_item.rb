@@ -1,5 +1,6 @@
 class LineItem < ApplicationRecord
 
+  delegate :user, to: :order
   ## ASSOCIATINOS
   belongs_to :order
   belongs_to :deal
@@ -27,8 +28,7 @@ class LineItem < ApplicationRecord
   private
 
     def ensure_deal_not_bought_again_in_another_order
-      associated_user = order.user
-      if associated_user.line_items.where(deal_id: deal_id).where.not(order_id: order_id).present?
+      if user.line_items.where(deal_id: deal_id).where.not(order_id: order_id).present?
         errors[:base] << I18n.t(:deal_already_bought, scope: [:errors, :custom_validation])
       end
     end
@@ -49,11 +49,11 @@ class LineItem < ApplicationRecord
     end
 
     def order_not_deleted?
-      Order.exists?(order.id)
+      order.persisted?
     end
     
     def update_orders_total
-      order.update(loyalty_discount: order.line_items.sum(:loyalty_discount), total_amount: order.line_items.sum(:total_amount))
+      order.update_columns(loyalty_discount: order.line_items.sum(:loyalty_discount), total_amount: order.line_items.sum(:total_amount))
     end
 
 end

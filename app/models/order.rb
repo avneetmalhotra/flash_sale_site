@@ -44,7 +44,7 @@ class Order < ApplicationRecord
     def ensure_order_incomplete
       if completed_at.present?
         errors[:base] << I18n.t(:order_cannot_be_deleted, scope: [:flash, :alert])
-        raise ActiveRecord::Rollback
+        throw :abort
       end    
     end
 

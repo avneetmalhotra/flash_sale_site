@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <%= render @line_items %>
+            <%= render current_order.line_items.includes(:deal) %>
           <tr>
             <td colspan="4"><strong><p class="col-md-offset-6">Total Loyalty Discount</p></strong></td>
             <td colspan="2"><strong><%= number_to_currency(current_order.loyalty_discount) %></strong></td>
