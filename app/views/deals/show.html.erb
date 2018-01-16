@@ -39,7 +39,7 @@
             
             <div class="form-group">
               <%= form.label :quantity%>
-              <%= form.select(:quantity, options_for_select(((1..@deal.quantity).step(1).to_a),1), {}, { class: 'form-control', id: :line_item_quantity }) %>
+              <%= form.number_field :quantity, min: 1, max: @deal.quantity, value: 1, class: 'form-control' %>
             </div>
 
             <%= form.submit I18n.t(:add_to_cart, scope: :action), class: "btn btn-success btn-lg add-to-cart-btn" %>
@@ -49,8 +49,6 @@
 
 
         <% elsif @deal.is_expired? %>
-          <%= button_to I18n.t(:add_to_cart, scope: :action), line_items_url(deal_id: @deal), class: "btn btn-success btn-lg add-to-cart-btn disabled" %>
-          <br><br>
           <p class="lead text-danger">Sold Out</p>
         <% end %>    
       </div>

@@ -87,6 +87,7 @@ en:
       line_item_cannot_be_deleted:  "Line Item couldn't be deleted."
       line_item_cannot_be_updated:  "Line Item couldn't be updated."
       not_authorized:               'You are not authorized to perform this action.'
+      order_cannot_be_deleted:      'Order cannot be deleted.'
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'

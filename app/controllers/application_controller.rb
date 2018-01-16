@@ -24,10 +24,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def current_order(create_new_order_if_nil: false)
-      @current_order ||= Order.where(completed_at: nil).first
+    def current_order(options = {})
+      @current_order ||= Order.incomplete.first
       
-      if create_new_order_if_nil && @current_order.nil?
+      if options[:create_new_order] && @current_order.nil?
         @current_order = current_user.orders.create
       end
 

@@ -7,11 +7,20 @@
       <span class="lead text-success"><%= number_to_currency(line_item.discount_price) %></span>
     </p>
   </td>
-  <td><%= select_tag(:quantity, options_for_select(((1..line_item.deal.quantity).step(1).to_a), line_item.quantity), class: 'form-control', data: { 'line-item-id': line_item.id, 'line-item-attr': 'quantity' }) %></td>
-  <td><%= number_to_currency(line_item.loyalty_discount) %></td>
-  <td><%= number_to_currency(line_item.total_price) %></td>
   <td>
-    <%= link_to t(:page_action_destroy, scope: [:action]), line_item_url(line_item), method: 'delete', data: { confirm: 'Are you sure?' } %>
+    <%= form_with(model: line_item, url: line_item_url(line_item), method: :patch, local: true) do |form| %>
+      <%= form.number_field :quantity, min: 1, max: line_item.deal.quantity, value: line_item.quantity, class: 'form-control' %>
+  <!-- not-part-of-form start-->
+  </td>
+  <td><%= number_to_currency(line_item.loyalty_discount) %></td>
+  <td><%= number_to_currency(line_item.total_amount) %></td>
+  <td>
+  <!-- not-part-of-form end-->
+      <%= form.submit 'Update', class: 'btn-link' %>
+    <% end %>
+  <!-- form ends -->
+    | <%= link_to t(:page_action_destroy, scope: [:action]), line_item_url(line_item), method: 'delete', data: { confirm: 'Are you sure?' } %>
+  
     <% if line_item.deal.is_expired? %>
       | <span class="label label-danger">EXPIRED</span>
     <% end %>
