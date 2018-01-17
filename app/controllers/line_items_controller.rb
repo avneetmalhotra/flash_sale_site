@@ -3,7 +3,7 @@ class LineItemsController < ApplicationController
   before_action :get_line_item, only: [:destroy, :update]
 
   def create
-    @line_item = current_order(options = {create_new_order: true}).add_deal(@deal, params[:line_item][:quantity].to_i)
+    @line_item = current_order({create_new_order: true}).add_deal(@deal, params[:line_item][:quantity].to_i)
 
     if @line_item.errors.present?
       redirect_to deal_path(@deal), alert: @line_item.pretty_error

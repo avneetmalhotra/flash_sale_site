@@ -24,7 +24,6 @@ class SessionsController < ApplicationController
 
   def destroy
     delete_remember_me_cookie
-    # delete_empty_order
     reset_session
     redirect_to login_url, notice: t(:logout_successfull, scope: [:flash, :notice])
   end
@@ -55,12 +54,4 @@ class SessionsController < ApplicationController
       end      
     end
 
-    # def delete_empty_order
-    #   if current_order.present?
-    #     unless current_order.line_items.exists?
-    #       current_order.destroy
-    #     end
-    #   end
-    # end
-    
 end

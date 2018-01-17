@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
   private
 
     def get_order
-      @order = Order.find_by(id: params[:id])
+      @order = current_user.orders.find_by(id: params[:id])
       render_404 unless @order.present?
     end
 
