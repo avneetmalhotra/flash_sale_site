@@ -1,0 +1,17 @@
+<div class="col-md-3 panel panel-default">
+  <div class="panel-body row">
+    <div class="col-md-2">
+      <%= radio_button_tag 'address', address.id %>
+    </div>
+    <div class="col-md-10">
+      <%= address.house_number %>
+      <br>
+      <%= address.street %>
+      <br>
+      <%= address.city %>, <%= address.state %> <%= address.pincode %>
+      <br>
+      <%= address.country %>
+    </div>
+  </div>
+</div>
+

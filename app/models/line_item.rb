@@ -21,7 +21,7 @@ class LineItem < ApplicationRecord
   before_save :update_total_amount
   after_commit :update_orders_total, if: :order_not_deleted?
 
-  def pretty_error
+  def pretty_errors
     errors.full_messages.join("<br>")
   end
 
