@@ -23,6 +23,9 @@
   
     <section class="col-md-5 deal-details right-side">
       <div class="col-md-10 col-xs-10 col-md-offset-1">
+        <% if @deal.is_live? %>
+          <p class="deal-countdown-timer text-centre", data-timer='yes', data-end-at="<%= @deal.end_at %>"></p>
+        <% end %>
         <h2>
           <span class="lead text-danger text-muted "><del><%= number_to_currency(@deal.price) %><del></span>
           <span class="text-success"><%= number_to_currency(@deal.discount_price) %></span>
@@ -31,10 +34,21 @@
         <br>
 
         <% if @deal.is_live? %>
-          <%= link_to I18n.t(:add_to_cart, scope: :action), deal_url(@deal), class: "btn btn-success btn-lg view-deal-btn" %>
+          <div>
+            <%= form_with(scope: :line_item, url: line_items_url(deal_id: @deal), local: true) do |form| %>
+            
+            <div class="form-group">
+              <%= form.label :quantity%>
+              <%= form.number_field :quantity, min: 1, max: @deal.quantity, value: 1, class: 'form-control' %>
+            </div>
+
+            <%= form.submit I18n.t(:add_to_cart, scope: :action), class: "btn btn-success btn-lg add-to-cart-btn" %>
+            <% end %>
+            <p><small class="form-text text-muted">Can be ordered only once.</small></p>
+          </div>
+
+
         <% elsif @deal.is_expired? %>
-          <%= link_to I18n.t(:add_to_cart, scope: :action), deal_url(@deal), class: "btn btn-success btn-lg view-deal-btn disabled" %>
-          <br><br>
           <p class="lead text-danger">Sold Out</p>
         <% end %>    
       </div>

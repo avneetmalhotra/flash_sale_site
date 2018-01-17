@@ -6,6 +6,8 @@ class Deal < ApplicationRecord
   has_many :images, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true, reject_if: proc { |attributes| attributes[:avatar].blank? }
 
+  has_many :line_items, dependent: :restrict_with_error
+
   ## VALIDATIONS
   with_options presence: true do
     validates :title, :description, :price, :discount_price, :quantity

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user
   helper_method :current_user
+  helper_method :current_order
 
   private
     def current_user
@@ -21,6 +22,16 @@ class ApplicationController < ActionController::Base
 
         user
       end
+    end
+
+    def current_order(options = {})
+      @current_order ||= Order.incomplete.first
+      
+      if options[:create_new_order] && @current_order.nil?
+        @current_order = current_user.orders.create
+      end
+
+      @current_order
     end
 
     def authenticate_user

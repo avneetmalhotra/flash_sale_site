@@ -53,5 +53,5 @@ class SessionsController < ApplicationController
         redirect_to login_url, alert: t(:account_inactive, scope: [:flash, :alert]) and return
       end      
     end
-    
+
 end

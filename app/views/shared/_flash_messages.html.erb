@@ -6,7 +6,7 @@
       end %>">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <% flash.each do |name, msg| %>
-      <%= content_tag :p, msg, class: 'mb-0' %>
+      <%= content_tag :p, msg.html_safe, class: 'mb-0' %>
     <% end %>
   </div>
 <% end %>

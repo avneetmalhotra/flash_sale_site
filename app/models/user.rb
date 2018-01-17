@@ -10,6 +10,10 @@ class User < ApplicationRecord
   has_secure_token :api_token
   has_secure_token :remember_me_token
 
+  ## ASSOCATIONS
+  has_many :orders, dependent: :restrict_with_error
+  has_many :line_items, through: :orders
+
   ## VALIDATIONS
   with_options presence: true do
     validates :name
