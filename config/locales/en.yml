@@ -76,6 +76,7 @@ en:
   flash:
     alert:
       account_already_confirmed:       'Your account is already confirmed. Please Log in'
+      address_could_not_be_added:      "Address could't be added to the order."
       account_inactive:                'Your account is not active. Please contact site administrator'
       account_not_confirmed:           'Please confirm your account to continue.'
       address_not_added:               'Please add address before proceeding for payment.'
@@ -134,6 +135,7 @@ en:
       can_be_bought_once:  'can be bought only once.'
       cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
       deal_already_bought: 'This deal has already been bought before.'
+      deal_expired:        'This deal has expired.'
       discount_price_less_than_price: 'must be less than price.'
       image_greater_than: 'count must be greater than or equal to %{image_count}'
       publishing_date_cannot_be_changed_after_deal_expire: 'cannot be changed after deal has exipired.'

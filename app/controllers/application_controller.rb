@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_order(options = {})
-      @current_order ||= Order.incomplete.first
+      @current_order ||= current_user.orders.incomplete.first
       
       if options[:create_new_order] && @current_order.nil?
         @current_order = current_user.orders.create
@@ -46,6 +46,19 @@ class ApplicationController < ActionController::Base
 
     def render_404
       render file: Rails.root.join('public', '404.html'), status: 404 and return
+    end
+
+    def ensure_current_order_present
+      if current_order.nil?
+        redirect_to cart_url, alert: I18n.t(:cart_empty, scope: [:flash, :alert]) and return
+      end
+    end
+    
+    def ensure_checkout_allowed
+      # check current_order's validity explicitly
+      unless current_order.ensure_checkout_allowed?
+        redirect_to cart_url, alert: current_order.pretty_base_errors and return
+      end
     end
 
 end

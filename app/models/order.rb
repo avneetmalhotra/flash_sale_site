@@ -4,9 +4,11 @@ class Order < ApplicationRecord
   belongs_to :user
   has_many :line_items, dependent: :destroy
   belongs_to :address, optional: true
+  has_many :deals, through: :line_items
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
+  scope :complete, ->{ where.not(completed_at: nil) }
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete
@@ -14,11 +16,11 @@ class Order < ApplicationRecord
   ## STATE MACHINE
   state_machine :state, initial: :cart do
     event :add_address do
-      transition cart: :address, if: :is_valid?
+      transition cart: :address, if: :ensure_checkout_allowed?
     end
 
-    event :checkout do
-      transition address: :payment, if: :is_valid?
+    event :pay do
+      transition address: :payment, if: :ensure_checkout_allowed?
     end
 
   end
@@ -27,11 +29,11 @@ class Order < ApplicationRecord
     errors.full_messages.join("<br>")
   end
 
-  def base_errors
+  def pretty_base_errors
     errors[:base].join("<br>")
   end
 
-  def is_valid?
+  def ensure_checkout_allowed?
     is_order_not_empty? && are_deals_live? && are_deals_quantity_valid?
   end
 
@@ -46,6 +48,10 @@ class Order < ApplicationRecord
     line_item_temp
   end
 
+  def associate_address(address)
+    update(address: address)
+  end
+
   private
 
     def ensure_order_incomplete
@@ -57,31 +63,32 @@ class Order < ApplicationRecord
 
 
     def is_order_not_empty?
-      unless line_items.exists?
+      if line_items.empty?
         errors[:base] << I18n.t(:cart_empty, scope: [:order, :errors])
-        return false
+        false
+      else 
+        true
       end
-      true
     end
 
     def are_deals_live?
-      line_items.includes(:deal).each do |line_item|
-        if line_item.deal.is_expired?
-          errors[:base] << I18n.t(:has_expired_deals, scope: [:order, :errors])
-          return false
-        end
+      if deals.expired.present?
+        errors[:base] << I18n.t(:has_expired_deals, scope: [:order, :errors])
+        false
+      else
+        true
       end
-      true
     end
 
     def are_deals_quantity_valid?
-      line_items.each do |line_item|
+      line_items.includes(:deal).all? do |line_item|
         if line_item.deal.quantity < line_item.quantity
           errors[:base] << I18n.t(:has_invalid_deal_quantity, scope: [:order, :errors], deal_title: line_item.deal.title)
-          return false
+          false
+        else
+          true
         end
       end
-      true
     end
 
 end 

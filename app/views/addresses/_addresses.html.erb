@@ -1,0 +1,13 @@
+<div class="col-md-6">
+  <legend>Choose a Delivery Address</legend>
+  <%= form_with(scope: :address, url: address_associate_address_url, local: true, method: :patch) do |f| %>
+    <%= collection_radio_buttons :current_user, :recently_used_address_id, @addresses, :id, :full_address do |b| %>
+      <div class="col-md-6 panel panel-default">
+        <div class="panel-body row">
+        <%= b.label(class: 'col-md-11') { b.radio_button(class: 'col-md-1 full-bottom-margin') + b.text} %>
+        </div>
+      </div>
+    <% end %>
+    <%= f.submit 'Deliver to Selected address', class: 'btn btn-primary col-md-offset-4' %>
+  <% end %>
+</div>

@@ -1,22 +1,8 @@
-
-
-<% if @addresses.present? %>
-  <div class="row">
-    <%= form_for(current_user, url: address_delivery_address_url) do |f| %>
-      <%= f.collection_radio_buttons :last_used_address_id, @addresses, :id, :full_address do |b| %>
-        <div class="col-md-3 panel panel-default">
-          <div class="panel-body row">
-          <%= b.label(class: 'col-md-10') { b.radio_button(class: 'col-md-2 full-bottom-margin') + b.text} %>
-          </div>
-        </div>
-      <% end %>
-      <%= f.submit 'Deliver to Selected address', class: 'btn btn-primary col-md-offset-1' %>
-    <% end %>
-  </div>
-<% end %>
-
 <div class="row">
-  <div class='form-div col-md-6 col-md-offset-3'>
+  <!-- partial will render only if object is not empty -->
+  <%= render partial: 'addresses', object: @addresses %>
+
+  <div class="form-div <%= @addresses.empty?? 'col-md-6 col-md-offset-3' : 'col-md-6' %>">
 
     <%= form_with(model: @address, local: true) do |form| %>
 

@@ -11,11 +11,11 @@
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if current_user.present? %>
         <ul class="nav navbar-nav">
           <li><%= link_to t(:deals, scope: [:action]), deals_url %></li>
         </ul>
 
+      <% if current_user.present? %>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to image_tag('cart_logo.png', size: '25x25'), cart_url %></li>
           <li class="dropdown">

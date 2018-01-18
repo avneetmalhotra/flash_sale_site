@@ -1,32 +1,34 @@
 class AddressesController < ApplicationController
 
-  before_action :get_address, only: [:delivery_address]
   before_action :ensure_current_order_present
+  before_action :ensure_checkout_allowed
   before_action :update_current_order_state, only: [:new]
+  before_action :get_current_user_associated_addresses, except: [:associate_address]
+  before_action :get_address, only: [:associate_address]
 
   def new
-    @addresses = current_user.try(:addresses)
     @address = Address.new
   end
 
   def create
     @address = current_user.addresses.build(address_params)
     if @address.save
-      current_order.address = @address
-      current_order.save
-
-      redirect_to new_payment_path, notice: I18n.t(:address_successfully_added, scope: [:flash, :notice])
+      if current_order.associate_address(@address)
+        redirect_to new_payment_path, notice: I18n.t(:address_successfully_added, scope: [:flash, :notice]) and return
+      else
+        redirect_to new_address_path, alert: I18n.t(:address_could_not_be_added, scope: [:flash, :alert]) and return
+      end
     else
-      @addresses = current_user.try(:addresses).where.not(id: nil)
       render 'new'
     end
   end
 
-  def delivery_address
-    current_order.address = @address
-    current_order.save
-
-    redirect_to new_payment_path, notice: I18n.t(:address_successfully_added, scope: [:flash, :notice])
+  def associate_address
+    if current_order.associate_address(@address)
+      redirect_to new_payment_path, notice: I18n.t(:address_successfully_added, scope: [:flash, :notice])
+    else
+      redirect_to new_address_path, alert: I18n.t(:address_could_not_be_added, scope: [:flash, :alert])
+    end
   end
 
   private
@@ -36,29 +38,20 @@ class AddressesController < ApplicationController
     end
 
     def get_address
-      @address = Address.find_by(id: params[:user][:last_used_address_id])
+      @address = Address.find_by(id: params[:current_user][:recently_used_address_id])
       render_404 unless @address.present?
     end
 
-    def ensure_current_order_present
-      if current_order.nil?
-        redirect_to cart_url, alert: I18n.t(:cart_empty, scope: [:flash, :alert])
+    def update_current_order_state
+      if current_order.can_add_address?
+        unless current_order.add_address
+          redirect_to cart_url, alert: current_order.pretty_base_errors and return
+        end
       end
     end
 
-    def update_current_order_state
-      if current_order.state?(:cart)
-        unless current_order.add_address
-          redirect_to cart_url, alert: current_order.base_errors
-        end
-
-      # if current_order.state?(:address)/(:payment) is true then:-
-      else
-        # check current_order's validity explicitly
-        unless current_order.is_valid?
-          redirect_to cart_url, alert: current_order.base_errors
-        end
-      end
+    def get_current_user_associated_addresses
+      @addresses = current_user.addresses.where.not(id: nil)
     end
 
 end

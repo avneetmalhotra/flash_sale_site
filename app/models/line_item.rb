@@ -15,6 +15,7 @@ class LineItem < ApplicationRecord
   validate :ensure_quantity_available
  
   validate :ensure_deal_not_bought_again_in_another_order
+  validate :ensure_deal_live
 
   ## CALLBACKS
   before_save :update_loyalty_discount
@@ -30,6 +31,12 @@ class LineItem < ApplicationRecord
     def ensure_deal_not_bought_again_in_another_order
       if user.line_items.where(deal_id: deal_id).where.not(order_id: order_id).present?
         errors[:base] << I18n.t(:deal_already_bought, scope: [:errors, :custom_validation])
+      end
+    end
+
+    def ensure_deal_live
+      if deal.is_expired?
+        errors[:base] << I18n.t(:deal_expired, scope: [:errors, :custom_validation])
       end
     end
 

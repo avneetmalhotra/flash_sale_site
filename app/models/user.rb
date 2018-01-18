@@ -66,14 +66,14 @@ class User < ApplicationRecord
       update(confirmation_token: nil, confirmed_at: Time.current)
     end
 
-    def last_used_address_id
+    def recently_used_address_id
       # orders.last is not used because it will return the current_order user is working on
-      if orders.second_to_last.present?
-        last_used_address = orders.second_to_last.address
+      if orders.complete.present?
+        recently_used_address_id = orders.complete.last.address_id
       else
-        last_used_address = addresses.where.not(id: nil).last
+        recently_used_address_id = addresses.where.not(id: nil).last.try(:id)
       end
-      last_used_address.id
+      recently_used_address_id
     end
 
   private

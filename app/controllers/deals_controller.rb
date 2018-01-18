@@ -1,6 +1,7 @@
 class DealsController < ApplicationController
 
   before_action :set_deal, only: [:show]
+  skip_before_action :authenticate_user, only: [:index]
 
   def index
     @live_deals = Deal.includes(:images).live
