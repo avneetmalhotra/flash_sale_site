@@ -59,7 +59,7 @@ class Order < ApplicationRecord
     total_amount * 100
   end
 
-  def build_paymen
+  def build_payment
     payments.build(user_id: user.id, amount: total_amount)
   end
 
