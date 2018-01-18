@@ -25,6 +25,8 @@ gem 'delayed_job_active_record', '~> 4.1.2'
 
 gem 'stripe', '~> 3.9.1'
 
+gem 'stripe', '3.9.1'
+
 gem 'whenever', '~> 0.10.0', require: false
 
 gem 'ckeditor', '~> 4.1.3'
