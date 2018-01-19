@@ -111,6 +111,17 @@ en:
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
       password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
 
+  order_mailer:
+    confirmation_email:
+      greeting: 'Hi'
+      first_line: 'Thank you for ordering from FLASH SALE'
+      second_line: 'Your Order Invoice number is: %{invoice_number}'
+      third_line: {
+                    one: 'You ordered the following item',
+                    other: 'You ordered the following items'
+                  }
+      subject: '%{invoice_number} -FLASH SALE Order Confirmation'
+
   user_mailer:
     confirmation_email:
       action:

@@ -33,5 +33,5 @@ Rails.application.routes.draw do
   resources :addresses, only: [:new, :create]
   patch 'address/associate_address', to: "addresses#associate_address"
 
-  resources :payments, only: [:new]
+  resources :payments, only: [:new, :create]
 end

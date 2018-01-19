@@ -1,10 +1,12 @@
 class Order < ApplicationRecord
+  include TokenGenerator
 
   ## ASSOCIATIONS
   belongs_to :user
   has_many :line_items, dependent: :destroy
   belongs_to :address, optional: true
   has_many :deals, through: :line_items
+  has_one :payment
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
@@ -12,10 +14,12 @@ class Order < ApplicationRecord
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete
+  after_commit :generate_invoice_number, on: :create
 
   ## STATE MACHINE
   state_machine :state, initial: :cart do
-    before_transition on: [:add_address, :pay], do: :checkout_allowed?
+    before_transition on: [:add_address, :pay, :complete], do: :checkout_allowed?
+    after_transition on: :complete, do: [:set_completed_at, :send_confirmation_instructions]
 
     event :add_address do
       transition cart: :address
@@ -23,6 +27,10 @@ class Order < ApplicationRecord
 
     event :pay do
       transition address: :payment
+    end
+
+    event :complete do
+      transition payment: :completed
     end
 
   end
@@ -54,7 +62,25 @@ class Order < ApplicationRecord
     update(address: address)
   end
 
+  def quantity
+    quantity = 0
+    line_items.each { |line_item| quantity+= line_item.quantity }
+    quantity
+  end
+
+  def generate_invoice_number
+    update_columns(invoice_number: generate_unique_token(:invoice_number, 8, 'INV-'))
+  end
+
   private
+
+    def set_completed_at
+      update(completed_at: Time.current)
+    end
+
+    def send_confirmation_instructions
+      OrderMailer.confirmation_email(id).deliver_later
+    end
 
     def ensure_order_incomplete
       if completed_at.present?
@@ -62,7 +88,6 @@ class Order < ApplicationRecord
         throw :abort
       end    
     end
-
 
     def is_order_not_empty?
       if line_items.empty?

@@ -1,11 +1,31 @@
 class PaymentsController < ApplicationController
-
   before_action :ensure_current_order_present
   before_action :ensure_checkout_allowed
-  before_action :update_current_order_state
+  before_action :update_current_order_state, only: [:new]
 
   def new
+    @final_amount_in_cents = current_order.total_amount * 100
   end
+
+  def create
+    @final_amount = current_order.total_amount
+    @final_amount_in_cents = @final_amount * 100
+
+    begin
+      payment = Stripe::Payment.create(
+        customer_id:     current_user.id,
+        amount:          @final_amount,
+        order_id:        current_order.id
+      )
+
+    rescue Stripe::CardError => exception
+      flash[:alert] = exception.message
+      redirect_to new_payment_path
+    end
+
+    current_order.complete
+  end
+
 
   private
 
@@ -19,4 +39,5 @@ class PaymentsController < ApplicationController
         end
       end
     end
+
 end
