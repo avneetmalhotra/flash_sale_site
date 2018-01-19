@@ -1,5 +1,4 @@
 class Address < ApplicationRecord
-  include AddressHelper
 
   ## ASSOCIATIONS
   has_many :orders, dependent: :restrict_with_error
@@ -20,4 +19,7 @@ class Address < ApplicationRecord
     errors.full_messages.join("<br>")
   end
 
+  def full_address
+    ("#{house_number}<br>#{street}<br>#{city}, #{state} - #{pincode}<br>#{country}").html_safe
+  end
 end

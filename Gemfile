@@ -21,15 +21,14 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-gem 'delayed_job_active_record', '4.1.2'
+gem 'delayed_job_active_record', '~> 4.1.2'
 
 gem 'whenever', '~> 0.10.0', require: false
 
-gem 'ckeditor', '4.1.3'
+gem 'ckeditor', '~> 4.1.3'
 
-# gem 'state_machine', '1.2.0'
-gem 'state_machines', '0.5.0'
-gem 'state_machines-activerecord', '0.5.0'
+gem 'state_machines', '~> 0.5.0'
+gem 'state_machines-activerecord', '~> 0.5.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

@@ -76,7 +76,6 @@ en:
   flash:
     alert:
       account_already_confirmed:       'Your account is already confirmed. Please Log in'
-      address_could_not_be_added:      "Address could't be added to the order."
       account_inactive:                'Your account is not active. Please contact site administrator'
       account_not_confirmed:           'Please confirm your account to continue.'
       address_not_added:               'Please add address before proceeding for payment.'
@@ -154,4 +153,4 @@ en:
     errors:
       cart_empty:                        'Cart is empty.'
       has_expired_deals:                 "Please delete the expired deals to continue."
-      has_invalid_deal_quantity:         "%{deal_title}'s remaining quantity has decreased. Please update it's quantity to continue."
+      invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."

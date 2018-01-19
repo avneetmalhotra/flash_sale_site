@@ -1,6 +1,8 @@
 <div class="row">
-  <!-- partial will render only if object is not empty -->
-  <%= render partial: 'addresses', object: @addresses %>
+
+  <% if @addresses.present? %>
+    <%= render 'addresses', addresses: @addresses %>
+  <% end %>
 
   <div class="form-div <%= @addresses.empty?? 'col-md-6 col-md-offset-3' : 'col-md-6' %>">
 

@@ -15,12 +15,14 @@ class Order < ApplicationRecord
 
   ## STATE MACHINE
   state_machine :state, initial: :cart do
+    before_transition on: [:add_address, :pay], do: :checkout_allowed?
+
     event :add_address do
-      transition cart: :address, if: :ensure_checkout_allowed?
+      transition cart: :address
     end
 
     event :pay do
-      transition address: :payment, if: :ensure_checkout_allowed?
+      transition address: :payment
     end
 
   end
@@ -33,7 +35,7 @@ class Order < ApplicationRecord
     errors[:base].join("<br>")
   end
 
-  def ensure_checkout_allowed?
+  def checkout_allowed?
     is_order_not_empty? && are_deals_live? && are_deals_quantity_valid?
   end
 
@@ -81,13 +83,11 @@ class Order < ApplicationRecord
     end
 
     def are_deals_quantity_valid?
-      line_items.includes(:deal).all? do |line_item|
-        if line_item.deal.quantity < line_item.quantity
-          errors[:base] << I18n.t(:has_invalid_deal_quantity, scope: [:order, :errors], deal_title: line_item.deal.title)
-          false
-        else
-          true
-        end
+      if line_items.includes(:deal).all? { |line_item| line_item.deal.quantity >= line_item.quantity }
+        true
+      else
+        errors[:base] << I18n.t(:invalid_deal_quantity, scope: [:order, :errors])
+        false
       end
     end
 

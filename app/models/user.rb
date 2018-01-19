@@ -71,7 +71,7 @@ class User < ApplicationRecord
       if orders.complete.present?
         recently_used_address_id = orders.complete.last.address_id
       else
-        recently_used_address_id = addresses.where.not(id: nil).last.try(:id)
+        recently_used_address_id = addresses.last.try(:id)
       end
       recently_used_address_id
     end

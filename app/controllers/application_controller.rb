@@ -36,12 +36,12 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user
       if current_user.nil?
-        redirect_to login_url, alert: t(:login_to_continue, scope: [:flash, :alert]) and return
+        redirect_to login_path, alert: t(:login_to_continue, scope: [:flash, :alert]) and return
       end
     end
 
     def ensure_logged_out
-      redirect_to root_url, alert: t(:logout_to_continue, scope: [:flash, :alert]) and return if current_user.present?
+      redirect_to root_path, alert: t(:logout_to_continue, scope: [:flash, :alert]) and return if current_user.present?
     end
 
     def render_404
@@ -50,14 +50,14 @@ class ApplicationController < ActionController::Base
 
     def ensure_current_order_present
       if current_order.nil?
-        redirect_to cart_url, alert: I18n.t(:cart_empty, scope: [:flash, :alert]) and return
+        redirect_to cart_path, alert: I18n.t(:cart_empty, scope: [:flash, :alert]) and return
       end
     end
     
     def ensure_checkout_allowed
       # check current_order's validity explicitly
-      unless current_order.ensure_checkout_allowed?
-        redirect_to cart_url, alert: current_order.pretty_base_errors and return
+      unless current_order.checkout_allowed?
+        redirect_to cart_path, alert: current_order.pretty_base_errors and return
       end
     end
 
