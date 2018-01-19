@@ -6,7 +6,7 @@ class LineItemsController < ApplicationController
     @line_item = current_order({create_new_order: true}).add_deal(@deal, params[:line_item][:quantity].to_i)
 
     if @line_item.errors.present?
-      redirect_to deal_path(@deal), alert: @line_item.pretty_error
+      redirect_to deal_path(@deal), alert: @line_item.pretty_errors
     else
       redirect_to cart_path, notice: I18n.t(:deal_added_to_cart, scope: [:flash, :notice], deal_title: @deal.title)
     end
@@ -16,7 +16,7 @@ class LineItemsController < ApplicationController
     if @line_item.destroy
       flash[:notice] = I18n.t(:deal_deleted_from_cart, scope: [:flash, :notice], deal_title: @line_item.deal.title)
     else
-      flash[:alert] = @line_item.pretty_error
+      flash[:alert] = @line_item.pretty_errors
     end
     redirect_to cart_path
   end
@@ -25,7 +25,7 @@ class LineItemsController < ApplicationController
     if @line_item.update(update_params)
       flash[:notice] = I18n.t(:line_item_quantity_updated, scope: [:flash, :notice], deal_title: @line_item.deal.title)
     else
-      flash[:alert] = @line_item.pretty_error
+      flash[:alert] = @line_item.pretty_errors
     end
     redirect_to cart_path
   end

@@ -30,4 +30,8 @@ Rails.application.routes.draw do
   resources :orders, only: [:destroy]
   get 'cart', to: 'orders#cart'
 
+  resources :addresses, only: [:new, :create]
+  patch 'address/associate_address', to: "addresses#associate_address"
+
+  resources :payments, only: [:new]
 end

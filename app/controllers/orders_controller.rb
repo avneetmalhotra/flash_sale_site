@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
     if @order.destroy
       redirect_to root_path, notice: I18n.t(:cart_emptied, scope: [:flash, :notice])
     else
-      redirect_to cart_path, alert: @order.pretty_error
+      redirect_to cart_path, alert: @order.pretty_errors
     end
   end
   

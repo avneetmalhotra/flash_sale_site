@@ -13,6 +13,7 @@ class User < ApplicationRecord
   ## ASSOCATIONS
   has_many :orders, dependent: :restrict_with_error
   has_many :line_items, through: :orders
+  has_many :addresses, dependent: :nullify
 
   ## VALIDATIONS
   with_options presence: true do
@@ -63,6 +64,16 @@ class User < ApplicationRecord
 
     def confirm
       update(confirmation_token: nil, confirmed_at: Time.current)
+    end
+
+    def recently_used_address_id
+      # orders.last is not used because it will return the current_order user is working on
+      if orders.complete.present?
+        recently_used_address_id = orders.complete.last.address_id
+      else
+        recently_used_address_id = addresses.last.try(:id)
+      end
+      recently_used_address_id
     end
 
   private

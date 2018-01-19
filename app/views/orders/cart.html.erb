@@ -36,7 +36,8 @@
     </div>
 
     <div>
-      <%= link_to I18n.t(:empty_cart, scope: [:action]), order_url(current_order), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+      <%= link_to I18n.t(:empty_cart, scope: [:action]), order_url(current_order), method: :delete, class: 'btn btn-danger col-md-offset-1', data: { confirm: 'Are you sure?' } %>
+      <%= link_to I18n.t(:continue, scope: [:action]), new_address_url, class: 'btn btn-success col-md-offset-7' %>
     </div>
     
   </div>

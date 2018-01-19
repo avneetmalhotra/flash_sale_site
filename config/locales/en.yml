@@ -44,12 +44,14 @@ en:
     add_deal_image:                   'Add Image'
     activate:                         'Activate'
     confirmation_email_not_recieved:  'Did not receive Confirmation email?'
+    continue:                         'Continue'
     create_account:                   'Create New Account'
     create_customer:                  'Create Customer'
     create_deal:                      'Create Deal'
     deactivate:                       'Deactivate'
     deals:                            'Deals'
     deal_page_title:                  'Deals'
+    deliver_to_this_address:          'Deliver to this address'
     edit:                             'Edit'
     edit_customer:                    'Edit Customer'
     empty_cart:                       'Empty Cart'
@@ -73,25 +75,28 @@ en:
 
   flash:
     alert:
-      account_already_confirmed:    'Your account is already confirmed. Please Log in'
-      account_inactive:             'Your account is not active. Please contact site administrator'
-      account_not_confirmed:        'Please confirm your account to continue.'
-      deal_cannot_be_added_to_cart: 'Deal could not be added to cart.'
-      deal_cannot_be_destroyed:     'Deal could not be deleted.'
-      invalid_account:              'User with given email does not exist.'
-      invalid_confirmation_token:   'Confirmation Token has been expired. Please request a new one.'
-      invalid_email_or_password:    'Invalid email or password. Please try again.'
-      invalid_password_reset_token: 'Password Reset Token has been expired. Please request a new one.'
-      login_to_continue:            'Please login to view this page.'
-      logout_to_continue:           'You are not authorized to perform this action.'
-      line_item_cannot_be_deleted:  "Line Item couldn't be deleted."
-      line_item_cannot_be_updated:  "Line Item couldn't be updated."
-      not_authorized:               'You are not authorized to perform this action.'
-      order_cannot_be_deleted:      'Order cannot be deleted.'
+      account_already_confirmed:       'Your account is already confirmed. Please Log in'
+      account_inactive:                'Your account is not active. Please contact site administrator'
+      account_not_confirmed:           'Please confirm your account to continue.'
+      address_not_added:               'Please add address before proceeding for payment.'
+      cart_empty:                      'Cart is empty.'
+      deal_cannot_be_added_to_cart:    'Deal could not be added to cart.'
+      deal_cannot_be_destroyed:        'Deal could not be deleted.'
+      invalid_account:                 'User with given email does not exist.'
+      invalid_confirmation_token:      'Confirmation Token has been expired. Please request a new one.'
+      invalid_email_or_password:       'Invalid email or password. Please try again.'
+      invalid_password_reset_token:    'Password Reset Token has been expired. Please request a new one.'
+      login_to_continue:               'Please login to view this page.'
+      logout_to_continue:              'You are not authorized to perform this action.'
+      line_item_cannot_be_deleted:     "Line Item couldn't be deleted."
+      line_item_cannot_be_updated:     "Line Item couldn't be updated."
+      not_authorized:                  'You are not authorized to perform this action.'
+      order_cannot_be_deleted:         'Order cannot be deleted.'
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'
       account_updated:              'Your account has been successfully updated.'
+      address_successfully_added:   'Your address has been successfully added.'
       cart_emptied:                 'Cart has been emptied.'
       confirmation_email_sent:      'Confirmation email has been sent to your email address.'
       customer_account_updated:     "Customer's account was successfully updated"
@@ -129,6 +134,7 @@ en:
       can_be_bought_once:  'can be bought only once.'
       cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
       deal_already_bought: 'This deal has already been bought before.'
+      deal_expired:        'This deal has expired.'
       discount_price_less_than_price: 'must be less than price.'
       image_greater_than: 'count must be greater than or equal to %{image_count}'
       publishing_date_cannot_be_changed_after_deal_expire: 'cannot be changed after deal has exipired.'
@@ -142,3 +148,9 @@ en:
     errors:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
+
+  order:
+    errors:
+      cart_empty:                        'Cart is empty.'
+      has_expired_deals:                 "Please delete the expired deals to continue."
+      invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."

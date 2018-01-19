@@ -1,0 +1,57 @@
+<div class="row">
+
+  <% if @addresses.present? %>
+    <%= render 'addresses', addresses: @addresses %>
+  <% end %>
+
+  <div class="form-div <%= @addresses.empty?? 'col-md-6 col-md-offset-3' : 'col-md-6' %>">
+
+    <%= form_with(model: @address, local: true) do |form| %>
+
+      <fieldset>
+        <div class="form-group">
+          <h4 class= 'col-md-offset-4'>Add new delivery address</h4>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:house_number, @address) %>">
+          <%= form.label :house_number, 'House Number', class: 'required-field' %>
+          <%= form.text_field :house_number, id: :address_house_number, class: 'form-control', placeholder: '123R' %>
+          <%= display_error(:house_number, @address) %>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:street, @address) %>">
+          <%= form.label :street, class: 'required-field' %>
+          <%= form.text_field :street, id: :address_street, class: 'form-control', placeholder: 'long street' %>
+          <%= display_error(:street, @address) %>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:city, @address) %>">
+          <%= form.label :city, class: 'required-field' %>
+          <%= form.text_field :city, id: :address_city, class: 'form-control', placeholder: 'Mumbai' %>
+          <%= display_error(:city, @address) %>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:state, @address) %>">
+          <%= form.label :state, class: 'required-field' %>
+          <%= form.text_field :state, id: :address_state, class: 'form-control', placeholder: 'Kerela' %>
+          <%= display_error(:state, @address) %>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:country, @address) %>">
+          <%= form.label :country, class: 'required-field' %>
+          <%= form.text_field :country, id: :address_country, class: 'form-control', placeholder: 'India' %>
+          <%= display_error(:country, @address) %>
+        </div>
+
+        <div class="form-group <%= 'has-error' if has_error?(:pincode, @address) %>">
+          <%= form.label :pincode, class: 'required-field' %>
+          <%= form.text_field :pincode, id: :address_pincode, class: 'form-control', placeholder: '10020' %>
+          <%= display_error(:pincode, @address) %>
+        </div>
+
+        <%= form.submit t(:deliver_to_this_address, scope: [:action]), class: 'btn btn-primary col-md-offset-4' %>
+      </fieldset>
+
+    <% end %>
+  </div>
+</div>

@@ -30,10 +30,11 @@
           <span class="lead text-danger text-muted "><del><%= number_to_currency(@deal.price) %><del></span>
           <span class="text-success"><%= number_to_currency(@deal.discount_price) %></span>
         </h2>
-        <p>Only <span class="lead text-primary"><%= @deal.quantity %></span> more left</p>
-        <br>
 
-        <% if @deal.is_live? %>
+        <% if @deal.is_live? && @deal.quantity > 0 %>
+          <p>Only <span class="lead text-primary"><%= @deal.quantity %></span> more left</p>
+          <br>
+
           <div>
             <%= form_with(scope: :line_item, url: line_items_url(deal_id: @deal), local: true) do |form| %>
             
@@ -48,7 +49,8 @@
           </div>
 
 
-        <% elsif @deal.is_expired? %>
+        <% else %>
+          <br>
           <p class="lead text-danger">Sold Out</p>
         <% end %>    
       </div>
