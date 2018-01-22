@@ -45,11 +45,11 @@ class User < ApplicationRecord
     end
 
     def generate_password_reset_token
-      update_columns(password_reset_token: generate_unique_token(:password_reset_token, 16), password_reset_token_sent_at: Time.current)
+      update_columns(password_reset_token: generate_unique_token(:password_reset_token), password_reset_token_sent_at: Time.current)
     end
 
     def generate_confirmation_token
-      update_columns(confirmation_token: generate_unique_token(:confirmation_token, 16), confirmation_token_sent_at: Time.current)
+      update_columns(confirmation_token: generate_unique_token(:confirmation_token), confirmation_token_sent_at: Time.current)
     end
 
     def confirmation_token_expired?

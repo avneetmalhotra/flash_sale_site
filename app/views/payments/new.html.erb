@@ -12,7 +12,7 @@
   <div class="col-md-2 col-md-offset-9 col-xs-2 col-xs-offset-9">
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-amount=<%= @final_amount_in_cents %>
+            data-amount=<%= current_order.total_amount_in_cents %>
             data-locale="auto"></script>
   </div>
 <% end %>
