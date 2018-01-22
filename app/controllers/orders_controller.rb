@@ -31,6 +31,7 @@ class OrdersController < ApplicationController
     redirect_to order_path(@order) 
   end
   
+
   private
 
     def get_order
