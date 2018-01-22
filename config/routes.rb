@@ -27,9 +27,11 @@ Rails.application.routes.draw do
 
   resources :line_items, only: [:create, :destroy, :update]
 
-  resources :orders, only: [:destroy]
+  resources :orders, only: [:destroy, :show]
   get 'cart', to: 'orders#cart'
   get 'order/details', to: 'orders#show'
+  get 'myorders', to: 'orders#myorders'
+  patch 'order/cancel', to: 'orders#cancel'
 
   resources :addresses, only: [:new, :create]
   patch 'address/associate_address', to: "addresses#associate_address"

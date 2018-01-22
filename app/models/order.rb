@@ -18,6 +18,9 @@ class Order < ApplicationRecord
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
   scope :complete, ->{ where.not(completed_at: nil) }
+  scope :open, ->{ where(state: 'completed') }
+  scope :cancelled, ->{ where(state: 'cancelled') }
+  scope :delivered, ->{ where(state: 'delivered') }
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete
@@ -49,6 +52,10 @@ class Order < ApplicationRecord
 
   def quantity
     line_items.sum(:quantity)
+  end
+
+  def items_subtotal
+    line_items.sum(:discount_price)
   end
 
   def generate_invoice_number
