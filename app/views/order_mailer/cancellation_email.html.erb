@@ -1,0 +1,9 @@
+<p>
+  <%= t(:greeting, scope: [:order_mailer, :cancellation_email]) %> <%= @user.name %><br>
+  <br>
+  <%= t(:first_line, scope: [:order_mailer, :cancellation_email], invoice_number: @order.invoice_number) %>
+  <br><br>
+  <%= t(:second_line, scope: [:order_mailer, :cancellation_email], count: @order.quantity) %>:<br>
+</p>
+
+<%= render 'shared/final_cart', current_order: @order %>

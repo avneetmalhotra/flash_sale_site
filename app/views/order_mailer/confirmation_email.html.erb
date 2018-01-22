@@ -1,5 +1,5 @@
 <p>
-  <%= t(:greeting, scope: [:order_mailer, :confirmation_email]) %> <%= @user %><br>
+  <%= t(:greeting, scope: [:order_mailer, :confirmation_email]) %> <%= @user.name %><br>
   <br>
   <%= t(:first_line, scope: [:order_mailer, :confirmation_email]) %>.<br>
   <%= t(:second_line, scope: [:order_mailer, :confirmation_email], invoice_number: @order.invoice_number) %>
