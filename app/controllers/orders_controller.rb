@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :get_order, only: [:destroy, :show]
+  before_action :get_order, only: [:destroy, :show, :cancel]
   before_action :get_current_users_open_orders, only: :myorders
   before_action :get_current_users_delivered_orders, only: :myorders
   before_action :get_current_users_cancelled_orders, only: :myorders 
@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
     else
       flash[:alert] = @order.pretty_base_errors
     end
-    redirect_to order_details_path(invoice: @order.invoice_number) 
+    redirect_to order_path(@order) 
   end
   
   private
