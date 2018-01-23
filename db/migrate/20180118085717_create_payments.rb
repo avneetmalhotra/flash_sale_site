@@ -6,7 +6,6 @@ class CreatePayments < ActiveRecord::Migration[5.1]
       t.string :currency
       t.string :failure_code
       t.string :status
-      t.integer :user_id
 
       t.timestamps
     end

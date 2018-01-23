@@ -10,10 +10,9 @@ class Order < ApplicationRecord
   has_many :payments, dependent: :destroy
 
   ## VALIDATIONS
-  validates :invoice_number, presence: true
+  validates :invoice_number, presence: true,  uniqueness: { allow_blank: true }
   validates :loyalty_discount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'].to_i }
   validates :total_amount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
-  validates :invoice_number, uniqueness: true
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
@@ -47,20 +46,16 @@ class Order < ApplicationRecord
     update(address: address)
   end
 
-  def quantity
+  def total_items_quantity
     line_items.sum(:quantity)
-  end
-
-  def generate_invoice_number
-    self.invoice_number = generate_unique_token(:invoice_number, 8, 'INV-')
   end
 
   def total_amount_in_cents
     total_amount * 100
   end
 
-  def build_payment
-    payments.build(user_id: user.id, amount: total_amount)
+  def to_param
+    invoice_number
   end
 
   private
@@ -72,4 +67,7 @@ class Order < ApplicationRecord
       end    
     end
 
+    def generate_invoice_number
+      self.invoice_number = generate_unique_token(:invoice_number, 8, 'INV-')
+    end
 end 

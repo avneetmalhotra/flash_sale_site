@@ -1,16 +1,15 @@
 class PaymentsController < ApplicationController
   before_action :ensure_current_order_present
-  before_action :ensure_checkout_allowed, only: :new
-  before_action :update_current_order_state, only: :new
-  before_action :build_payment, only: :create
-  before_action :create_stripe_payment, only: :create
-  before_action :complete_order, only: :create
+  before_action :ensure_checkout_allowed, only: [:new, :create]
+  before_action :update_current_order_state, only: [:new, :create]
 
   def new
   end
 
   def create
-    redirect_to order_details_path(invoice: @payment.order.invoice_number)
+    @payment = current_order.payments.build
+    create_stripe_payment
+    redirect_to order_path(@payment.order)
   end
 
 
@@ -27,11 +26,8 @@ class PaymentsController < ApplicationController
       end
     end
 
-    def build_payment
-      @payment = current_order.build_payment
-    end
-
     def create_stripe_payment
+      begin
         @payment.create_stripe_record(params[:stripeToken])
       rescue Stripe::CardError => exception
         redirect_to new_payment_path, alert: I18n.t(:invalid_card, scope: [:flash, :alert]) and return
@@ -39,6 +35,7 @@ class PaymentsController < ApplicationController
         redirect_to new_payment_path, alert: I18n.t(:incomplete_transaction, scope: [:flash, :alert]) and return
       rescue Stripe::StripeError => exception
         redirect_to new_payment_path, alert: exception.message and return
+      end
     end
 
     def complete_order

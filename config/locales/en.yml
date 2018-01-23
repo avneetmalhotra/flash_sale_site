@@ -118,10 +118,9 @@ en:
       greeting: 'Hi'
       first_line: 'Thank you for ordering from FLASH SALE'
       second_line: 'Your Order Invoice number is: %{invoice_number}'
-      third_line: {
-                    one: 'You ordered the following item',
-                    other: 'You ordered the following items'
-                  }
+      third_line: 
+        one: 'You ordered the following item'
+        other: 'You ordered the following items'
       subject: '%{invoice_number} -FLASH SALE Order Confirmation'
 
   user_mailer:

@@ -4,7 +4,7 @@ class OrderMailer < ApplicationMailer
     @order = Order.find_by(id: order_id)
     @user = @order.try(:user)
 
-    if @order.present? && @user.present?
+    if @order.present?
       mail(to: @user.email, subject: default_i18n_subject(invoice_number: @order.invoice_number))
     end
   end

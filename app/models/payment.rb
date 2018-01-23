@@ -1,20 +1,21 @@
 class Payment < ApplicationRecord
 
+  delegate :user, to: :order
   ## ASSOCIATIONS
   belongs_to :order
+
+  ## SCOPES
+  scope :successful, ->{ where(status: 'succeeded') }
   
   ## VALIDATIONS
   with_options presence: true do
-    validates :currency, :status, :charge_id, :amount, :user_id
+    validates :currency, :status, :charge_id, :amount
   end
 
-  validates :user_id, numericality: {
-    only_integer: true,
-    greater_than: 0
-  }
-
   validates :amount, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
-    
+  
+  ## CALLBACKS
+  after_commit :complete_order, if: :has_orders_payment_completed?  
 
   def create_stripe_record(stripe_token)
     create_stripe_customer(stripe_token)
@@ -25,7 +26,7 @@ class Payment < ApplicationRecord
   private
 
     def create_stripe_customer(token)
-      @customer = Stripe::Customer.create(email: order.user.email, source: token)
+      @customer = Stripe::Customer.create(email: user.email, source: token)
     end
 
     def create_stripe_charge
@@ -33,7 +34,20 @@ class Payment < ApplicationRecord
     end
 
     def create_payment
-      update(charge_id: @charge.id, currency: @charge.currency, failure_code: @charge.failure_code, status: @charge.status)
+      self.amount       =  order.total_amount
+      self.charge_id    =  @charge.id
+      self.currency     =  @charge.currency
+      self.failure_code =  @charge.failure_code
+      self.status       =  @charge.status
+      save
+    end
+
+    def complete_order
+      order.complete
+    end
+
+    def has_orders_payment_completed?
+      order.total_amount <= order.payments.successful.sum(:amount)
     end
 
 end

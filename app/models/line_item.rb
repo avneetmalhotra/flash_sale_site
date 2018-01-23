@@ -26,8 +26,8 @@ class LineItem < ApplicationRecord
   validate :ensure_deal_live
 
   ## CALLBACKS
-  before_validation :update_loyalty_discount
-  before_validation :update_total_amount
+  before_save :update_loyalty_discount
+  before_save :update_total_amount
   after_commit :update_orders_total, if: :order_not_deleted?
 
   def pretty_errors

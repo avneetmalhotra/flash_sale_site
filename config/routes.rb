@@ -27,13 +27,11 @@ Rails.application.routes.draw do
 
   resources :line_items, only: [:create, :destroy, :update]
 
-  resources :orders, only: [:destroy]
+  resources :orders, only: [:destroy, :show], param: :invoice_number
   get 'cart', to: 'orders#cart'
-  get 'order/details', to: 'orders#show'
 
   resources :addresses, only: [:new, :create]
   patch 'address/associate_address', to: "addresses#associate_address"
 
   resources :payments, only: [:new, :create]
-  get 'payment_successful', to: "payments#successful"
 end

@@ -2,11 +2,18 @@ module Checkout
 
   extend ActiveSupport::Concern
 
+# STATES:-
+# cart    -> order in cart
+# address -> order's address has been added
+# payment -> order's payment has started
+# completed -> order has been successfully placed
+## flow - cart -> address -> payment -> completed
+
   included do
     ## STATE MACHINE
     state_machine :state, initial: :cart do
       before_transition on: [:add_address, :pay, :complete], do: :checkout_allowed?
-      after_transition on: :complete, do: [:set_completed_at, :update_deals_quantity, :send_confirmation_instructions]
+      after_transition on: :complete, do: [:set_completed_at, :decrease_deals_stock, :send_confirmation_instructions]
 
       event :add_address do
         transition cart: :address
@@ -37,15 +44,17 @@ module Checkout
       OrderMailer.confirmation_email(id).deliver_later
     end
 
-    def update_deals_quantity
-      line_items.each do |line_item|
-        line_item.deal.quantity -= line_item.quantity
+    def decrease_deals_stock
+      line_items.includes(:deal).each do |line_item|
+        deal = line_item.deal
+        deal.update_columns(quantity: deal.quantity - line_item.quantity)
       end
     end
 
-    def rollback_deal_quantity_update
-      line_items.each do |line_item|
-        line_item.deal.quantity += line_item.quantity
+    def increase_deals_stock
+      line_items.includes(:deal).each do |line_item|
+        deal = line_item.deal
+        deal.update_columns(quantity: deal.quantity + line_item.quantity)
       end
     end
 

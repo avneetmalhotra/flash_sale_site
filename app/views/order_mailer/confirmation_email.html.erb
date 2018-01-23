@@ -4,7 +4,7 @@
   <%= t(:first_line, scope: [:order_mailer, :confirmation_email]) %>.<br>
   <%= t(:second_line, scope: [:order_mailer, :confirmation_email], invoice_number: @order.invoice_number) %>
   <br><br>
-  <%= t(:third_line, scope: [:order_mailer, :confirmation_email], count: @order.quantity) %>:<br>
+  <%= t(:third_line, scope: [:order_mailer, :confirmation_email], count: @order.total_items_quantity) %>:<br>
 </p>
 
 <%= render 'shared/final_cart', current_order: @order %>
