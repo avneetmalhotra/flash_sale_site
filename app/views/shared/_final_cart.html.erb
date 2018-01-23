@@ -1,0 +1,45 @@
+<div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+    
+    <div class="table-responsive ">
+      <div class="panel panel-default">
+        <table class="table table-striped table-hover ">
+          <thead>
+            <tr>
+              <th></th>
+              <th nowrap>TITLE</th>
+              <th nowrap>UNIT PRICE</th>
+              <th nowrap>QUANTITY</th>
+              <th nowrap>LOYALTY DISCOUNT</th>
+              <th nowrap>TOTAL PRICE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% current_order.line_items.includes(:deal).each do |line_item| %>
+              <tr>
+                <td><%= link_to image_tag(line_item.deal.images.first.avatar.url(:mini)), deal_url(line_item.deal) %></td>
+                <td><%= link_to line_item.deal.title, deal_url(line_item.deal) %></td>
+                <td>
+                  <p>
+                    <span class="text-muted"><del><%= number_to_currency(line_item.price) %></del></span>
+                    <span class="lead text-success"><%= number_to_currency(line_item.discount_price) %></span>
+                  </p>
+                </td>
+                <td><%= line_item.quantity %></td>
+                <td><%= number_to_currency(line_item.loyalty_discount) %></td>
+                <td><%= number_to_currency(line_item.total_amount) %></td>
+              </tr>
+            <% end %>
+
+            <tr>
+              <td colspan="4"><strong><p class="col-md-offset-6">Total Loyalty Discount</p></strong></td>
+              <td colspan="2"><strong><%= number_to_currency(current_order.loyalty_discount) %></strong></td>
+            <tr>
+              <td colspan="5"><strong><p class="col-md-offset-8">SUBTOTAL:</p></strong></td>
+              <td colspan="2"><strong><%= number_to_currency(current_order.total_amount) %></strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>

@@ -13,6 +13,7 @@ class User < ApplicationRecord
   ## ASSOCATIONS
   has_many :orders, dependent: :restrict_with_error
   has_many :line_items, through: :orders
+  has_many :payments, through: :orders
   has_many :addresses, dependent: :nullify
 
   ## VALIDATIONS

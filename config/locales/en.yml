@@ -82,7 +82,9 @@ en:
       cart_empty:                      'Cart is empty.'
       deal_cannot_be_added_to_cart:    'Deal could not be added to cart.'
       deal_cannot_be_destroyed:        'Deal could not be deleted.'
+      incomplete_transaction:          'There was some issue completing the transaction. Please try again.'
       invalid_account:                 'User with given email does not exist.'
+      invalid_card:                    "There was some issue processing payment from you card. Please try paying using a different card."
       invalid_confirmation_token:      'Confirmation Token has been expired. Please request a new one.'
       invalid_email_or_password:       'Invalid email or password. Please try again.'
       invalid_password_reset_token:    'Password Reset Token has been expired. Please request a new one.'
@@ -110,6 +112,16 @@ en:
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
       password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
+
+  order_mailer:
+    confirmation_email:
+      greeting: 'Hi'
+      first_line: 'Thank you for ordering from FLASH SALE'
+      second_line: 'Your Order Invoice number is: %{invoice_number}'
+      third_line:
+        one: 'You ordered the following item'
+        other: 'You ordered the following items'
+      subject: '%{invoice_number} -FLASH SALE Order Confirmation'
 
   user_mailer:
     confirmation_email:
@@ -154,3 +166,7 @@ en:
       cart_empty:                        'Cart is empty.'
       has_expired_deals:                 "Please delete the expired deals to continue."
       invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."
+
+  payment:
+    stripe:
+      description:                  "Flash Sale payment of order: #%{invoice_number}"

@@ -1,1 +1,18 @@
-payment controller new
+<%= render 'shared/final_cart' %>
+
+<%= form_tag payments_path do %>
+  <article>
+    <% if flash[:error].present? %>
+      <div id="error_explanation">
+        <p><%= flash[:error] %></p>
+      </div>
+    <% end %>
+  </article>
+
+  <div class="col-md-2 col-md-offset-9 col-xs-2 col-xs-offset-9">
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-amount=<%= current_order.total_amount_in_cents %>
+            data-locale="auto"></script>
+  </div>
+<% end %>

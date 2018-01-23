@@ -1,10 +1,18 @@
 class Order < ApplicationRecord
+  include TokenGenerator
+  include Checkout
 
   ## ASSOCIATIONS
   belongs_to :user
   has_many :line_items, dependent: :destroy
-  belongs_to :address, optional: true
   has_many :deals, through: :line_items
+  belongs_to :address, optional: true
+  has_many :payments, dependent: :destroy
+
+  ## VALIDATIONS
+  validates :invoice_number, presence: true,  uniqueness: { allow_blank: true }
+  validates :loyalty_discount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'].to_i }
+  validates :total_amount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
@@ -12,20 +20,8 @@ class Order < ApplicationRecord
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete
+  before_validation :generate_invoice_number, on: :create
 
-  ## STATE MACHINE
-  state_machine :state, initial: :cart do
-    before_transition on: [:add_address, :pay], do: :checkout_allowed?
-
-    event :add_address do
-      transition cart: :address
-    end
-
-    event :pay do
-      transition address: :payment
-    end
-
-  end
 
   def pretty_errors
     errors.full_messages.join("<br>")
@@ -33,10 +29,6 @@ class Order < ApplicationRecord
 
   def pretty_base_errors
     errors[:base].join("<br>")
-  end
-
-  def checkout_allowed?
-    is_order_not_empty? && are_deals_live? && are_deals_quantity_valid?
   end
 
   def add_deal(deal, line_item_quantity = 1)
@@ -54,6 +46,18 @@ class Order < ApplicationRecord
     update(address: address)
   end
 
+  def total_items_quantity
+    line_items.sum(:quantity)
+  end
+
+  def total_amount_in_cents
+    total_amount * 100
+  end
+
+  def to_param
+    invoice_number
+  end
+
   private
 
     def ensure_order_incomplete
@@ -63,32 +67,7 @@ class Order < ApplicationRecord
       end    
     end
 
-
-    def is_order_not_empty?
-      if line_items.empty?
-        errors[:base] << I18n.t(:cart_empty, scope: [:order, :errors])
-        false
-      else 
-        true
-      end
+    def generate_invoice_number
+      self.invoice_number = generate_unique_token(:invoice_number, 8, 'INV-')
     end
-
-    def are_deals_live?
-      if deals.expired.present?
-        errors[:base] << I18n.t(:has_expired_deals, scope: [:order, :errors])
-        false
-      else
-        true
-      end
-    end
-
-    def are_deals_quantity_valid?
-      if line_items.includes(:deal).all? { |line_item| line_item.deal.quantity >= line_item.quantity }
-        true
-      else
-        errors[:base] << I18n.t(:invalid_deal_quantity, scope: [:order, :errors])
-        false
-      end
-    end
-
 end 

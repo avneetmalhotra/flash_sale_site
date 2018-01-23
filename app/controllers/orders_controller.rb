@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :get_order, only: [:destroy]
+  before_action :get_order, only: [:destroy, :show]
 
   def cart
   end
@@ -12,11 +12,14 @@ class OrdersController < ApplicationController
       redirect_to cart_path, alert: @order.pretty_errors
     end
   end
-  
+
+  def show
+  end
+
   private
 
     def get_order
-      @order = current_user.orders.find_by(id: params[:id])
+      @order = current_user.orders.find_by(invoice_number: params[:invoice_number])
       render_404 unless @order.present?
     end
 
