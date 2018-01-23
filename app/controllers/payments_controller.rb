@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = current_order.payments.build
-    create_stripe_payment
+    create_stripe_payment!
     redirect_to order_path(@payment.order)
   end
 
@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
       end
     end
 
-    def create_stripe_payment
+    def create_stripe_payment!
       begin
         @payment.create_stripe_record(params[:stripeToken])
       rescue Stripe::CardError => exception
@@ -38,9 +38,4 @@ class PaymentsController < ApplicationController
       end
     end
 
-    def complete_order
-      unless current_order.complete
-        redirect_to cart_path, alert: current_order.pretty_base_errors and return
-      end 
-    end
 end

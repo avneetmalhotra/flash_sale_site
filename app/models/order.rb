@@ -5,8 +5,8 @@ class Order < ApplicationRecord
   ## ASSOCIATIONS
   belongs_to :user
   has_many :line_items, dependent: :destroy
-  belongs_to :address, optional: true
   has_many :deals, through: :line_items
+  belongs_to :address, optional: true
   has_many :payments, dependent: :destroy
 
   ## VALIDATIONS

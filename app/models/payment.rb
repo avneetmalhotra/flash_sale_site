@@ -30,7 +30,7 @@ class Payment < ApplicationRecord
     end
 
     def create_stripe_charge
-      @charge = Stripe::Charge.create(customer: @customer.id , amount: order.total_amount_in_cents.to_i, description: 'Flash Sale Customer', currency: 'usd')
+      @charge = Stripe::Charge.create(customer: @customer.id , amount: order.total_amount_in_cents.to_i, description: I18n.t(:description, scope: [:payment, :stripe], invoice_number: order.invoice_number), currency: 'usd')
     end
 
     def create_payment

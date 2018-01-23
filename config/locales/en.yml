@@ -118,7 +118,7 @@ en:
       greeting: 'Hi'
       first_line: 'Thank you for ordering from FLASH SALE'
       second_line: 'Your Order Invoice number is: %{invoice_number}'
-      third_line: 
+      third_line:
         one: 'You ordered the following item'
         other: 'You ordered the following items'
       subject: '%{invoice_number} -FLASH SALE Order Confirmation'
@@ -166,3 +166,7 @@ en:
       cart_empty:                        'Cart is empty.'
       has_expired_deals:                 "Please delete the expired deals to continue."
       invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."
+
+  payment:
+    stripe:
+      description:                  "Flash Sale payment of order: #%{invoice_number}"
