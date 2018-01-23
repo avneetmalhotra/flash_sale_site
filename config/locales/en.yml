@@ -56,7 +56,9 @@ en:
     edit_customer:                    'Edit Customer'
     empty_cart:                       'Empty Cart'
     login:                            'Login'
+    myorders:                         'My Orders'
     new:                              'New'
+    order_details:                    'Order Details'
     page_action_destroy:              'Delete'
     page_action_edit:                 'Edit'
     page_action_new_user:             'New User'
@@ -112,6 +114,7 @@ en:
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
       password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
+      successfully_cancelled:       'Order successfully cancelled.'
 
   order_mailer:
     confirmation_email:
@@ -122,6 +125,14 @@ en:
         one: 'You ordered the following item'
         other: 'You ordered the following items'
       subject: '%{invoice_number} -FLASH SALE Order Confirmation'
+
+    cancellation_email:
+      greeting: 'Hi'
+      first_line: 'Your Order with Invoice number is: %{invoice_number} has been cancelled.'
+      second_line:
+        one: 'You had ordered the following item'
+        other: 'You had ordered the following items'
+      subject: '%{invoice_number} -FLASH SALE Order Cancellation'
 
   user_mailer:
     confirmation_email:
@@ -146,6 +157,7 @@ en:
       can_be_bought_once:  'can be bought only once.'
       cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
       deal_already_bought: 'This deal has already been bought before.'
+      deal_bought_in_cancelled_order: "This deal was bought before and then it's order was cancelled."
       deal_expired:        'This deal has expired.'
       discount_price_less_than_price: 'must be less than price.'
       image_greater_than: 'count must be greater than or equal to %{image_count}'
@@ -164,7 +176,9 @@ en:
   order:
     errors:
       cart_empty:                        'Cart is empty.'
-      has_expired_deals:                 "Please delete the expired deals to continue."
+      cannot_be_expired_x_minutes_before_deals_expiration: 'Order cannot be expired %{x} minutes before a deal expires.'
+      has_expired_deals_cannot_continue: "Please delete the expired deals to continue."
+      has_expired_deals_cannot_be_cancelled: 'Cannot cancel an order with expired deals.'
       invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."
 
   payment:

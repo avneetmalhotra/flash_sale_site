@@ -1,0 +1,97 @@
+<div class="col-md-10 col-md-offset-1">
+  <div class="clearfix">
+    <h5 class="col-md-4 col-xs-5">Invoice Number: <%= @order.invoice_number %></h5>
+    <h5 class="col-md-4 col-xs-5">Ordered on <%= @order.completed_at.strftime("%v %r") %></h5>
+    <% if @order.completed? %>
+      <%= link_to 'Cancel Order', cancel_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger col-md-offset-2' %>
+    <% end %>    
+  </div>
+  <hr>
+  <div class="clearfix text-primary">
+    <% if @order.delivered? %>
+      <h4 class="col-md-12 col-xs-12 text-success">Delivered on <%= @order.delivered_at.strftime("%v %r") %></h4>
+    <% elsif @order.cancelled? %>
+      <h5 class="col-md-12 col-xs-12 text-danger">Cancelled on <%= @order.cancelled_at.strftime("%v %r") %></h5>
+    <% end %>
+  </div>
+
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <th nowrap>SHIPPING ADDRESS</th>
+          <th nowrap>ORDER SUMMARY</th>
+          <th nowrap></th>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <%= @order.address.full_address %>
+            </td>
+            <td>
+              <table class="col-md-6">
+                <tbody>
+                  <tr>
+                    <td>Item(s) Subtotal:</td>
+                    <td><%= number_to_currency(@order.items_subtotal) %></td>
+                  </tr>
+                  <tr>
+                    <td>Loyalty Discount: </td>
+                    <td><%= number_to_currency(@order.loyalty_discount) %></td>
+                  </tr>
+
+                  <tr class="text-success">
+                    <td>Grand Subtotal: </td>
+                    <td><%= number_to_currency(@order.total_amount) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <section class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <th nowrap></th>
+            <th nowrap>TITLE</th>
+            <th nowrap>UNIT PRICE</th>
+            <th nowrap>QUANTITY</th>
+            <th nowrap>LOYALTY DISCOUNT</th>
+            <th nowrap>TOTAL PRICE</th>
+            <th nowrap></th>
+
+          </thead>
+          <tbody>
+            <% @order.line_items.each do |line_item| %>
+              <tr>
+                <td><%= link_to image_tag(line_item.deal.images.first.avatar.url(:mini)), deal_path(line_item.deal) %></td>
+                <td><%= link_to line_item.deal.title, deal_path(line_item.deal) %></td>
+                <td>
+                  <p>
+                    <span class="text-muted"><del><%= number_to_currency(line_item.price) %></del></span>
+                    <span class="lead text-success"><%= number_to_currency(line_item.discount_price) %></span>
+                  </p>
+                </td>
+                <td><%= line_item.quantity %></td>
+                <td><%= number_to_currency(line_item.loyalty_discount) %></td>
+                <td><%= number_to_currency(line_item.total_amount) %></td>
+                <td>
+                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal), class: 'btn btn-primary' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+
+</div>
