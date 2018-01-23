@@ -17,19 +17,19 @@ class Payment < ApplicationRecord
   ## CALLBACKS
   after_commit :complete_order, if: :has_orders_payment_completed?  
 
-  def create_stripe_record(stripe_token)
-    create_stripe_customer(stripe_token)
-    create_stripe_charge
+  def create_stripe_record!(stripe_token)
+    create_stripe_customer!(stripe_token)
+    create_stripe_charge!
     create_payment
   end
 
   private
 
-    def create_stripe_customer(token)
+    def create_stripe_customer!(token)
       @customer = Stripe::Customer.create(email: user.email, source: token)
     end
 
-    def create_stripe_charge
+    def create_stripe_charge!
       @charge = Stripe::Charge.create(customer: @customer.id , amount: order.total_amount_in_cents.to_i, description: I18n.t(:description, scope: [:payment, :stripe], invoice_number: order.invoice_number), currency: 'usd')
     end
 

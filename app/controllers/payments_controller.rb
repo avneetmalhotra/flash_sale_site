@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = current_order.payments.build
-    create_stripe_payment!
+    create_stripe_payment
     redirect_to order_path(@payment.order)
   end
 
@@ -26,9 +26,9 @@ class PaymentsController < ApplicationController
       end
     end
 
-    def create_stripe_payment!
+    def create_stripe_payment
       begin
-        @payment.create_stripe_record(params[:stripeToken])
+        @payment.create_stripe_record!(params[:stripeToken])
       rescue Stripe::CardError => exception
         redirect_to new_payment_path, alert: I18n.t(:invalid_card, scope: [:flash, :alert]) and return
       rescue Stripe::RateLimitError, Stripe::InvalidRequestError, Stripe::AuthenticationError, Stripe::APIConnectionError => exception
