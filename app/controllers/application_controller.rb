@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
     def ensure_checkout_allowed
       # check current_order's validity explicitly
       unless current_order.checkout_allowed?
-        redirect_to cart_path, alert: current_order.pretty_errors and return
+        redirect_to cart_path, alert: current_order.pretty_base_errors and return
       end
     end
 

@@ -3,10 +3,7 @@ class Admin::DealsController < Admin::BaseController
   before_action :set_deal, only: [:edit, :update, :show, :destroy]
 
   def index
-    @live_deals = Deal.live.includes(:images).chronologically_by_end_at
-    @expired_deals = Deal.expired.includes(:images).reverse_chronologically_by_end_at
-    @future_deals = Deal.future.includes(:images)
-    @unpublished_deals = Deal.unpublished.includes(:images)
+    @deals = Deal.includes(:images)
   end
 
   def new
@@ -38,9 +35,9 @@ class Admin::DealsController < Admin::BaseController
 
   def destroy
     if @deal.destroy
-      redirect_to admin_deals_path, notice: t(:deal_successfully_destroyed, scope: [:flash, :notice])
+      redirect_to admin_deals_url, notice: t(:deal_successfully_destroyed, scope: [:flash, :notice])
     else
-      redirect_to admin_deals_path, alert: @deal.pretty_errors
+      redirect_to admin_deals_url, notice: t(:deal_cannot_be_destroyed, scope: [:flash, :alert]) + ' ' + errors.full_messages.join(' ')
     end
   end
 

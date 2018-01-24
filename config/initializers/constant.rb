@@ -6,4 +6,3 @@ PAPERCLIP_VALID_CONTENT_TYPES = ["image/jpeg", "image/png", "image/gif"]
 NO_IMAGE_AVAILABLE_PATH = 'no_image_available.gif'
 HOURS_BEFORE_START_WHEN_PUBLISHING_DATE_CANNOT_BE_CHANGED = 24.hours
 LOYALTY_DISCOUNT_SLABS = Hash.new(5).merge({ '1' => 0, '2' => 1, '3' => 2, '4' => 3, '5' => 4 })
-MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED = 200.minutes

@@ -9,7 +9,7 @@ class PaymentsController < ApplicationController
   def create
     @payment = current_order.payments.build
     create_stripe_payment
-    redirect_to order_path(@payment.order), success: I18n.t(:order_placed_successfully, scope: [:flash, :success])
+    redirect_to order_path(@payment.order)
   end
 
 
@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
 
       elsif current_order.can_pay?
         unless current_order.pay
-          redirect_to cart_path, alert: current_order.pretty_errors and return
+          redirect_to cart_path, alert: current_order.pretty_base_errors and return
         end
       end
     end

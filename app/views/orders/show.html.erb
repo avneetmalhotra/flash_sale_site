@@ -70,7 +70,7 @@
 
           </thead>
           <tbody>
-            <% @order.line_items.includes(deal: :images).each do |line_item| %>
+            <% @order.line_items.each do |line_item| %>
               <tr>
                 <td><%= link_to image_tag(line_item.deal.images.first.avatar.url(:mini)), deal_path(line_item.deal) %></td>
                 <td><%= link_to line_item.deal.title, deal_path(line_item.deal) %></td>
@@ -84,7 +84,7 @@
                 <td><%= number_to_currency(line_item.loyalty_discount) %></td>
                 <td><%= number_to_currency(line_item.total_amount) %></td>
                 <td>
-                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal) %>
+                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal), class: 'btn btn-primary' %>
                 </td>
               </tr>
             <% end %>

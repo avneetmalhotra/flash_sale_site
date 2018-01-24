@@ -4,8 +4,8 @@ class DealsController < ApplicationController
   skip_before_action :authenticate_user, only: [:index]
 
   def index
-    @live_deals = Deal.live.includes(:images).chronologically_by_end_at
-    @expired_deals = Deal.expired.includes(:images).reverse_chronologically_by_end_at
+    @live_deals = Deal.includes(:images).live
+    @expired_deals = Deal.includes(:images).expired    
   end
 
   def show

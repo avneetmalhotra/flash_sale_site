@@ -47,7 +47,7 @@ class AddressesController < ApplicationController
     def update_current_order_state
       if current_order.can_add_address?
         unless current_order.add_address
-          redirect_to cart_path, alert: current_order.pretty_errors and return
+          redirect_to cart_path, alert: current_order.pretty_base_errors and return
         end
       end
     end
