@@ -4,21 +4,24 @@ module Checkout
 
 # STATES:-
 # cart    -> order in cart
-# address -> order's address has been added
+# address -> order's address can been added now
 # payment -> order's payment has started
 # completed -> order has been successfully placed
 # cancelled -> order has been cancelled
 # delivered -> order has been delivered
-## flow - cart -> address -> payment -> completed
+## flow - cart -> address -> payment -> completed -> (cancelled or delivered)
 
   included do
     ## STATE MACHINE
     state_machine :state, initial: :cart do
-      before_transition on: [:add_address, :pay, :complete], do: :checkout_allowed?
-      after_transition on: :complete, do: [:set_completed_at, :decrease_deals_stock, :send_confirmation_instructions]
-      after_transition on: :deliver, do: :set_delivered_at
-      before_transition on: :cancel, do: :cancellation_allowed?
-      after_transition on: :cancel, do: [:set_cancelled_at, :increase_deals_stock, :send_cancellation_instructions]
+      before_transition on: [:add_address, :pay, :complete], do: :ensure_checkout_allowed?
+      after_transition on: :complete, do: [:set_completed_at, :decrease_deals_stock, :send_confirmation_email]
+      after_transition on: :deliver, do: [:set_delivered_at, :send_delivery_email]
+      
+      after_transition completed: :cancelled, do: [:set_cancelled_at, :increase_deals_stock]
+      after_transition on: :cancel, do: [:send_cancellation_email]
+      after_transition on: :admin_cancel, do: [:send_admin_cancellation_email]
+
 
       event :add_address do
         transition cart: :address
@@ -33,6 +36,10 @@ module Checkout
       end
 
       event :cancel do
+        transition completed: :cancelled, if: :cancellation_allowed?
+      end
+
+      event :admin_cancel do
         transition completed: :cancelled
       end
 
@@ -47,17 +54,31 @@ module Checkout
     is_order_not_empty? && are_deals_live? && are_deals_quantity_valid?
   end
 
-  def cancellation_allowed?
-    are_deals_live? && can_be_cancelled?
+  def cancelled_by!(canceller)
+    if canceller.admin?
+      admin_cancel!
+    else
+      cancel!
+    end
+    update_columns(canceller_id: canceller.id)
   end
 
+
   private
+
+    def ensure_checkout_allowed?
+      checkout_allowed?
+    end
+ 
+    def cancellation_allowed?
+      are_deals_live? && can_be_cancelled?
+    end
 
     def set_completed_at
       update_columns(completed_at: Time.current)
     end
 
-    def send_confirmation_instructions
+    def send_confirmation_email
       OrderMailer.confirmation_email(id).deliver_later
     end
 
@@ -69,7 +90,7 @@ module Checkout
     end
 
     def set_delivered_at
-      update_columns(deliverd_at: Time.current)
+      update_columns(delivered_at: Time.current)
     end
 
     def set_cancelled_at
@@ -94,11 +115,7 @@ module Checkout
 
     def are_deals_live?
       if deals.expired.present?
-        if completed?
-          errors[:base] << I18n.t(:has_expired_deals_cannot_be_cancelled, scope: [:order, :errors])
-        else
-          errors[:base] << I18n.t(:has_expired_deals_cannot_continue, scope: [:order, :errors])
-        end
+        errors[:base] << I18n.t(:has_expired_deals, scope: [:order, :errors])
         false
       else
         true
@@ -115,23 +132,25 @@ module Checkout
     end
 
     def can_be_cancelled?
-      if line_items.includes(:deal).all? { |line_item| line_item.deal.end_at - Time.current > ENV['minutes_before_expiration_when_deal_can_be_cancelled'].to_i.minutes }
+      # check if deal can be cancelled x minutes before deal expires
+      if deals.where('end_at > ?', MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED + Time.current ).present?
         true
       else
-        errors[:base] << I18n.t(:cannot_be_expired_x_minutes_before_deals_expiration, scope: [:order, :errors], x: ENV['minutes_before_expiration_when_deal_can_be_cancelled'])
+        errors[:base] << I18n.t(:cannot_be_expired_minutes_before_deals_expiration, scope: [:order, :errors], minutes: (MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED.to_i / 60))
         false       
       end
     end
 
-    def restore_deals_quantity
-      line_items.includes(:deal).each do |line_item|
-        deal = line_item.deal
-        deal.update_columns(quantity: deal.quantity + line_item.quantity)
-      end
+    def send_cancellation_email
+      OrderMailer.cancellation_email(id).deliver_later
     end
 
-    def send_cancellation_instructions
-      OrderMailer.cancellation_email(id).deliver_later
+    def send_delivery_email
+      OrderMailer.delivery_email(id).deliver_later
+    end
+
+    def send_admin_cancellation_email
+      OrderMailer.cancellation_by_admin_email(id).deliver_later
     end
 
 end
