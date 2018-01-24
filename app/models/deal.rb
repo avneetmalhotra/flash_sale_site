@@ -46,11 +46,12 @@ class Deal < ApplicationRecord
   scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }
   scope :live, ->{ where("start_at <= ? AND end_at >= ?", Time.current, Time.current) }
   scope :expired, ->{ where("end_at < ?", Time.current) }
-  # scope :future, ->(date = Date.current, time = Time.current) { where("publishing_date >= ? AND (start_at IS NULL OR start_at > ?)", date, time) }
   scope :future, -> { where(start_at: nil).where("publishing_date >= ?", Date.current) }
   scope :unpublished, ->{ where(publishing_date: nil) }
   scope :chronologically_by_end_at, ->{ order(:end_at) }
   scope :reverse_chronologically_by_end_at, ->{ order(end_at: :desc) }
+  scope :search_by_title_and_description, ->(title, description) { where("title LIKE ? OR description LIKE ?", "%#{title}%", "%#{description}%") }
+
 
   def has_publishing_date?
     publishing_date.present?
