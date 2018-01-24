@@ -1,0 +1,72 @@
+<% content_for :page_title do %>
+  <span class="page-title <%= @order.completed?? 'col-md-offset-5 col-xs-offset-5' : 'col-md-offset-4 col-xs-offset-4' %>">
+    <%= link_to t(:order_page_title, scope: :action), admin_orders_url %> / 
+    <%= @order.invoice_number %>
+  </span>
+<% end %>
+
+<% if @order.completed? %>
+  <% content_for :page_action do %>
+    <%= link_to t(:page_action_cancel, scope: :action), cancel_admin_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger page-action col-md-offset-7 col-xs-offset-7' %>
+    <%= link_to t(:page_action_deliver, scope: :action), deliver_admin_order_path(@order), method: :patch, data: { confirm: 'Are you sure you want to mark this order delivered?' }, class: 'btn btn-success page-action col-md-offset- col-xs-offset-' %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8 col-xs-8 col-md-offset-2">
+    <div class="panel panel-default">  
+      
+      <table class='table table-striped table-hover'>
+        <tr>
+          <td>Invoice Number</td>
+          <td><%= @order.invoice_number %></td>
+        </tr>
+        
+        <tr>
+          <td>State</td>
+          <td><%= @order.state.capitalize %></td>
+        </tr>
+
+        <tr>
+          <td>User Email</td>
+          <td><%= @order.user.email %></td>
+        </tr>
+
+        <tr>
+          <td>Completed On</td>
+          <td><%= @order.completed_at %></td>
+        </tr>
+        
+        <tr>
+          <td>Delivered On</td>
+          <td><%= @order.presenter.delivery_time %></td>
+        </tr>
+        
+        <tr>
+          <td>Cancelled On</td>
+          <td><%= @order.presenter.cancellation_time %></td>
+        </tr>
+
+        <tr>
+          <td>Items's Quantity</td>
+          <td><%= @order.total_items_quantity %></td>
+        </tr>
+
+        <tr>
+          <td>Item(s) Subtotal</td>
+          <td><%= number_to_currency(@order.items_subtotal) %></td>
+        </tr>
+
+        <tr>
+          <td>Loyalty Discount</td>
+          <td><%= number_to_currency(@order.loyalty_discount) %></td>
+        </tr>
+
+        <tr>
+          <td>Grand Subtotal</td>
+          <td><%= number_to_currency(@order.total_amount) %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

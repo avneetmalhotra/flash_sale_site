@@ -21,7 +21,7 @@
     </div>
     
     <div class="tab-pane fade" id="cancelled-orders">
-      <%= render partial: 'order', collection: @cancelled_order %>
+      <%= render partial: 'order', collection: @cancelled_orders %>
       <% if @cancelled_orders.empty? %>
         <h3>No Cancelled Orders</h3>
       <% end %>

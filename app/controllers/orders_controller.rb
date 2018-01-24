@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
 
   def cancel
     if @order.cancel
-      flash[:success] = I18n.t(:successfully_cancelled, scope: [:flash, :notice])
+      flash[:success] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
     else
       flash[:alert] = @order.pretty_base_errors
     end

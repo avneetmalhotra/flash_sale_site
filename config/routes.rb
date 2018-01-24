@@ -21,6 +21,13 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :deals
     resources :users, except: [:destroy]
+    resources :orders, only: [:index, :show], param: :invoice_number do
+      member do
+        patch 'cancel'
+        patch 'deliver'
+      end
+      post 'browse', on: :collection
+    end
   end
 
   resources :deals, only: [:index, :show]

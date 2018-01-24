@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   include TokenGenerator
   include Checkout
+  include Presentable
 
   ## ASSOCIATIONS
   belongs_to :user

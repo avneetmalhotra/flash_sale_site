@@ -38,9 +38,9 @@
     <div class="panel-body">
       <section>
         <% if order.delivered? %>
-          <p class="lead">Delivered <%= order.delivered_at.strftime('%v') %></p>
+          <p class="lead text-success">Delivered on <%= order.delivered_at.strftime('%v') %></p>
         <% elsif order.cancelled? %>
-          <p class="lead">Cancelled <%= order.cancelled_at.strftime('%v') %></p>
+          <p class="lead text-danger">Cancelled on <%= order.cancelled_at.strftime('%v') %></p>
         <% end %>
       </section>
 

@@ -1,0 +1,62 @@
+<br>
+<div class="table-responsive">
+  <div class="panel panel-default">  
+    <table class="table table-striped table-hover ">
+      
+      <thead>
+        <tr>
+          <th nowrap>#</th>
+          <th nowrap></th>
+          <th nowrap>TITLE</th>
+          <th nowrap>DESCRIPTION</th>
+          <th nowrap>PRICE</th>
+          <th nowrap>DISCOUNT PRICE</th>
+          <th nowrap>QUANTITY</th>
+          <th nowrap>PUBLISHING DATE</th>
+          <th nowrap>START TIME</th>
+          <th nowrap>END TIME</th>
+          <th nowrap></th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% deals.each.with_index(1) do |deal, serial_number| %>
+          <tr>
+
+            <td><%= serial_number %></td>
+
+            <td>
+              <% if deal.images.exists? %>
+                <%= image_tag deal.images.first.avatar.url(:mini) %>
+              <% else %>
+                <%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '48x48' %>
+              <% end %>
+            </td>
+
+            <td><%= deal.title %></td>
+
+            <td><%= strip_html_and_truncate(deal.description, 10) %></td>
+
+            <td><%= number_to_currency(deal.price) %></td>
+
+            <td><%= number_to_currency(deal.discount_price) %></td>
+
+            <td><%= deal.quantity %></td>
+
+            <td><%= deal.presenter.publishing_date %></td>
+
+            <td><%= deal.presenter.start_time %></td>
+            
+            <td><%= deal.presenter.end_time %></td>
+
+            <td>
+              <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(deal) %> | 
+              <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_deal_url(deal) %> | 
+              <%= link_to t(:page_action_destroy, scope: [:action]), admin_deal_url(deal), method: 'delete', data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

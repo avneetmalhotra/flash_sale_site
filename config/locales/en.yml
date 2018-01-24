@@ -55,10 +55,15 @@ en:
     edit:                             'Edit'
     edit_customer:                    'Edit Customer'
     empty_cart:                       'Empty Cart'
+    filter:                           'Filter'
     login:                            'Login'
     myorders:                         'My Orders'
     new:                              'New'
     order_details:                    'Order Details'
+    orders:                           'Orders'
+    order_page_title:                 'Orders'
+    page_action_cancel:               'Cancel'
+    page_action_deliver:              'Mark Delivered'
     page_action_destroy:              'Delete'
     page_action_edit:                 'Edit'
     page_action_new_user:             'New User'
@@ -84,6 +89,7 @@ en:
       cart_empty:                      'Cart is empty.'
       deal_cannot_be_added_to_cart:    'Deal could not be added to cart.'
       deal_cannot_be_destroyed:        'Deal could not be deleted.'
+      empty_email_argument:            'The email was blank.'
       incomplete_transaction:          'There was some issue completing the transaction. Please try again.'
       invalid_account:                 'User with given email does not exist.'
       invalid_card:                    "There was some issue processing payment from you card. Please try paying using a different card."
@@ -96,6 +102,8 @@ en:
       line_item_cannot_be_updated:     "Line Item couldn't be updated."
       not_authorized:                  'You are not authorized to perform this action.'
       order_cannot_be_deleted:         'Order cannot be deleted.'
+      order_cannot_be_cancelled:       'Order cannot be cancelled.'
+      order_cannot_be_marked_delivered: 'Order cannot be marked delivered.'
 
     notice:
       account_confirmed:            'Your account has been successfully confirmed. Please log in.'
@@ -114,7 +122,8 @@ en:
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
       password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
-      successfully_cancelled:       'Order successfully cancelled.'
+      order_successfully_cancelled: 'Order successfully cancelled.'
+      order_successfully_marked_delivered: 'Order successfully marked delivered'
 
   order_mailer:
     confirmation_email:
@@ -133,6 +142,23 @@ en:
         one: 'You had ordered the following item'
         other: 'You had ordered the following items'
       subject: '%{invoice_number} -FLASH SALE Order Cancellation'
+
+    cancellation_by_admin_email:
+      greeting: 'Hi'
+      first_line: 'Your Order with Invoice number: %{invoice_number} has been cancelled by the website administrator.'
+      second_line: 'Please contact site administrator if you have any issue.'
+      third_line:
+        one: 'You had ordered the following item'
+        other: 'You had ordered the following items'
+      subject: '%{invoice_number} -FLASH SALE Order Cancellation'
+
+    delivery_email:
+      greeting: 'Hi'
+      first_line: 'Your Order with Invoice number: %{invoice_number} has been successfully delivered at:'
+      second_line:
+        one: 'You had ordered the following item'
+        other: 'You had ordered the following items'
+      subject: '%{invoice_number} -FLASH SALE Order Delivery'
 
   user_mailer:
     confirmation_email:
@@ -172,6 +198,8 @@ en:
     errors:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
+      expired_deal_cannot_be_deleted:     'Expired Deal cannot be deleted.'
+      live_deal_cannot_be_deleted:        'Live Deal cannot be deleted.'
 
   order:
     errors:
@@ -180,7 +208,10 @@ en:
       has_expired_deals_cannot_continue: "Please delete the expired deals to continue."
       has_expired_deals_cannot_be_cancelled: 'Cannot cancel an order with expired deals.'
       invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."
+    not_cancelled:          'Not Cancelled'
+    not_delivered:          'Not Delivered'
 
   payment:
     stripe:
       description:                  "Flash Sale payment of order: #%{invoice_number}"
+
