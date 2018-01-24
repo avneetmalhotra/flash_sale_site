@@ -12,6 +12,47 @@
   <% end %>
 <% end %>
 
+<div class="col-md-10 col-xs-offset-1 col-md-offset-1 col-xs-10">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <section class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <th nowrap></th>
+            <th nowrap>TITLE</th>
+            <th nowrap>UNIT PRICE</th>
+            <th nowrap>QUANTITY</th>
+            <th nowrap>LOYALTY DISCOUNT</th>
+            <th nowrap>TOTAL PRICE</th>
+            <th nowrap></th>
+
+          </thead>
+          <tbody>
+            <% @order.line_items.includes(deal: :images).each do |line_item| %>
+              <tr>
+                <td><%= link_to image_tag(line_item.deal.images.first.avatar.url(:mini)), admin_deal_path(line_item.deal) %></td>
+                <td><%= link_to line_item.deal.title, admin_deal_path(line_item.deal) %></td>
+                <td>
+                  <p>
+                    <span class="text-muted"><del><%= number_to_currency(line_item.price) %></del></span>
+                    <span class="lead text-success"><%= number_to_currency(line_item.discount_price) %></span>
+                  </p>
+                </td>
+                <td><%= line_item.quantity %></td>
+                <td><%= number_to_currency(line_item.loyalty_discount) %></td>
+                <td><%= number_to_currency(line_item.total_amount) %></td>
+                <td>
+                  <%= link_to I18n.t(:view_deal, scope: :action), admin_deal_path(line_item.deal) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-md-8 col-xs-8 col-md-offset-2">
     <div class="panel panel-default">  

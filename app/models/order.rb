@@ -3,6 +3,8 @@ class Order < ApplicationRecord
   include Checkout
   include Presentable
 
+  VALID_STATES = %w(cart address payment completed cancelled delivered)
+
   ## ASSOCIATIONS
   belongs_to :user
   has_many :line_items, dependent: :destroy
@@ -14,7 +16,7 @@ class Order < ApplicationRecord
   validates :invoice_number, presence: true,  uniqueness: { allow_blank: true }
   validates :loyalty_discount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'].to_i }
   validates :total_amount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
-  validates :state, inclusion: { in: %w(cart address payment completed cancelled delivered) }
+  validates :state, inclusion: { in: VALID_STATES}
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
@@ -22,6 +24,7 @@ class Order < ApplicationRecord
   scope :ready_for_delivery, ->{ where(state: 'completed') }
   scope :cancelled, ->{ where(state: 'cancelled') }
   scope :delivered, ->{ where(state: 'delivered') }
+  scope :search_by_email, ->(email) { joins(:user).where("email LIKE ?", "%#{email}%") }
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete

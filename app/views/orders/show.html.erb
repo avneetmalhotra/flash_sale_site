@@ -84,7 +84,7 @@
                 <td><%= number_to_currency(line_item.loyalty_discount) %></td>
                 <td><%= number_to_currency(line_item.total_amount) %></td>
                 <td>
-                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal), class: 'btn btn-primary' %>
+                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal) %>
                 </td>
               </tr>
             <% end %>

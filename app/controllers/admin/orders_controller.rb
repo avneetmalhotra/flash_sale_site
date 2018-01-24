@@ -1,13 +1,9 @@
 class Admin::OrdersController < Admin::BaseController
 
+  before_action :fetch_orders, only: :index
   before_action :get_order, only: [:show, :cancel, :deliver]
 
   def index
-    if params[:user].present? && params[:user][:email].present?
-      @orders = Order.joins(:user).where("email LIKE ?", "%#{params[:user][:email]}%")
-    else
-      @orders = Order.all
-    end  
     @ready_for_delivery_orders = @orders.ready_for_delivery.order(completed_at: :desc)
     @delivered_orders = @orders.delivered.order(delivered_at: :desc)
     @cancelled_orders = @orders.cancelled.order(cancelled_at: :desc)
@@ -18,10 +14,11 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def cancel
-    if @order.cancel(current_user)
+    begin
+      @order.cancelled_by!(current_user)
       flash[:notice] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
-    else
-      flash[:alert] = I18n.t(:order_cannot_be_cancelled, scope: [:flash, :alert]) + '<br>' + @order.pretty_errors
+    rescue => e
+      flash[:alert] = e.message
     end
     redirect_to admin_order_path(@order)
   end
@@ -30,17 +27,11 @@ class Admin::OrdersController < Admin::BaseController
     if @order.deliver
       flash[:notice] = I18n.t(:order_successfully_marked_delivered, scope: [:flash, :notice])
     else
-      flash[:alert] = I18n.t(:order_cannot_be_marked_delivered, scope: [:flash, :alert]) + '<br>' + @order.pretty_errors
+      flash[:alert] = @order.pretty_errors
     end
     redirect_to admin_order_path(@order)
   end
 
-  def browse
-    @ready_for_delivery_orders = @orders.ready_for_delivery.order(completed_at: :desc)
-    @delivered_orders = @orders.delivered.order(delivered_at: :desc)
-    @cancelled_orders = @orders.cancelled.order(cancelled_at: :desc)
-    render 'index'
-  end
 
   private
 
@@ -49,6 +40,14 @@ class Admin::OrdersController < Admin::BaseController
       if @order.nil?
         render_404
       end
+    end
+
+    def fetch_orders
+      if params[:search].present? && params[:search][:email].present?
+        @orders = Order.search_by_email(params[:search][:email])
+      else
+        @orders = Order.all
+      end 
     end
 
 end

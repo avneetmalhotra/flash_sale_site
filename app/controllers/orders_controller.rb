@@ -23,12 +23,13 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    if @order.cancel(current_user)
+    begin
+      @order.cancelled_by!(current_user)
       flash[:success] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
-    else
-      flash[:alert] = @order.pretty_errors
+    rescue => e
+      flash[:alert] = e.message
     end
-    redirect_to order_path(@order) 
+    redirect_to order_path(@order)
   end
   
 

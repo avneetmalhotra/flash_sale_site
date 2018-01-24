@@ -11,8 +11,6 @@
             <th nowrap>COMPLETED AT</th>
             <th nowrap>DELIVERED AT</th>
             <th nowrap>CANCELLED AT</th>
-            <th nowrap>QUANTITY</th>
-            <th nowrap>ITEM(S) SUBTOTAL</th>
             <th nowrap>LOYALTY DISCOUNT</th>
             <th nowrap>GRAND SUBTOTAL</th>
             <th nowrap></th>
@@ -33,10 +31,6 @@
               <td><%= order.presenter.delivery_time %></td>
 
               <td><%= order.presenter.cancellation_time %></td>
-
-              <td><%= order.total_items_quantity %></td>
-
-              <td><%= number_to_currency(order.items_subtotal) %></td>
 
               <td><%= number_to_currency(order.loyalty_discount) %></td>
 

@@ -40,13 +40,14 @@ class Deal < ApplicationRecord
   # when image is destroyed images.size changes only after update
   # so this callback verifies if image_count_valid
   after_update :ensure_images_count_valid, if: :has_publishing_date?
-  before_destroy :ensure_deal_can_be_destroyed
+  before_destroy :ensure_deal_not_live_or_expired
 
   ## SCOPE
   scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }
-  scope :live, ->(time = Time.current) { where("start_at <= ? AND end_at >= ?", time, time) }
-  scope :expired, ->(time = Time.current) { where("end_at < ?", time) }
-  scope :future, ->(date = Date.current, time = Time.current) { where("publishing_date >= ? AND (start_at IS NULL OR start_at > ?)", date, time) }
+  scope :live, ->{ where("start_at <= ? AND end_at >= ?", Time.current, Time.current) }
+  scope :expired, ->{ where("end_at < ?", Time.current) }
+  # scope :future, ->(date = Date.current, time = Time.current) { where("publishing_date >= ? AND (start_at IS NULL OR start_at > ?)", date, time) }
+  scope :future, -> { where(start_at: nil).where("publishing_date >= ?", Date.current) }
   scope :unpublished, ->{ where(publishing_date: nil) }
   scope :chronologically_by_end_at, ->{ order(:end_at) }
   scope :reverse_chronologically_by_end_at, ->{ order(end_at: :desc) }
@@ -137,12 +138,9 @@ class Deal < ApplicationRecord
       end
     end
 
-    def ensure_deal_can_be_destroyed
-      if is_expired?
-        errors[:base] << I18n.t(:expired_deal_cannot_be_deleted, scope: [:deal, :errors])
-        throw :abort
-      elsif is_live?
-        errors[:base] << I18n.t(:live_deal_cannot_be_deleted, scope: [:deal, :errors])
+    def ensure_deal_not_live_or_expired
+      if is_expired? || is_live?
+        errors[:base] << I18n.t(:live_or_expired_deal_cannot_be_deleted, scope: [:deal, :errors])
         throw :abort
       end
     end

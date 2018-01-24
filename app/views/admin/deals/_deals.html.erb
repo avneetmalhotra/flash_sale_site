@@ -8,7 +8,6 @@
           <th nowrap>#</th>
           <th nowrap></th>
           <th nowrap>TITLE</th>
-          <th nowrap>DESCRIPTION</th>
           <th nowrap>PRICE</th>
           <th nowrap>DISCOUNT PRICE</th>
           <th nowrap>QUANTITY</th>
@@ -34,8 +33,6 @@
             </td>
 
             <td><%= deal.title %></td>
-
-            <td><%= strip_html_and_truncate(deal.description, 10) %></td>
 
             <td><%= number_to_currency(deal.price) %></td>
 

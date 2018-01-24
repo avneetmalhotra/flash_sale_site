@@ -63,7 +63,7 @@ en:
     orders:                           'Orders'
     order_page_title:                 'Orders'
     page_action_cancel:               'Cancel'
-    page_action_deliver:              'Mark Delivered'
+    page_action_deliver:              'Deliver'
     page_action_destroy:              'Delete'
     page_action_edit:                 'Edit'
     page_action_new_user:             'New User'
@@ -122,14 +122,15 @@ en:
       logout_successfull:           'You have successfully logged out.'
       password_reset_email_sent:    'Email to Reset your Password has been sent to your email address.'
       password_successfully_reset:  'Your Password has been successfully reset. Please login with new password.'
-      order_successfully_cancelled: 'Order successfully cancelled.'
-      order_successfully_marked_delivered: 'Order successfully marked delivered'
+      order_placed_successfully:    'Thank you for placing the order.'
+      order_successfully_cancelled: 'Order has been cancelled successfully.'
+      order_successfully_marked_delivered: 'Order has been delivered successfully.'
 
   order_mailer:
     confirmation_email:
       greeting: 'Hi'
       first_line: 'Thank you for ordering from FLASH SALE'
-      second_line: 'Your Order Invoice number is: %{invoice_number}'
+      second_line: 'Your Invoice number is: %{invoice_number}'
       third_line:
         one: 'You ordered the following item'
         other: 'You ordered the following items'
@@ -137,7 +138,7 @@ en:
 
     cancellation_email:
       greeting: 'Hi'
-      first_line: 'Your Order with Invoice number is: %{invoice_number} has been cancelled.'
+      first_line: 'Your Order with Invoice number: %{invoice_number} has been cancelled.'
       second_line:
         one: 'You had ordered the following item'
         other: 'You had ordered the following items'
@@ -146,7 +147,7 @@ en:
     cancellation_by_admin_email:
       greeting: 'Hi'
       first_line: 'Your Order with Invoice number: %{invoice_number} has been cancelled by the website administrator.'
-      second_line: 'Please contact site administrator if you have any issue.'
+      second_line: 'Please contact site administrator for further information.'
       third_line:
         one: 'You had ordered the following item'
         other: 'You had ordered the following items'
@@ -197,8 +198,7 @@ en:
     errors:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
-      expired_deal_cannot_be_deleted:     'Expired Deal cannot be deleted.'
-      live_deal_cannot_be_deleted:        'Live Deal cannot be deleted.'
+      live_or_expired_deal_cannot_be_deleted:     'Live or Expired Deal cannot be deleted.'
 
   order:
     errors:

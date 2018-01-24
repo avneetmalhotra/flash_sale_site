@@ -3,8 +3,8 @@
 <% end %>
 
 <div class="browse-order clearfix">
-  <%= form_with(scope: :user, url: admin_orders_path, local: true, method: :get, class: 'navbar-form navbar-left') do |form| %>
-    <%= form.text_field :email, class: 'form-control', placeholder: 'a@mail.com' %>
+  <%= form_with(scope: :search, url: admin_orders_path, local: true, method: :get, class: 'navbar-form navbar-left') do |form| %>
+    <%= form.text_field :email, class: 'form-control', placeholder: 'test@mail.com' %>
     <%= form.submit I18n.t(:filter, scope: [:action]), class: 'btn btn-default' %>
   <% end %>
 </div>
