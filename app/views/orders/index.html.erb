@@ -1,15 +1,15 @@
 <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#open-orders" data-toggle="tab" aria-expanded="true">Open Orders</a></li>
+    <li class="active"><a href="#ready-for-delivery-orders" data-toggle="tab" aria-expanded="true">Ready for Delivery Orders</a></li>
     <li class=""><a href="#delivered-orders" data-toggle="tab" aria-expanded="false">Delivered Orders</a></li>
     <li class=""><a href="#cancelled-orders" data-toggle="tab" aria-expanded="false">Cancelled Orders</a></li>
   </ul>
 
   <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="open-orders">
-      <%= render partial: 'order', collection: @open_orders %>
-      <% if @open_orders.empty? %>
-        <h3>No Open Orders</h3>
+    <div class="tab-pane fade active in" id="ready-for-delivery-orders">
+      <%= render partial: 'order', collection: @ready_for_delivery_orders %>
+      <% if @ready_for_delivery_orders.empty? %>
+        <h3>No Orders for delivery</h3>
       <% end %>
     </div>
 

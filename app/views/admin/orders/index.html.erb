@@ -3,7 +3,7 @@
 <% end %>
 
 <div class="browse-order clearfix">
-  <%= form_with(scope: :user, url: browse_admin_orders_path, local: true, class: 'navbar-form navbar-left') do |form| %>
+  <%= form_with(scope: :user, url: admin_orders_path, local: true, method: :get, class: 'navbar-form navbar-left') do |form| %>
     <%= form.text_field :email, class: 'form-control', placeholder: 'a@mail.com' %>
     <%= form.submit I18n.t(:filter, scope: [:action]), class: 'btn btn-default' %>
   <% end %>
@@ -12,33 +12,33 @@
 
 <div class="col-md-12 col-xs-12">
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#open-orders" data-toggle="tab" aria-expanded="true">Open Orders</a></li>
+    <li class="active"><a href="#ready-for-delivery-orders" data-toggle="tab" aria-expanded="true">Ready for Delivery Orders</a></li>
     <li class=""><a href="#delivered-orders" data-toggle="tab" aria-expanded="false">Delivered Orders</a></li>
     <li class=""><a href="#cancelled-orders" data-toggle="tab" aria-expanded="false">Cancelled Orders</a></li>
   </ul>
 
   <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade active in" id="open-orders">
-      <% if @open_orders.try(:present?) %>
-        <%= render partial: 'orders', object: @open_orders %>
+    <div class="tab-pane fade active in" id="ready-for-delivery-orders">
+      <% if @ready_for_delivery_orders.empty? %>
+        <h3>No Orders for delivery</h3>
       <% else %>
-        <h3>No Open Orders</h3>
+        <%= render partial: 'orders', object: @ready_for_delivery_orders %>
       <% end %>
     </div>
 
     <div class="tab-pane fade" id="delivered-orders">
-      <% if @delivered_orders.try(:present?) %>
-        <%= render partial: 'orders', object: @delivered_orders %>
-      <% else %>
+      <% if @delivered_orders.empty? %>
         <h3>No Delivered Orders</h3>
+      <% else %>
+        <%= render partial: 'orders', object: @delivered_orders %>
       <% end %>
     </div>
     
     <div class="tab-pane fade" id="cancelled-orders">
-      <% if @cancelled_orders.try(:present?) %>
-        <%= render partial: 'orders', object: @cancelled_orders %>
-      <% else %>
+      <% if @cancelled_orders.empty? %>
         <h3>No Cancelled Orders</h3>
+      <% else %>
+        <%= render partial: 'orders', object: @cancelled_orders %>
       <% end %>
     </div>
   </div>

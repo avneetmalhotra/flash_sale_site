@@ -26,7 +26,6 @@ Rails.application.routes.draw do
         patch 'cancel'
         patch 'deliver'
       end
-      post 'browse', on: :collection
     end
   end
 
@@ -34,11 +33,10 @@ Rails.application.routes.draw do
 
   resources :line_items, only: [:create, :destroy, :update]
 
-  resources :orders, only: [:destroy, :show], param: :invoice_number do
+  resources :orders, only: [:index, :destroy, :show], param: :invoice_number do
     patch 'cancel', on: :member
   end
   get 'cart', to: 'orders#cart'
-  get 'myorders', to: 'orders#myorders'
 
   resources :addresses, only: [:new, :create]
   patch 'address/associate_address', to: "addresses#associate_address"

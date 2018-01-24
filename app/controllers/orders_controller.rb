@@ -1,9 +1,6 @@
 class OrdersController < ApplicationController
 
   before_action :get_order, only: [:destroy, :show, :cancel]
-  before_action :get_current_users_open_orders, only: :myorders
-  before_action :get_current_users_delivered_orders, only: :myorders
-  before_action :get_current_users_cancelled_orders, only: :myorders 
 
   def cart
   end
@@ -19,14 +16,17 @@ class OrdersController < ApplicationController
   def show
   end
 
-  def myorders
+  def index
+    @ready_for_delivery_orders = current_user.orders.ready_for_delivery.order(completed_at: :desc)
+    @delivered_orders = current_user.orders.delivered.order(delivered_at: :desc)
+    @cancelled_orders = current_user.orders.cancelled.order(cancelled_at: :desc)
   end
 
   def cancel
-    if @order.cancel
+    if @order.cancel(current_user)
       flash[:success] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
     else
-      flash[:alert] = @order.pretty_base_errors
+      flash[:alert] = @order.pretty_errors
     end
     redirect_to order_path(@order) 
   end
@@ -37,18 +37,6 @@ class OrdersController < ApplicationController
     def get_order
       @order = current_user.orders.find_by(invoice_number: params[:invoice_number])
       render_404 unless @order.present?
-    end
-
-    def get_current_users_open_orders
-      @open_orders = current_user.orders.open.order(completed_at: :desc)
-    end
-
-    def get_current_users_delivered_orders
-      @delivered_orders = current_user.orders.delivered.order(delivered_at: :desc)
-    end
-
-    def get_current_users_cancelled_orders
-      @cancelled_orders = current_user.orders.cancelled.order(cancelled_at: :desc)
     end
 
 end

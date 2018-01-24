@@ -183,7 +183,6 @@ en:
       can_be_bought_once:  'can be bought only once.'
       cannot_have_more_deals: 'is already taken by %{maximum_number_of_deals} deals.'
       deal_already_bought: 'This deal has already been bought before.'
-      deal_bought_in_cancelled_order: "This deal was bought before and then it's order was cancelled."
       deal_expired:        'This deal has expired.'
       discount_price_less_than_price: 'must be less than price.'
       image_greater_than: 'count must be greater than or equal to %{image_count}'
@@ -204,9 +203,8 @@ en:
   order:
     errors:
       cart_empty:                        'Cart is empty.'
-      cannot_be_expired_x_minutes_before_deals_expiration: 'Order cannot be expired %{x} minutes before a deal expires.'
-      has_expired_deals_cannot_continue: "Please delete the expired deals to continue."
-      has_expired_deals_cannot_be_cancelled: 'Cannot cancel an order with expired deals.'
+      cannot_be_expired_minutes_before_deals_expiration: 'Order cannot be expired %{minutes} minutes before a deal expires.'
+      has_expired_deals: 'Order has expired deals'
       invalid_deal_quantity:             "Some deal(s) remaining quantity has decreased. Please update their quantity to continue."
     not_cancelled:          'Not Cancelled'
     not_delivered:          'Not Delivered'

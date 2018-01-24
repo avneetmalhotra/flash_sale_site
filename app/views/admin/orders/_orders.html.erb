@@ -8,14 +8,9 @@
             <th nowrap>#</th>
             <th nowrap>INVOICE NUMBER</th>
             <th nowrap>USER EMAIL</th>
-            <th nowrap>COMPLETION TIME</th>
-            <th nowrap>
-              <% if orders.first.delivered? %>
-                DELIVERY TIME
-              <% elsif orders.first.cancelled? %>
-                CANCELLATION TIME
-              <% end %>
-            </th>
+            <th nowrap>COMPLETED AT</th>
+            <th nowrap>DELIVERED AT</th>
+            <th nowrap>CANCELLED AT</th>
             <th nowrap>QUANTITY</th>
             <th nowrap>ITEM(S) SUBTOTAL</th>
             <th nowrap>LOYALTY DISCOUNT</th>
@@ -35,13 +30,9 @@
             
               <td><%= order.completed_at %></td>
                 
-              <td>
-                <% if order.delivered? %>
-                  <%= order.delivered_at %>
-                <% elsif order.cancelled? %>
-                  <%= order.cancelled_at %>
-                <% end %>
-              </td>
+              <td><%= order.presenter.delivery_time %></td>
+
+              <td><%= order.presenter.cancellation_time %></td>
 
               <td><%= order.total_items_quantity %></td>
 

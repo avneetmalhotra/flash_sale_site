@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
 
       elsif current_order.can_pay?
         unless current_order.pay
-          redirect_to cart_path, alert: current_order.pretty_base_errors and return
+          redirect_to cart_path, alert: current_order.pretty_errors and return
         end
       end
     end

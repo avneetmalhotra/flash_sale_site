@@ -26,7 +26,7 @@
             <td><%= serial_number %></td>
 
             <td>
-              <% if deal.images.exists? %>
+              <% if deal.images.present? %>
                 <%= image_tag deal.images.first.avatar.url(:mini) %>
               <% else %>
                 <%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '48x48' %>

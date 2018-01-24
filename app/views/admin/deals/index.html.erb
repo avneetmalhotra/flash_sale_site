@@ -6,61 +6,45 @@
   <span class="col-md-offset-10 col-xs-offset-10 page-title"><%= t(:deal_page_title, scope: [:action]) %></span>
 <% end %>
 
-<% if @live_deals.empty? && @future_deals.empty? && @expired_deals.empty? && @unpublished_deals.empty? %>
-  <div class="col-md-6 col-md-offset-3">
-    <div class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title col-md-offset-4">NO DEAL FOUND</h3>
-      </div>
-      <div class="panel-body">
-        <p>No deal has been created yet.</p>
-        <%= link_to 'Create', new_admin_deal_url, class: 'btn btn-danger' %>
-        a deal now.
-      </div>
+<div class="col-md-12 col-xs-12">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#live-deals" data-toggle="tab" aria-expanded="true">Live Deals</a></li>
+    <li class=""><a href="#future-deals" data-toggle="tab" aria-expanded="false">Future Deals</a></li>
+    <li class=""><a href="#expired-deals" data-toggle="tab" aria-expanded="false">Expired Deals</a></li>
+    <li class=""><a href="#unpublished-deals" data-toggle="tab" aria-expanded="false">Unpublished Deals</a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="live-deals">
+      <% if @live_deals.empty? %>
+        <h3>No Live Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @live_deals %>
+      <% end %>
+    </div>
+
+    <div class="tab-pane fade" id="future-deals">
+      <% if @future_deals.empty? %>
+        <h3>No Future Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @future_deals %>
+      <% end %>
+    </div>
+    
+    <div class="tab-pane fade" id="expired-deals">
+      <% if @expired_deals.empty? %>
+        <h3>No Expired Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @expired_deals %>
+      <% end %>
+    </div>
+
+    <div class="tab-pane fade" id="unpublished-deals">
+      <% if @unpublished_deals.empty? %>
+        <h3>No Unpublished Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @unpublished_deals %>
+      <% end %>
     </div>
   </div>
-
-<% else %>
-  <div class="col-md-12 col-xs-12">
-    <ul class="nav nav-tabs">
-      <li class="active"><a href="#live-deals" data-toggle="tab" aria-expanded="true">Live Deals</a></li>
-      <li class=""><a href="#future-deals" data-toggle="tab" aria-expanded="false">Future Deals</a></li>
-      <li class=""><a href="#expired-deals" data-toggle="tab" aria-expanded="false">Expired Deals</a></li>
-      <li class=""><a href="#unpublished-deals" data-toggle="tab" aria-expanded="false">Unpublished Deals</a></li>
-    </ul>
-
-    <div id="myTabContent" class="tab-content">
-      <div class="tab-pane fade active in" id="live-deals">
-        <% if @live_deals.empty? %>
-          <h3>No Live Deals</h3>
-        <% else %>
-          <%= render partial: 'deals', object: @live_deals %>
-        <% end %>
-      </div>
-
-      <div class="tab-pane fade" id="future-deals">
-        <% if @future_deals.empty? %>
-          <h3>No Future Deals</h3>
-        <% else %>
-          <%= render partial: 'deals', object: @future_deals %>
-        <% end %>
-      </div>
-      
-      <div class="tab-pane fade" id="expired-deals">
-        <% if @expired_deals.empty? %>
-          <h3>No Expired Deals</h3>
-        <% else %>
-          <%= render partial: 'deals', object: @expired_deals %>
-        <% end %>
-      </div>
-
-      <div class="tab-pane fade" id="unpublished-deals">
-        <% if @unpublished_deals.empty? %>
-          <h3>No Unpublished Deals</h3>
-        <% else %>
-          <%= render partial: 'deals', object: @unpublished_deals %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-<% end %>
+</div>
