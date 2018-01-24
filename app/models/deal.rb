@@ -40,12 +40,17 @@ class Deal < ApplicationRecord
   # when image is destroyed images.size changes only after update
   # so this callback verifies if image_count_valid
   after_update :ensure_images_count_valid, if: :has_publishing_date?
+  before_destroy :ensure_deal_not_live_or_expired
 
   ## SCOPE
   scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }
-  scope :live, ->(time = Time.current) { where("start_at <= ? AND end_at >= ?", time, time) }
-  scope :expired, ->(time = Time.current) { where("end_at < ?", time) }
-
+  scope :live, ->{ where("start_at <= ? AND end_at >= ?", Time.current, Time.current) }
+  scope :expired, ->{ where("end_at < ?", Time.current) }
+  # scope :future, ->(date = Date.current, time = Time.current) { where("publishing_date >= ? AND (start_at IS NULL OR start_at > ?)", date, time) }
+  scope :future, -> { where(start_at: nil).where("publishing_date >= ?", Date.current) }
+  scope :unpublished, ->{ where(publishing_date: nil) }
+  scope :chronologically_by_end_at, ->{ order(:end_at) }
+  scope :reverse_chronologically_by_end_at, ->{ order(end_at: :desc) }
 
   def has_publishing_date?
     publishing_date.present?
@@ -71,6 +76,10 @@ class Deal < ApplicationRecord
 
   def is_expired?
     start_at.present? && end_at.present? && end_at < Time.current
+  end
+
+  def pretty_errors
+    errors.full_messages.join("<br>")
   end
 
   private
@@ -126,6 +135,13 @@ class Deal < ApplicationRecord
       if has_invalid_associated_images_count?
         errors[:images] << I18n.t(:image_greater_than, scope: [:errors, :custom_validation], image_count: ENV['published_deal_minimum_image_count'].to_i) 
         raise ActiveRecord::Rollback
+      end
+    end
+
+    def ensure_deal_not_live_or_expired
+      if is_expired? || is_live?
+        errors[:base] << I18n.t(:live_or_expired_deal_cannot_be_deleted, scope: [:deal, :errors])
+        throw :abort
       end
     end
 end

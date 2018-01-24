@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 
-  before_action :get_order, only: [:destroy, :show]
+  before_action :get_order, only: [:destroy, :show, :cancel]
 
   def cart
   end
@@ -15,6 +15,23 @@ class OrdersController < ApplicationController
 
   def show
   end
+
+  def index
+    @ready_for_delivery_orders = current_user.orders.ready_for_delivery.order(completed_at: :desc)
+    @delivered_orders = current_user.orders.delivered.order(delivered_at: :desc)
+    @cancelled_orders = current_user.orders.cancelled.order(cancelled_at: :desc)
+  end
+
+  def cancel
+    begin
+      @order.cancelled_by!(current_user)
+      flash[:success] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
+    rescue => e
+      flash[:alert] = e.message
+    end
+    redirect_to order_path(@order)
+  end
+  
 
   private
 

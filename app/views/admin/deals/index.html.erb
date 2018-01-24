@@ -6,80 +6,45 @@
   <span class="col-md-offset-10 col-xs-offset-10 page-title"><%= t(:deal_page_title, scope: [:action]) %></span>
 <% end %>
 
-<% if @deals.empty? %>
-  <div class="col-md-6 col-md-offset-3">
-    <div class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title col-md-offset-4">NO DEAL FOUND</h3>
-      </div>
-      <div class="panel-body">
-        <p>No deal has been created yet.</p>
-        <%= link_to 'Create', new_admin_deal_url, class: 'btn btn-danger' %>
-        a deal now.
-      </div>
+<div class="col-md-12 col-xs-12">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#live-deals" data-toggle="tab" aria-expanded="true">Live Deals</a></li>
+    <li class=""><a href="#future-deals" data-toggle="tab" aria-expanded="false">Future Deals</a></li>
+    <li class=""><a href="#expired-deals" data-toggle="tab" aria-expanded="false">Expired Deals</a></li>
+    <li class=""><a href="#unpublished-deals" data-toggle="tab" aria-expanded="false">Unpublished Deals</a></li>
+  </ul>
+
+  <div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active in" id="live-deals">
+      <% if @live_deals.empty? %>
+        <h3>No Live Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @live_deals %>
+      <% end %>
+    </div>
+
+    <div class="tab-pane fade" id="future-deals">
+      <% if @future_deals.empty? %>
+        <h3>No Future Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @future_deals %>
+      <% end %>
+    </div>
+    
+    <div class="tab-pane fade" id="expired-deals">
+      <% if @expired_deals.empty? %>
+        <h3>No Expired Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @expired_deals %>
+      <% end %>
+    </div>
+
+    <div class="tab-pane fade" id="unpublished-deals">
+      <% if @unpublished_deals.empty? %>
+        <h3>No Unpublished Deals</h3>
+      <% else %>
+        <%= render partial: 'deals', object: @unpublished_deals %>
+      <% end %>
     </div>
   </div>
-
-<% else %>
-  <div class="table-responsive">
-    <div class="panel panel-default">  
-      <table class="table table-striped table-hover ">
-        
-        <thead>
-          <tr>
-            <th nowrap>#</th>
-            <th nowrap></th>
-            <th nowrap>TITLE</th>
-            <th nowrap>DESCRIPTION</th>
-            <th nowrap>PRICE</th>
-            <th nowrap>DISCOUNT PRICE</th>
-            <th nowrap>QUANTITY</th>
-            <th nowrap>PUBLISHING DATE</th>
-            <th nowrap>START TIME</th>
-            <th nowrap>END TIME</th>
-            <th nowrap></th>
-          </tr>
-        </thead>
-        
-        <tbody>
-          <% @deals.each.with_index(1) do |deal, serial_number| %>
-            <tr>
-
-              <td><%= serial_number %></td>
-
-              <td>
-                <% if deal.images.exists? %>
-                  <%= image_tag deal.images.first.avatar.url(:mini) %>
-                <% else %>
-                  <%= image_tag NO_IMAGE_AVAILABLE_PATH, size: '48x48' %>
-                <% end %>
-              </td>
-
-              <td><%= deal.title %></td>
-
-              <td><%= strip_html_and_truncate(deal.description, 10) %></td>
-
-              <td><%= number_to_currency(deal.price) %></td>
-
-              <td><%= number_to_currency(deal.discount_price) %></td>
-
-              <td><%= deal.quantity %></td>
-
-              <td><%= deal.presenter.publishing_date %></td>
-
-              <td><%= deal.presenter.start_time %></td>
-              
-              <td><%= deal.presenter.end_time %></td>
-
-              <td>
-                <%= link_to t(:page_action_show, scope: [:action]), admin_deal_url(deal) %> | 
-                <%= link_to t(:page_action_edit, scope: [:action]), edit_admin_deal_url(deal) %> | 
-                <%= link_to t(:page_action_destroy, scope: [:action]), admin_deal_url(deal), method: 'delete', data: { confirm: 'Are you sure?' } %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-<% end %>
+</div>

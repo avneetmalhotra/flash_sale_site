@@ -1,6 +1,9 @@
 class Order < ApplicationRecord
   include TokenGenerator
   include Checkout
+  include Presentable
+
+  VALID_STATES = %w(cart address payment completed cancelled delivered)
 
   ## ASSOCIATIONS
   belongs_to :user
@@ -13,10 +16,15 @@ class Order < ApplicationRecord
   validates :invoice_number, presence: true,  uniqueness: { allow_blank: true }
   validates :loyalty_discount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'].to_i }
   validates :total_amount, allow_blank: true, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
+  validates :state, inclusion: { in: VALID_STATES}
 
   ## SCOPES
   scope :incomplete, ->{ where(completed_at: nil) }
   scope :complete, ->{ where.not(completed_at: nil) }
+  scope :ready_for_delivery, ->{ where(state: 'completed') }
+  scope :cancelled, ->{ where(state: 'cancelled') }
+  scope :delivered, ->{ where(state: 'delivered') }
+  scope :search_by_email, ->(email) { joins(:user).where("email LIKE ?", "%#{email}%") }
 
   ## CALLBACKS
   before_destroy :ensure_order_incomplete
@@ -25,10 +33,6 @@ class Order < ApplicationRecord
 
   def pretty_errors
     errors.full_messages.join("<br>")
-  end
-
-  def pretty_base_errors
-    errors[:base].join("<br>")
   end
 
   def add_deal(deal, line_item_quantity = 1)
@@ -48,6 +52,10 @@ class Order < ApplicationRecord
 
   def total_items_quantity
     line_items.sum(:quantity)
+  end
+
+  def items_subtotal
+    line_items.sum(:discount_price)
   end
 
   def total_amount_in_cents
@@ -70,4 +78,5 @@ class Order < ApplicationRecord
     def generate_invoice_number
       self.invoice_number = generate_unique_token(:invoice_number, 8, 'INV-')
     end
+
 end 

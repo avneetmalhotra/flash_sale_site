@@ -1,0 +1,77 @@
+<br>
+<div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <strong>
+        </table>
+        <div class="row text-muted">
+          <span class=" col-md-2 col-xs-3">
+            ORDER PLACED
+          </span>
+          <span class="col-md-2 col-xs-2">
+            TOTAL
+          </span>
+          <span class="col-md-3 col-xs-3">
+            LOYALTY DISCOUNT
+          </span>
+          <span class="col-md-3 col-md-offset-2 col-xs-4">
+            <%= order.invoice_number %>
+          </span>
+        </div>
+        <div class="row text-muted">
+          <span class="col-md-2 col-xs-3">
+            <%= order.completed_at.strftime('%v') %>
+          </span>
+          <span class="col-md-2 col-xs-2">
+            <%= number_to_currency(order.total_amount) %>
+          </span>
+          <span class="col-md-3 col-xs-3">
+            <%= number_to_currency(order.loyalty_discount) %>
+          </span>
+          <span class="col-md-3 col-md-offset-2 col-xs-4">
+            <%= link_to I18n.t(:order_details, scope: [:action]), order_path(order) %>
+          </span>
+        </div>
+      </strong>
+    </div>
+    
+    <div class="panel-body">
+      <section>
+        <% if order.delivered? %>
+          <p class="lead text-success">Delivered on <%= order.delivered_at.strftime('%v') %></p>
+        <% elsif order.cancelled? %>
+          <p class="lead text-danger">Cancelled on <%= order.cancelled_at.strftime('%v') %></p>
+        <% end %>
+      </section>
+
+      <section class="table-responsive">
+        <table class="table table-hover table-condensed">
+          <thead>
+            <th nowrap></th>
+            <th nowrap>TITLE</th>
+            <th nowrap>UNIT PRICE</th>
+            <th nowrap></th>
+
+          </thead>
+          <tbody>
+            <% order.line_items.includes(deal: :images).each do |line_item| %>
+              <tr>
+                <td><%= link_to image_tag(line_item.deal.images.first.avatar.url(:mini)), deal_path(line_item.deal) %></td>
+                <td><%= link_to line_item.deal.title, deal_path(line_item.deal) %></td>
+                <td>
+                  <p>
+                    <span class="text-muted"><del><%= number_to_currency(line_item.price) %></del></span>
+                    <span class="lead text-success"><%= number_to_currency(line_item.discount_price) %></span>
+                  </p>
+                </td>
+                <td>
+                  <%= link_to I18n.t(:view_deal, scope: :action), deal_path(line_item.deal) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+</div>
