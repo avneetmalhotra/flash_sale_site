@@ -42,4 +42,17 @@ Rails.application.routes.draw do
   patch 'address/associate_address', to: "addresses#associate_address"
 
   resources :payments, only: [:new, :create]
+
+  namespace :api do
+    namespace :v1 do
+      resources :deals, only: [] do
+        collection do
+          get 'live'
+          get 'expired'
+        end
+      end
+
+      resources :orders, path: :myorders, only: [:index]
+    end
+  end
 end

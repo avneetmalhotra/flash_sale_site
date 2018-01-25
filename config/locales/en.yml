@@ -214,3 +214,5 @@ en:
     stripe:
       description:                  "Flash Sale payment of order: #%{invoice_number}"
 
+  api:
+    not_authorized:               'You are not authorized to perform this action.'
