@@ -4,7 +4,7 @@ class Api::V1::OrdersController < Api::V1::BaseController
 
   def index
     if @orders.empty?
-      render json: I18n.t(:user_does_not_has_any_order, scope: [:api, :order])
+      render json: { error: I18n.t(:user_does_not_has_any_order, scope: [:api, :order]) }
     else
       render json: @orders
     end
@@ -16,9 +16,9 @@ class Api::V1::OrdersController < Api::V1::BaseController
       user = User.find_by(api_token: params[:token])
       
       if user.nil?
-        render json: I18n.t(:invalid_user, scope: [:api, :order]) and return
+        render json: { error: I18n.t(:invalid_user, scope: [:api, :order]), status: 404 } and return
       end
 
-      @orders = user.orders.includes(:address, line_items: :deal)
+      @orders = user.orders.includes(:address, :line_items, :payments)
     end
 end

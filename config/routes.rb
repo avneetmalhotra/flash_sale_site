@@ -45,12 +45,12 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      namespace :deals do
+      resources :deals, only: [] do
         get 'live'
         get 'expired'
       end
 
-      get 'myorders', to: 'orders#index'
+      resources :orders, path: :myorders, only: [:index]
     end
   end
 end
