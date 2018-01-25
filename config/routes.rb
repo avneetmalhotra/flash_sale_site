@@ -46,8 +46,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :deals, only: [] do
-        get 'live'
-        get 'expired'
+        collection do
+          get 'live'
+          get 'expired'
+        end
       end
 
       resources :orders, path: :myorders, only: [:index]
