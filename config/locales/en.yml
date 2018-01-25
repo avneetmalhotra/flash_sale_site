@@ -214,3 +214,12 @@ en:
     stripe:
       description:                  "Flash Sale payment of order: #%{invoice_number}"
 
+  api:
+    deal:
+      no_live_deals:              'There are no deals live right now.'
+      no_expired_deals:           'There are noe expired deals.'
+
+    order:
+      user_does_not_has_any_order:  "This user doesn't has any order."
+      invalid_user:                 "This user doesn't exist."
+

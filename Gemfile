@@ -32,6 +32,8 @@ gem 'ckeditor', '~> 4.1.3'
 gem 'state_machines', '~> 0.5.0'
 gem 'state_machines-activerecord', '~> 0.5.0'
 
+gem 'active_model_serializers', '~> 0.10.0'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
