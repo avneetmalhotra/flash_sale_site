@@ -15,6 +15,11 @@
           <li><%= link_to t(:deals, scope: [:action]), deals_url %></li>
         </ul>
 
+        <%= form_with(scope: :search, url: deals_path, local: true, method: :get, class: 'navbar-form navbar-left') do |form| %>
+          <%= form.text_field :deal_text, class: 'form-control', placeholder: 'clothes' %>
+          <%= form.submit I18n.t(:browse_deals, scope: [:action]), class: 'btn btn-default' %>
+        <% end %>
+
       <% if current_user.present? %>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to image_tag('cart_logo.png', size: '25x25'), cart_url %></li>

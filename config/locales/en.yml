@@ -43,6 +43,7 @@ en:
   action:
     add_deal_image:                   'Add Image'
     activate:                         'Activate'
+    browse_deals:                     'Browse Deals'
     confirmation_email_not_recieved:  'Did not receive Confirmation email?'
     continue:                         'Continue'
     create_account:                   'Create New Account'
