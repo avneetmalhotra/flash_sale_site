@@ -6,6 +6,7 @@ class Payment < ApplicationRecord
 
   ## SCOPES
   scope :successful, ->{ where(status: 'succeeded') }
+  scope :belonging_to_completed_and_delivered_orders, ->{ joins(:order).where(orders: { state: [:completed, :delivered] }) } 
   
   ## VALIDATIONS
   with_options presence: true do
@@ -15,7 +16,8 @@ class Payment < ApplicationRecord
   validates :amount, numericality: { greater_than_or_equal_to: ENV['minimum_order_total_amount'].to_i }
   
   ## CALLBACKS
-  after_commit :complete_order, if: :has_orders_payment_completed?  
+  after_commit :complete_order, if: :has_orders_payment_completed?
+
 
   def create_stripe_record!(stripe_token)
     create_stripe_customer!(stripe_token)
