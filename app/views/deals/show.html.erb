@@ -1,4 +1,5 @@
 <%= javascript_include_tag "slideshow.js" %>
+<%= javascript_include_tag "deal_poller.js" %>
 
 <article class="deal-view panel panel-default">
   <div class= 'panel-body'>
@@ -25,11 +26,23 @@
       <div class="col-md-10 col-xs-10 col-md-offset-1">
         <% if @deal.is_live? %>
           <p class="deal-countdown-timer text-centre", data-timer='yes', data-end-at="<%= @deal.end_at %>"></p>
+          
+          <div class="modal", data-modal='deal-show'>
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                </div>
+              </div>
+            </div>
+          </div>
+
         <% end %>
         <h2>
           <span class="lead text-danger text-muted "><del><%= number_to_currency(@deal.price) %><del></span>
           <span class="text-success"><%= number_to_currency(@deal.discount_price) %></span>
         </h2>
+
+        
 
         <% if @deal.is_live? && @deal.quantity > 0 %>
           <p>Only <span class="lead text-primary"><%= @deal.quantity %></span> more left</p>

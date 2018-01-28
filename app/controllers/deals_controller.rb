@@ -10,6 +10,11 @@ class DealsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: {endTime: @deal.end_at} }
+    end
+    
   end
 
   private

@@ -1,5 +1,5 @@
 $(function(){
   
   //jquery ui datepicker
-  $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+  $("[data-type='datepicker']").datepicker({ dateFormat: "yy-mm-dd" });
 });
