@@ -34,3 +34,12 @@
     ```sh
     $ rake admin:publish_deal
     ```
+  - To invoke Delayed Jobs, run following in rails console:-
+    -- First, query for a job from Delayed::Job
+      ```sh
+      $ job = Delayed::Job.find_by(id: 4)
+      ```
+    -- Second,
+      ```sh
+      $ job.invoke_job
+      ```

@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
 
   before_action :get_deals, only: :index
-  before_action :set_deal, only: [:show]
+  before_action :set_deal, only: [:show, :polling]
   skip_before_action :authenticate_user, only: [:index]
 
   def index
@@ -10,11 +10,10 @@ class DealsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-      format.json { render json: {endTime: @deal.end_at} }
-    end
-    
+  end
+
+  def polling
+    render json: @deal
   end
 
   private

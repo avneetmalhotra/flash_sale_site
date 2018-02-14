@@ -1,7 +1,8 @@
 function DealPoller(options){
-  this.$liveDealsTimerElement = options.$liveDealsTimerElement;
+  this.$liveDealsTimerElement = $(options.liveDealsTimerElement);
   this.$modalElement = options.$modalElement;
   this.pollingInterval = options.pollingInterval;
+  this.pollingLink = this.$liveDealsTimerElement.data("poll-link")
 }
 
 DealPoller.prototype.init = function(){
@@ -16,14 +17,13 @@ DealPoller.prototype.setPolling = function(){
 
 DealPoller.prototype.pollingForExpiration = function(_this){
 
-  $.getJSON(window.location.href)
+  $.getJSON(_this.pollingLink)
     
-    .done(function(data){
+    .done(function(deal){
       var currentTime = new Date();
-      var dealEndTime = new Date(data.endTime);    
+      var dealEndTime = new Date(deal.endTime);
 
-
-      if(dealEndTime <= currentTime ){
+      if(dealEndTime <= currentTime || deal.quantity <= 0){
         _this.showModal('The Deal has expired. Please reload the page to continue shopping.');
         clearInterval(_this.pollingForExpiration);  
       }
@@ -44,7 +44,7 @@ DealPoller.prototype.showModal = function(modalText){
 
 $(function(){
 
-  var dealPollerArguments = { $liveDealsTimerElement : $("[data-timer='yes']"),
+  var dealPollerArguments = { liveDealsTimerElement :  ("[data-timer='yes']"),
                               $modalElement :          $("[data-modal='deal-show']"),
                               pollingInterval:         60000  },
       dealPoller = new DealPoller(dealPollerArguments);

@@ -29,7 +29,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deals, only: [:index, :show]
+  resources :deals, only: [:index, :show] do
+    member do
+      get 'polling'
+    end
+  end
 
   resources :line_items, only: [:create, :destroy, :update]
 
