@@ -133,7 +133,7 @@ module Checkout
 
     def can_be_cancelled?
       # check if deal can be cancelled x minutes before deal expires
-      if deals.where('end_at > ?', MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED + Time.current ).present?
+      if deals.where('end_at > ?',Time.current + MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED ).present?
         true
       else
         errors[:base] << I18n.t(:cannot_be_expired_minutes_before_deals_expiration, scope: [:order, :errors], minutes: (MINUTES_BEFORE_EXPIRATION_WHEN_DEAL_CAN_BE_CANCELLED.to_i / 60))

@@ -16,8 +16,8 @@ class Deal < ApplicationRecord
   with_options allow_blank: true do
     validates :title, uniqueness: { case_sensitive: false }
     
-    validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_i }
-    validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_i }
+    validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_f }
+    validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_f }
     
     validates :quantity, numericality: { 
       only_integer: true,
@@ -51,7 +51,6 @@ class Deal < ApplicationRecord
   scope :chronologically_by_end_at, ->{ order(:end_at) }
   scope :reverse_chronologically_by_end_at, ->{ order(end_at: :desc) }
   scope :search_by_title_and_description, ->(title, description) { where("title LIKE ? OR description LIKE ?", "%#{title}%", "%#{description}%") }
-
 
   def has_publishing_date?
     publishing_date.present?
@@ -137,6 +136,7 @@ class Deal < ApplicationRecord
         errors[:images] << I18n.t(:image_greater_than, scope: [:errors, :custom_validation], image_count: ENV['published_deal_minimum_image_count'].to_i) 
         raise ActiveRecord::Rollback
       end
+
     end
 
     def ensure_deal_not_live_or_expired

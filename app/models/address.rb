@@ -11,9 +11,12 @@ class Address < ApplicationRecord
 
   validates :pincode, numericality: { 
     only_integer: true,
+    greater_than: 0,
     allow_blank: true }
 
-  validates :house_number, uniqueness: { scope: [:street, :city, :pincode] }
+  validates :house_number, uniqueness: { 
+    scope: [:street, :city, :pincode], 
+    case_sensitive: false }
 
   def pretty_errors
     errors.full_messages.join("<br>")
