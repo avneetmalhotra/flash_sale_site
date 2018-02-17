@@ -36,7 +36,9 @@ class ConfirmationsController < ApplicationController
 
     def fetch_user_from_confirmation_token
       @user = User.find_by(confirmation_token: params[:confirmation_token])
-      render_404 if @user.nil?
+      if @user.nil?
+        render_404
+      end
     end
 
     def ensure_confirmation_token_validity

@@ -16,7 +16,9 @@ class DealsController < ApplicationController
 
     def set_deal
       @deal = Deal.find_by(id: params[:id])
-      render_404 unless @deal.present?
+      unless @deal.present?
+        render_404
+      end 
     end
 
     def get_deals

@@ -1,6 +1,6 @@
 require File.expand_path('../../config/environment', __FILE__)
 require 'simplecov'
-# SimpleCov.start
+SimpleCov.start
 SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/db/'

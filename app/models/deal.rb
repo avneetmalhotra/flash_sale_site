@@ -40,7 +40,7 @@ class Deal < ApplicationRecord
   # when image is destroyed images.size changes only after update
   # so this callback verifies if image_count_valid
   after_update :ensure_images_count_valid, if: :has_publishing_date?
-  before_destroy :ensure_deal_not_live_or_expired
+  before_destroy :ensure_deal_not_live_or_expired, prepend: true
 
   ## SCOPE
   scope :publishable_on, ->(date = Date.current) { where(publishing_date: date) }

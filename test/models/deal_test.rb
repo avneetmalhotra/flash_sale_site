@@ -97,6 +97,8 @@ class DealTest < ActiveSupport::TestCase
   end
 
   test 'update fails if images count in less than 2 on update of published deal' do
+    ## fot his test to work below mentioned file should exist: 
+    ## /public/systems/images/avatars/000/000/002/2.gif
     deal = Deal.second
     image = deal.images.first
     assert_not deal.update(title: 'new_deal1', images_attributes: [{ id: image.id, avatar: image.avatar, _destroy: true }])

@@ -2,7 +2,7 @@ class AddressesController < ApplicationController
 
   before_action :ensure_current_order_present
   before_action :ensure_checkout_allowed
-  before_action :update_current_order_state, only: [:new]
+  before_action :update_current_order_state, only: [:new, :create, :associate_address]
   before_action :get_current_user_associated_addresses, only: [:new, :create]
   before_action :get_address, only: [:associate_address]
 
@@ -41,7 +41,9 @@ class AddressesController < ApplicationController
 
     def get_address
       @address = Address.find_by(id: params[:current_user][:recently_used_address_id])
-      render_404 unless @address.present?
+      unless @address.present?
+        render_404
+      end
     end
 
     def update_current_order_state
