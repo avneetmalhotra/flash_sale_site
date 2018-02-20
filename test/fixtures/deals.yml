@@ -1,0 +1,38 @@
+first:
+  id: 1
+  title: "deal1"
+  description: "<p>lnfwnfwfnwpf wenf, wef</p>\r\n"
+  price: 0.23434e3
+  discount_price: 0.343e2
+  quantity: 34
+  publishing_date: "2018-02-10"
+  start_at: "2018-02-10 07:39:17"
+  end_at: "2018-02-10 07:39:17"
+  created_at: "2018-02-14 07:39:17"
+  updated_at: "2018-02-14 07:39:17"
+
+second:
+  id: 2
+  title: "deal2"
+  description: "<p>lnfwnfwfnwpf wenf, wef</p>\r\n"
+  price: 0.23434e3
+  discount_price: 0.343e2
+  quantity: 42
+  publishing_date: "2018-02-18"
+  start_at: "2018-02-18 07:39:17"
+  end_at: "2018-02-18 07:39:17"
+  created_at: "2018-02-14 07:39:17"
+  updated_at: "2018-02-14 07:39:17"
+
+third:
+  id: 3
+  title: "deal3"
+  description: "<p>lnfwnfwfnwpf wenf, wef</p>\r\n"
+  price: 0.23434e3
+  discount_price: 0.343e2
+  quantity: 4
+  publishing_date: "2018-02-10"
+  start_at: NULL
+  end_at: NULL
+  created_at: "2018-02-14 07:39:17"
+  updated_at: "2018-02-14 07:39:17"

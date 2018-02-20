@@ -9,7 +9,7 @@ class PaymentsController < ApplicationController
   def create
     @payment = current_order.payments.build
     create_stripe_payment
-    redirect_to order_path(@payment.order), success: I18n.t(:order_placed_successfully, scope: [:flash, :success])
+    redirect_to order_path(@payment.order), notice: I18n.t(:order_placed_successfully, scope: [:flash, :notice]) and return
   end
 
 

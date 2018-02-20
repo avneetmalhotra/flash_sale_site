@@ -1,0 +1,23 @@
+first:
+  id: 1
+  avatar_file_name: "1.gif"
+  avatar_content_type: "image/gif"
+  avatar_file_size: 728508
+  avatar_updated_at: "2018-02-14 07:39:03"
+  deal_id: 1
+
+second:
+  id: 2
+  avatar_file_name: "2.gif"
+  avatar_content_type: "image/gif"
+  avatar_file_size: 728508
+  avatar_updated_at: "2018-02-14 07:39:03"
+  deal_id: 2
+
+third:
+  id: 3
+  avatar_file_name: "3.gif"
+  avatar_content_type: "image/gif"
+  avatar_file_size: 728508
+  avatar_updated_at: "2018-02-14 07:39:03"
+  deal_id: 2

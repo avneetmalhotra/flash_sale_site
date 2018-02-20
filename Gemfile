@@ -54,6 +54,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver', '~> 3.8.0'
+  gem 'figaro', '~> 1.1.1'
 end
 
 group :development do
@@ -68,7 +69,12 @@ group :development do
   gem 'better_errors', '~> 2.4.0'
   gem 'bullet', '~> 5.7.0'
   gem 'rails-footnotes', '~> 4.1.8'
-  gem 'figaro', '~> 1.1.1'
+end
+
+group :test do
+  gem 'minitest-reporters', '~> 1.1.19'
+  gem 'simplecov', '~> 0.15.1'
+  gem 'rails-controller-testing', '~> 1.0.2'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

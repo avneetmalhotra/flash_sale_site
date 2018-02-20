@@ -15,9 +15,9 @@ class LineItem < ApplicationRecord
     validates :quantity, :discount_price, :price, :loyalty_discount, :total_amount
   end
 
-  validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_i }
-  validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_i }
-  validates :loyalty_discount, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'] .to_i}
+  validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_f }
+  validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_f }
+  validates :loyalty_discount, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'] .to_i }
 
   # ensure quantity less than or equal to deal.quantity
   validate :ensure_quantity_available

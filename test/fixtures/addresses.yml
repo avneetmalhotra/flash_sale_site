@@ -1,0 +1,23 @@
+first:
+  id: 1
+  house_number: "23D"
+  street: "Patel Nagar"
+  city: "Delhi"
+  state: "Delhi"
+  country: "India"
+  pincode: 111111
+  created_at: "2018-02-14 07:39:17"
+  updated_at: "2018-02-14 07:39:17"
+  user_id: 1
+
+second:
+  id: 2
+  house_number: "234"
+  street: "Patel Nagar"
+  city: "Delhi"
+  state: "Delhi"
+  country: "India"
+  pincode: 111112
+  created_at: "2018-02-14 07:39:17"
+  updated_at: "2018-02-14 07:39:17"
+  user_id: NULL

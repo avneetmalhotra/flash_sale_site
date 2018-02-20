@@ -36,7 +36,9 @@ class PasswordsController < ApplicationController
 
     def fetch_user_from_password_reset_token
       @user = User.find_by(password_reset_token: params[:password_reset_token])
-      render_404 if @user.nil?
+      if @user.nil?
+        render_404
+      end
     end
 
     def ensure_password_reset_token_validity
