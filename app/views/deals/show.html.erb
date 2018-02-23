@@ -25,12 +25,12 @@
   
     <section class="col-md-5 deal-details right-side">
       <div class="col-md-10 col-xs-10 col-md-offset-1">
-        <% if @deal.is_live? && @deal.quantity > 0 %>
+        <% if @deal.sellable %>
           <p class="deal-countdown-timer text-centre", data-timer='yes', data-end-at="<%= @deal.end_at %>", data-poll-link= <%= polling_deal_url %> ></p>
           
           <div class="modal", data-modal='deal-show'>
             <div class="modal-dialog">
-              <div class="modal-content">
+              <div class="modal-content modal-content-style">
                 <div class="modal-body">
                 </div>
               </div>
@@ -45,7 +45,7 @@
 
         
 
-        <% if @deal.is_live? && @deal.quantity > 0 %>
+        <% if @deal.sellable %>
           <p>Only <span class="lead text-primary"><%= @deal.quantity %></span> more left</p>
           <br>
 

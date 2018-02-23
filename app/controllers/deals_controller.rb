@@ -1,7 +1,8 @@
 class DealsController < ApplicationController
 
   before_action :get_deals, only: :index
-  before_action :set_deal, only: [:show, :polling]
+  before_action :set_deal, only: :show
+  before_action :get_polled_deal, only: :polling
   skip_before_action :authenticate_user, only: [:index]
 
   def index
@@ -13,7 +14,9 @@ class DealsController < ApplicationController
   end
 
   def polling
-    render json: @deal
+    unless @deal.sellable
+      render json: { error: 'The Deal has expired. Please reload the page to continue shopping' }
+    end
   end
 
   private
@@ -31,4 +34,10 @@ class DealsController < ApplicationController
       end
     end
 
+    def get_polled_deal
+      @deal = Deal.find_by(id: params[:id])
+      if @deal.nil?
+        render json: { error: 'Something went wrong. Please reload the page.' }, status: 422 and return
+      end
+    end
 end

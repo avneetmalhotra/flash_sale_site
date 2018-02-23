@@ -79,6 +79,10 @@ class Deal < ApplicationRecord
     start_at.present? && end_at.present? && end_at < Time.current
   end
 
+  def sellable
+    is_live? && quantity > 0
+  end
+
   def pretty_errors
     errors.full_messages.join("<br>")
   end

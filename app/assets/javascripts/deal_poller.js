@@ -19,18 +19,15 @@ DealPoller.prototype.pollingForExpiration = function(_this){
 
   $.getJSON(_this.pollingLink)
     
-    .done(function(deal){
-      var currentTime = new Date();
-      var dealEndTime = new Date(deal.endTime);
-
-      if(dealEndTime <= currentTime || deal.quantity <= 0){
-        _this.showModal('The Deal has expired. Please reload the page to continue shopping.');
+    .done(function(data){
+      if(data !== undefined && data.hasOwnProperty('error')){
+        _this.showModal(data.error);
         clearInterval(_this.pollingForExpiration);  
       }
     })
     
     .fail(function(data){
-      _this.showModal('Something went wrong. Please reload the page.');
+      _this.showModal(data.responseJSON.error);
     });
 };
 
