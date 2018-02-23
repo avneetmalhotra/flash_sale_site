@@ -36,4 +36,28 @@ class DealPresenter < Struct.new(:deal)
     end 
   end
 
+  def quantity_ordered
+    if deal.quantity_ordered.nil?
+      0
+    else
+      deal.quantity_ordered
+    end
+  end
+
+  def unique_orders
+    if deal.unique_orders.nil?
+      0
+    else
+      deal.unique_orders
+    end
+  end
+
+  def revenue_generated
+    if deal.revenue_generated.nil?
+      0
+    else
+      deal.revenue_generated
+    end
+  end
+
 end

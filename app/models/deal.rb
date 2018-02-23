@@ -83,6 +83,21 @@ class Deal < ApplicationRecord
     errors.full_messages.join("<br>")
   end
 
+  def self.order_by(option)
+    case option
+    when 'price_ascending'
+      @deals = Deal.order(:price)
+    when 'price_descending'
+      @deals = Deal.order(price: :desc)
+    when 'discount_price_ascending', 'loyalty_discount_ascending'
+      @deals = Deal.order(:discount_price)
+    when 'discount_price_descending', 'loyalty_discount_descending'
+      @deals = Deal.order(discount_price: :desc)
+    else
+      @deal = Deal.all
+    end
+  end
+
   private
 
     def publishing_date_must_be_after_today

@@ -6,7 +6,6 @@ class Payment < ApplicationRecord
 
   ## SCOPES
   scope :successful, ->{ where(status: 'succeeded') }
-  scope :belonging_to_completed_and_delivered_orders, ->{ joins(:order).where(orders: { state: [:completed, :delivered] }) } 
   
   ## VALIDATIONS
   with_options presence: true do

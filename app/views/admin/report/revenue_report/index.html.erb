@@ -26,9 +26,9 @@
             <td><%= deal.title %></td>
             <td><%= number_to_currency(deal.price) %></td>
             <td><%= number_to_currency(deal.discount_price) %></td>
-            <td><%= deal.line_items.belonging_to_completed_and_delivered_orders.sum(:quantity) %></td>
-            <td><%= deal.line_items.belonging_to_completed_and_delivered_orders.count %></td>
-            <td><%= number_to_currency(deal.line_items.belonging_to_completed_and_delivered_orders.sum(:total_amount)) %></td>
+            <td><%= deal.presenter.quantity_ordered %></td>
+            <td><%= deal.presenter.unique_orders %></td>
+            <td><%= deal.presenter.revenue_generated %></td>
           </tr>
         <% end %>
       </tbody>

@@ -29,8 +29,7 @@
             
             <td><%= customer.email%></td>
 
-            <td><%= number_to_currency(customer.payments.successful.belonging_to_completed_and_delivered_orders.sum(:amount)) %></td>
-          
+            <td><%= number_to_currency(customer.presenter.money_spend) %></td>
           </tr>
         <% end %>
       </tbody>
