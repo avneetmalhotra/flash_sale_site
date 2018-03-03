@@ -155,6 +155,4 @@ RSpec.describe PaymentsController, type: :controller do
       it { expect(flash[:alert]).to eql(I18n.t(:login_to_continue, scope: [:flash, :alert])) }      
     end
   end
-
-
 end

@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
 
   def create
     @payment = current_order.payments.build
-    
+
     # create_stripe_payment
     begin
       @payment.create_stripe_record!(params[:stripeToken])
