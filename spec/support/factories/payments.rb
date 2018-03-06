@@ -8,5 +8,9 @@ FactoryBot.define do
     status "succeeded"
 
     order
+
+    trait :with_order_id do
+      order_id nil
+    end
   end
 end

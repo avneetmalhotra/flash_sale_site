@@ -34,12 +34,16 @@ class LineItemsController < ApplicationController
 
     def get_deal
       @deal = Deal.find_by(id: params[:deal_id])
-      redirect_to root_path, alert: I18n.t(:deal_cannot_be_added_to_cart, scope: [:flash, :alert]) unless @deal.present?
+      unless @deal.present?
+        redirect_to root_path, alert: I18n.t(:deal_cannot_be_added_to_cart, scope: [:flash, :alert])
+      end
     end
 
     def get_line_item
       @line_item = LineItem.find_by(id: params[:id])
-      render_404 unless @line_item.present?
+      unless @line_item.present?
+        render_404
+      end
     end
 
     def update_params

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_order
 
+
   private
     def current_user
       if session[:user_id].nil?
@@ -17,8 +18,10 @@ class ApplicationController < ActionController::Base
     def fetch_user_from_cookie
       if cookies[:remember_me].present?
         user = User.find_by(remember_me_token: cookies.encrypted[:remember_me])
-
-        session[:user_id] = user.id if user.present? && user.confirmed_at? && user.active?
+        
+        if user.present? && user.confirmed_at? && user.active?
+          session[:user_id] = user.id
+        end
 
         user
       end
@@ -41,7 +44,9 @@ class ApplicationController < ActionController::Base
     end
 
     def ensure_logged_out
-      redirect_to root_path, alert: t(:logout_to_continue, scope: [:flash, :alert]) and return if current_user.present?
+      if current_user.present?
+        redirect_to root_path, alert: t(:logout_to_continue, scope: [:flash, :alert]) and return
+      end
     end
 
     def render_404

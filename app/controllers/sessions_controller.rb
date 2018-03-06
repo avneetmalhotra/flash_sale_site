@@ -11,7 +11,9 @@ class SessionsController < ApplicationController
 
   def create
     if @user.try(:authenticate, params[:user][:password])
-      create_remember_me_cookie if params[:remember_me].present?
+      if params[:remember_me].present?
+        create_remember_me_cookie
+      end
       session[:user_id] = @user.id
 
       flash[:notice] = t(:login_successfull, scope: [:flash, :notice])
@@ -32,6 +34,9 @@ class SessionsController < ApplicationController
 
     def fetch_user
       @user = User.find_by(email: params[:user][:email])
+      if @user.nil?
+        redirect_to login_url, alert: t(:invalid_email_or_password, scope: [:flash, :alert])
+      end
     end
 
     def ensure_user_confirmed

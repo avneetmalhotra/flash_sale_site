@@ -18,9 +18,11 @@ class PaymentsController < ApplicationController
       redirect_to new_payment_path, alert: I18n.t(:incomplete_transaction, scope: [:flash, :alert]) and return
     rescue Stripe::StripeError => exception
       redirect_to new_payment_path, alert: exception.message and return
+    rescue => exception
+      redirect_to new_payment_path, alert: exception.message and return
     end
 
-    redirect_to order_path(@payment.order), success: I18n.t(:order_placed_successfully, scope: [:flash, :success])
+    redirect_to order_path(@payment.order), notice: I18n.t(:order_placed_successfully, scope: [:flash, :notice])
   end
 
 
@@ -28,7 +30,7 @@ class PaymentsController < ApplicationController
 
     def update_current_order_state
       if current_order.cart?
-        redirect_to cart_path, alert: I18n.t(:address_not_added, scope: [:flash, :alert]) and return
+        redirect_to cart_path, alert: I18n.t(:address_not_added, scope: [:flash, :alert])
 
       elsif current_order.can_pay?
         unless current_order.pay
