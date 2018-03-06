@@ -16,8 +16,8 @@ class Deal < ApplicationRecord
   with_options allow_blank: true do
     validates :title, uniqueness: { case_sensitive: false }
     
-    validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_i }
-    validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_i }
+    validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_f }
+    validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_f }
     
     validates :quantity, numericality: { 
       only_integer: true,
