@@ -86,16 +86,20 @@ class Deal < ApplicationRecord
   def self.order_by(option)
     case option
     when 'price_ascending'
-      @deals = Deal.order(:price)
+      @deals = order(:price)
     when 'price_descending'
-      @deals = Deal.order(price: :desc)
+      @deals = order(price: :desc)
     when 'discount_price_ascending', 'loyalty_discount_ascending'
-      @deals = Deal.order(:discount_price)
+      @deals = order(:discount_price)
     when 'discount_price_descending', 'loyalty_discount_descending'
-      @deals = Deal.order(discount_price: :desc)
+      @deals = order(discount_price: :desc)
     else
-      @deal = Deal.all
+      @deal = all
     end
+  end
+
+  def selling_price_with_maximum_loyalty_discount
+    (discount_price * (100 - LOYALTY_DISCOUNT_SLABS['maximum'])) / 100
   end
 
   private

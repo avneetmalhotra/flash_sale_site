@@ -29,7 +29,7 @@
             
             <td><%= customer.email%></td>
 
-            <td><%= number_to_currency(customer.presenter.money_spend) %></td>
+            <td><%= number_to_currency(customer.money_spend.to_f) %></td>
           </tr>
         <% end %>
       </tbody>

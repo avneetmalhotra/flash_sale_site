@@ -15,12 +15,4 @@ class UserPresenter < Struct.new(:user)
       'Not Confirmed'
     end
   end
-
-  def money_spend
-    if user.money_spend.nil?
-      0
-    else
-      user.money_spend
-    end
-  end
 end

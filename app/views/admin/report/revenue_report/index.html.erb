@@ -26,9 +26,9 @@
             <td><%= deal.title %></td>
             <td><%= number_to_currency(deal.price) %></td>
             <td><%= number_to_currency(deal.discount_price) %></td>
-            <td><%= deal.presenter.quantity_ordered %></td>
-            <td><%= deal.presenter.unique_orders %></td>
-            <td><%= deal.presenter.revenue_generated %></td>
+            <td><%= deal.quantity_ordered.to_i %></td>
+            <td><%= deal.unique_orders.to_i %></td>
+            <td><%= deal.revenue_generated.to_f %></td>
           </tr>
         <% end %>
       </tbody>

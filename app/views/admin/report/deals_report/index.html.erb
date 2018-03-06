@@ -41,7 +41,7 @@
             
             <td><%= number_to_currency(deal.discount_price) %></td>
 
-            <td><%= number_to_currency((deal.discount_price * (100 - LOYALTY_DISCOUNT_SLABS['maximum'])) / 100) %></td>
+            <td><%= number_to_currency(deal.selling_price_with_maximum_loyalty_discount) %></td>
           
           </tr>
         <% end %>
