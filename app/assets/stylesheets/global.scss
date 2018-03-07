@@ -70,19 +70,21 @@
   .left-side {
     border-right: 1px solid #e0e0e0;
   }
-
-  .deal-details {
-    .modal { 
-      .modal-content-style {
-        margin-top: 240px;
-        text-align: center;
-        padding: 20px;
-        font-size: 20px;
-      }
-    }
-  }
 }
 
 .full-bottom-margin {
   margin-bottom: 80px !important;
+}
+
+.modal { 
+  .modal-content-style {
+    margin-top: 240px;
+    text-align: center;
+    padding: 20px;
+    font-size: 20px;
+  }
+
+  .modal-footer {
+    text-align: center;
+  }
 }

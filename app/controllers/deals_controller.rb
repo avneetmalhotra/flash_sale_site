@@ -14,10 +14,10 @@ class DealsController < ApplicationController
   end
 
   def polling
-    unless @deal.sellable
-      render json: { error: I18n.t(:expired, scope: [:deal, :polling, :error]) }, status: 422
+    if @deal.sellable?
+      render json: { message: I18n.t(:is_live, scope: [:deal, :polling]) }
     else
-      render json: { message: I18n.t(:is_live, scope: [:deal, :polling]) }, status: 200
+      render json: { error: I18n.t(:expired, scope: [:deal, :polling, :error]) }, status: 422
     end
   end
 

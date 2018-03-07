@@ -79,7 +79,7 @@ class Deal < ApplicationRecord
     start_at.present? && end_at.present? && end_at < Time.current
   end
 
-  def sellable
+  def sellable?
     is_live? && quantity > 0
   end
 
