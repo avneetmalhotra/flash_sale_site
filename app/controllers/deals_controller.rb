@@ -15,7 +15,9 @@ class DealsController < ApplicationController
 
   def polling
     unless @deal.sellable
-      render json: { error: 'The Deal has expired. Please reload the page to continue shopping' }
+      render json: { error: I18n.t(:expired, scope: [:deal, :polling, :error]) }, status: 422
+    else
+      render json: { message: I18n.t(:is_live, scope: [:deal, :polling]) }, status: 200
     end
   end
 
@@ -23,7 +25,9 @@ class DealsController < ApplicationController
 
     def set_deal
       @deal = Deal.find_by(id: params[:id])
-      render_404 unless @deal.present?
+      unless @deal.present?
+        render_404
+      end
     end
 
     def get_deals
@@ -37,7 +41,7 @@ class DealsController < ApplicationController
     def get_polled_deal
       @deal = Deal.find_by(id: params[:id])
       if @deal.nil?
-        render json: { error: 'Something went wrong. Please reload the page.' }, status: 422 and return
+        render json: { error: I18n.t(:invalid_deal, scope: [:deal, :polling, :error]) }, status: 404 and return
       end
     end
 end

@@ -17,17 +17,18 @@ DealPoller.prototype.setPolling = function(){
 
 DealPoller.prototype.pollingForExpiration = function(_this){
 
-  $.getJSON(_this.pollingLink)
+    $.getJSON(_this.pollingLink)
     
     .done(function(data){
-      if(data !== undefined && data.hasOwnProperty('error')){
-        _this.showModal(data.error);
-        clearInterval(_this.pollingForExpiration);  
-      }
     })
     
     .fail(function(data){
-      _this.showModal(data.responseJSON.error);
+      var response_status_code = self.jqxhr.status
+
+      if(response_status_code == (422 || 404) ){
+        _this.showModal(data.responseJSON.error);
+        clearInterval((_this.pollingForExpiration));
+      }
     });
 };
 
