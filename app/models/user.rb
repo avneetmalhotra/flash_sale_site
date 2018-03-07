@@ -77,6 +77,10 @@ class User < ApplicationRecord
       recently_used_address_id
     end
 
+    def money_spend
+      orders.where(state: ['completed', 'delivered']).sum(:total_amount)
+    end
+
   private
 
     def clear_confirmed_token_sent_at

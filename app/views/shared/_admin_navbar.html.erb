@@ -15,6 +15,14 @@
         <li><%= link_to t(:deals, scope: [:action]), admin_deals_path %></li>
         <li><%= link_to t(:users, scope: [:action]), admin_users_path %></li>
         <li><%= link_to t(:orders, scope: [:action]), admin_orders_path %></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Reports<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><%= link_to t(:customers_report), admin_report_customers_report_index_path %></li>
+            <li><%= link_to t(:revenue_report), admin_report_revenue_report_index_path %></li>
+            <li><%= link_to t(:deals_report), admin_report_deals_report_index_path %></li>
+          </ul>
+        </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">

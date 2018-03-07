@@ -83,6 +83,25 @@ class Deal < ApplicationRecord
     errors.full_messages.join("<br>")
   end
 
+  def self.order_by(option)
+    case option
+    when 'price_ascending'
+      @deals = order(:price)
+    when 'price_descending'
+      @deals = order(price: :desc)
+    when 'discount_price_ascending', 'loyalty_discount_ascending'
+      @deals = order(:discount_price)
+    when 'discount_price_descending', 'loyalty_discount_descending'
+      @deals = order(discount_price: :desc)
+    else
+      @deal = all
+    end
+  end
+
+  def selling_price_with_maximum_loyalty_discount
+    (discount_price * (100 - LOYALTY_DISCOUNT_SLABS['maximum'])) / 100
+  end
+
   private
 
     def publishing_date_must_be_after_today

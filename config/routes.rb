@@ -27,6 +27,12 @@ Rails.application.routes.draw do
         patch 'deliver'
       end
     end
+
+    namespace :report do
+      resources :deals_report, only: [:index]
+      resources :customers_report, only: [:index]
+      resources :revenue_report, only: [:index]
+    end
   end
 
   resources :deals, only: [:index, :show]

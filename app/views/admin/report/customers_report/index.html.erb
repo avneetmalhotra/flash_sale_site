@@ -1,0 +1,38 @@
+<% content_for :page_title do %>
+  <span class="col-md-offset-4 col-xs-offset-4 page-title"><%= t(:customer_report_page_title, scope: [:action]) %></span>
+<% end %>
+
+
+<div class="table-responsive">
+  <div class="panel panel-default">  
+    <table class="table table-striped table-hover ">
+
+      <thead>
+        <tr>
+          <th nowrap>#</th>
+          <th nowrap>NAME</th>
+          <th nowrap>ADMIN</th>
+          <th nowrap>EMAIL</th>
+          <th nowrap>MONEY SPEND</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @customers.each.with_index(1) do |customer, serial_number| %>
+          <tr>
+
+            <td><%= serial_number %></td>
+
+            <td><%= customer.name %></td>
+
+            <td><%= customer.admin? %></td>
+            
+            <td><%= customer.email%></td>
+
+            <td><%= number_to_currency(customer.money_spend.to_f) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

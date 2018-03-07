@@ -35,5 +35,4 @@ class DealPresenter < Struct.new(:deal)
       deal.end_at
     end 
   end
-
 end
