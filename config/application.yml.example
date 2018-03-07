@@ -1,0 +1,16 @@
+# Constants:-
+email_regex : '\A([\w.]+)@([\w]+)\.([\w&&\S^_]{2,})\z'
+registrations_path_regex: '\/registrations(\/)?\w*'
+senders_email_address : 'sender_mail@email.com'
+date_regex : '\A(\d{4})(((\-\d{2})){2})\z'
+published_deal_minimum_image_count: numeric_string
+published_deal_minimum_quantity_count: numeric_string 
+maximum_number_of_deal_per_publishing_date: numeric_string
+minimum_price: numeric_string
+minimum_discount_price: numeric_string
+minimum_loyalty_discount: numeric_string
+minimum_order_total_amount: numeric_string
+number_of_hours_before_start_when_publishing_date_cannot_be_changed: numeric_string
+maximum_number_of_deals_one_can_order: numeric_string
+PUBLISHABLE_KEY: 'stripe_publishable_key'
+SECRET_KEY: 'stripe_secret_key'

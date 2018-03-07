@@ -208,6 +208,11 @@ en:
       no_date_set:                        'No Date Set'
       no_time_set:                        'No Time Set'
       live_or_expired_deal_cannot_be_deleted:     'Live or Expired Deal cannot be deleted.'
+    polling:
+      error: 
+        expired: 'The Deal has expired. Please reload the page to continue shopping'
+        invalid_deal: 'Something went wrong. Please reload the page.'
+      is_live: 'Deal is still live.'
 
   order:
     errors:

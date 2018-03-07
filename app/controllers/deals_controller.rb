@@ -1,7 +1,8 @@
 class DealsController < ApplicationController
 
   before_action :get_deals, only: :index
-  before_action :set_deal, only: [:show]
+  before_action :set_deal, only: :show
+  before_action :get_polled_deal, only: :polling
   skip_before_action :authenticate_user, only: [:index]
 
   def index
@@ -12,11 +13,21 @@ class DealsController < ApplicationController
   def show
   end
 
+  def polling
+    if @deal.sellable?
+      render json: { message: I18n.t(:is_live, scope: [:deal, :polling]) }
+    else
+      render json: { error: I18n.t(:expired, scope: [:deal, :polling, :error]) }, status: 422
+    end
+  end
+
   private
 
     def set_deal
       @deal = Deal.find_by(id: params[:id])
-      render_404 unless @deal.present?
+      unless @deal.present?
+        render_404
+      end
     end
 
     def get_deals
@@ -27,4 +38,10 @@ class DealsController < ApplicationController
       end
     end
 
+    def get_polled_deal
+      @deal = Deal.find_by(id: params[:id])
+      if @deal.nil?
+        render json: { error: I18n.t(:invalid_deal, scope: [:deal, :polling, :error]) }, status: 404 and return
+      end
+    end
 end
