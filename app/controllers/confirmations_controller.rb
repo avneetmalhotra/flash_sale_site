@@ -10,7 +10,7 @@ class ConfirmationsController < ApplicationController
   end
 
   def create
-    @user.send_confrimation_instructions
+    @user.send_confirmation_instructions
     redirect_to login_url, notice: t(:confirmation_email_sent, scope: [:flash, :notice])
   end
 

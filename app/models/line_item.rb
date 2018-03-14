@@ -15,15 +15,15 @@ class LineItem < ApplicationRecord
     validates :quantity, :discount_price, :price, :loyalty_discount, :total_amount
   end
 
-  validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_i }
-  validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_i }
+  validates :price, numericality: { greater_than_or_equal_to: ENV['minimum_price'].to_f }
+  validates :discount_price, numericality: { greater_than_or_equal_to: ENV['minimum_discount_price'].to_f }
   validates :loyalty_discount, numericality: { greater_than_or_equal_to: ENV['minimum_loyalty_discount'] .to_i}
 
   # ensure quantity less than or equal to deal.quantity
-  validate :ensure_quantity_available
+  validate :ensure_quantity_available, if: [:quantity, :deal]
  
-  validate :ensure_deal_not_bought_again_in_another_order
-  validate :ensure_deal_live
+  validate :ensure_deal_not_bought_again_in_another_order, if: [:order]
+  validate :ensure_deal_live, if: [:deal]
 
   ## CALLBACKS
   before_save :update_loyalty_discount
