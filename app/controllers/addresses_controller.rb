@@ -41,7 +41,9 @@ class AddressesController < ApplicationController
 
     def get_address
       @address = Address.find_by(id: params[:current_user][:recently_used_address_id])
-      render_404 unless @address.present?
+      unless @address.present?
+        render_404
+      end
     end
 
     def update_current_order_state

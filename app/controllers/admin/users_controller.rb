@@ -39,7 +39,9 @@ class Admin::UsersController < Admin::BaseController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      render_404 unless @user.present?
+      unless @user.present?
+        render_404
+      end
     end
 
     def new_user_params
@@ -51,6 +53,8 @@ class Admin::UsersController < Admin::BaseController
     end
 
     def ensure_not_admin
-      redirect_to admin_users_url, alert: t(:not_authorized, scope: [:flash, :alert]) if @user.admin?
+      if @user.admin?
+        redirect_to admin_users_url, alert: t(:not_authorized, scope: [:flash, :alert])
+      end
     end
 end 

@@ -9,7 +9,9 @@ class HomeController < ApplicationController
   private
 
     def get_deals
-      @live_deals= Deal.live.includes(:images)
-      @expired_deals = Deal.expired.includes(:images).order(end_at: :desc).limit(2) if @live_deals.empty?
+      @live_deals = Deal.live.includes(:images)
+      if @live_deals.empty?
+        @expired_deals = Deal.expired.includes(:images).order(end_at: :desc).limit(2)
+      end
     end
 end

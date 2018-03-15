@@ -40,7 +40,9 @@ class RegistrationsController < ApplicationController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      render_404 if @user.try(:id) != current_user.id
+      if @user.try(:id) != current_user.id
+        render_404
+      end
     end
 
 end

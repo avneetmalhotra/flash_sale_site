@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   def cancel
     begin
       @order.cancelled_by!(current_user)
-      flash[:success] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
+      flash[:notice] = I18n.t(:order_successfully_cancelled, scope: [:flash, :notice])
     rescue => e
       flash[:alert] = e.message
     end
@@ -37,7 +37,9 @@ class OrdersController < ApplicationController
 
     def get_order
       @order = current_user.orders.find_by(invoice_number: params[:invoice_number])
-      render_404 unless @order.present?
+      unless @order.present?
+        render_404
+      end
     end
 
 end

@@ -6,6 +6,8 @@ class Admin::BaseController < ApplicationController
   private
 
     def ensure_admin
-      render_404 unless current_user.admin?
+      unless current_user.admin?
+        render_404
+      end
     end
 end
