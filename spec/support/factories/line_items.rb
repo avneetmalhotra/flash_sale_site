@@ -12,6 +12,5 @@ FactoryBot.define do
       deal_id nil
       association :order, factory: :order, user_email: 'new_mail@line_item2.com'
     end
-
   end
 end
