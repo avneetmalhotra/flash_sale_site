@@ -29,13 +29,13 @@ class User < ApplicationRecord
   
   validates :password, allow_blank: true, length: { minimum: 6 }
 
-  ## CALLBACKLS
+  ## CALLBACKS
   before_update :clear_confirmed_token_sent_at, if: :confirmation_token_changed?
   before_update :clear_password_reset_token_sent_at, if: :password_reset_token_changed?
-  after_commit :send_confrimation_instructions, on: :create
+  after_commit :send_confirmation_instructions, on: :create
 
 
-    def send_confrimation_instructions
+    def send_confirmation_instructions
       generate_confirmation_token
       UserMailer.confirmation_email(id, password).deliver_later
     end
@@ -54,12 +54,16 @@ class User < ApplicationRecord
     end
 
     def confirmation_token_expired?
-      return true if confirmation_token_sent_at.nil? || confirmation_token.nil?
+      if confirmation_token_sent_at.nil? || confirmation_token.nil?
+        return true
+      end
       Time.current - confirmation_token_sent_at > CONFIRMATION_TOKEN_VALIDITY
     end
 
     def password_reset_token_expired?
-      return true if password_reset_token_sent_at.nil? || password_reset_token.nil?
+      if password_reset_token_sent_at.nil? || password_reset_token.nil?
+        return true
+      end
       Time.current - password_reset_token_sent_at > PASSWORD_RESET_TOKEN_VALIDITY
     end
 
